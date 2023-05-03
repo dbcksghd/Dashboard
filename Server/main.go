@@ -6,6 +6,12 @@ import (
 	"os"
 )
 
+type Dashboard struct {
+	Id      int    `json:"id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
 func main() {
 	password := os.Getenv("PASSWORD")
 	_, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
