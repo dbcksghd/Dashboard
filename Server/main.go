@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 	"os"
 )
 
@@ -14,9 +15,14 @@ type Dashboard struct {
 
 func main() {
 	password := os.Getenv("PASSWORD")
-	_, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
+	db, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
 	if err != nil {
 		panic(err)
 	}
 
+	newPost := Dashboard{Title: "what", Content: "뭐라고??"}
+	_, err = db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", newPost.Title, newPost.Content)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
