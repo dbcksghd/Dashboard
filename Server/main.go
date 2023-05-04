@@ -29,9 +29,29 @@ func main() {
 		}
 		_, err := db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
 		if err != nil {
-			return c.NoContent(500)
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		return c.NoContent(201)
+	})
+
+	e.GET("/post", func(c echo.Context) error {
+		rows, err := db.Query("select * from board")
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		var posts []Dashboard
+		for rows.Next() {
+			var post Dashboard
+			if err := rows.Scan(&post.Id, &post.Title, &post.Content); err != nil {
+				return c.JSON(500, map[string]string{"error": err.Error()})
+			}
+			posts = append(posts, post)
+		}
+		if err := rows.Err(); err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+
+		return c.JSON(200, posts)
 	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
