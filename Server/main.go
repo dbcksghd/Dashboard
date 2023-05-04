@@ -53,5 +53,14 @@ func main() {
 
 		return c.JSON(200, posts)
 	})
+
+	e.DELETE("post", func(c echo.Context) error {
+		id := c.QueryParam("id")
+		_, err := db.Exec("delete from board where id = ?", id)
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		return c.NoContent(201)
+	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
