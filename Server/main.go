@@ -2,14 +2,13 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
-	"io/ioutil"
 	"os"
 )
 
 type Dashboard struct {
+	Id      int    `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
 }
@@ -22,17 +21,13 @@ func main() {
 	}
 
 	e := echo.New()
-	e.POST("/newpost", func(c echo.Context) error {
-		var jsonData Dashboard
-		requestBody, err := ioutil.ReadAll(c.Request().Body)
-		if err != nil {panic(err)}
+	e.POST("/post", func(c echo.Context) error {
+		requestBody := new(Dashboard)
 
-		err = json.Unmarshal(requestBody, &jsonData)
-		if err != nil {
+		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		newPost := Dashboard{Title: jsonData.Title, Content: jsonData.Content}
-		_, err = db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", newPost.Title, newPost.Content)
+		_, err = db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
 		if err != nil {
 			return c.NoContent(500)
 		}
