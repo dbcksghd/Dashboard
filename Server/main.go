@@ -27,7 +27,7 @@ func main() {
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		_, err = db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
+		_, err := db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
 		if err != nil {
 			return c.NoContent(500)
 		}
