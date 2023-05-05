@@ -54,7 +54,7 @@ func main() {
 		return c.JSON(200, posts)
 	})
 
-	e.DELETE("post", func(c echo.Context) error {
+	e.DELETE("/post", func(c echo.Context) error {
 		id := c.QueryParam("id")
 		_, err := db.Exec("delete from board where id = ?", id)
 		if err != nil {
