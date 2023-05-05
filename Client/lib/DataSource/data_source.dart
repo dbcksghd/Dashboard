@@ -22,6 +22,8 @@ class PostDataSource {
     final response = await http.get(Uri.parse(postUrl));
     if (response.statusCode == 200) {
       return PostList.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 204) {
+      return PostList.fromJson(jsonDecode("[]"));
     } else {
       throw Exception("게시글 불러오기 실패");
     }
