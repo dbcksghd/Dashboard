@@ -7,7 +7,7 @@ import 'package:client/Model/post.dart';
 class PostDataSource {
   final String postUrl = 'http://localhost:8080/post';
 
-  Future<void> createPost(String title, String content) async {
+  Future<void> createPost(String title, content) async {
     final response = await http.post(
       Uri.parse(postUrl),
       headers: {'Content-Type': 'application/json'},
@@ -31,6 +31,17 @@ class PostDataSource {
 
   Future<List<Post>> readPost() async =>
       _readPost().then((value) => value.post!);
+
+  Future<void> updatePost(int id, String title, content) async {
+    final response = await http.patch(
+      Uri.parse(postUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'id': id, 'title': title, 'content': content}),
+    );
+    if (response.statusCode == 500) {
+      throw Exception("게시글 수정 실패");
+    }
+  }
 
   Future<void> deletePost(int id) async {
     final response = await http.delete(Uri.parse("$postUrl?id=$id"));

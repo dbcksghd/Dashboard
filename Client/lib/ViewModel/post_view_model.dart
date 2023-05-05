@@ -14,13 +14,18 @@ class PostViewModel with ChangeNotifier {
     readPost();
   }
 
+  Future<void> createPost(String title, content) async {
+    await _repository.createPost(title, content);
+    readPost();
+  }
+
   Future<void> readPost() async {
     _postList = await _repository.readPost();
     notifyListeners();
   }
 
-  Future<void> createPost(String title, content) async {
-    await _repository.createPost(title, content);
+  Future<void> updatePost(int id, String title, content) async {
+    await _repository.updatePost(id, title, content);
     readPost();
   }
 
