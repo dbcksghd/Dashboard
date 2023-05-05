@@ -30,8 +30,8 @@ class CustomPostWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(width: 1),
         ),
-        width: MediaQuery.of(context).size.width - 20,
-        height: MediaQuery.of(context).size.height - 600,
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.09,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
