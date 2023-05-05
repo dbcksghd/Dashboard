@@ -1,13 +1,23 @@
 import 'package:client/View/Screen/content_page.dart';
+import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomPostWidget extends StatelessWidget {
-  CustomPostWidget({Key? key, required this.title, required this.content})
-      : super(key: key);
+  CustomPostWidget({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.id,
+  }) : super(key: key);
+
   String title, content;
+  int id;
+  late PostViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
+    viewModel = Provider.of<PostViewModel>(context);
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
@@ -52,7 +62,7 @@ class CustomPostWidget extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize:
-                                  MediaQuery.of(context).size.height * 0.03,
+                                      MediaQuery.of(context).size.height * 0.03,
                                 ),
                               ),
                             ),
@@ -60,7 +70,10 @@ class CustomPostWidget extends StatelessWidget {
                                 height:
                                     MediaQuery.of(context).size.height * 0.05),
                             TextButton(
-                              onPressed: null,
+                              onPressed: () {
+                                viewModel.deletePost(id);
+                                Navigator.of(context).pop();
+                              },
                               child: Text(
                                 "삭제하기",
                                 style: TextStyle(
