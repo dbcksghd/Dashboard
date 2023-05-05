@@ -16,7 +16,10 @@ class ContentPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
       ),
-      body: Text(content),
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+        child: Text(content),
+      ),
     );
   }
 }
