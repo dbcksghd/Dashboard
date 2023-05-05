@@ -39,27 +39,35 @@ class CustomPostWidget extends StatelessWidget {
                   showModalBottomSheet(
                     context: context,
                     builder: (context) => SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.26,
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "수정하기",
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.03,
+                            TextButton(
+                              onPressed: null,
+                              child: Text(
+                                "수정하기",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context).size.height * 0.03,
+                                ),
                               ),
                             ),
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.05),
-                            Text(
-                              "삭제하기",
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.03,
+                            TextButton(
+                              onPressed: null,
+                              child: Text(
+                                "삭제하기",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize:
+                                      MediaQuery.of(context).size.height * 0.03,
+                                ),
                               ),
                             ),
                           ],
