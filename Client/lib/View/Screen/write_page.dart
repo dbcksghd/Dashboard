@@ -13,12 +13,14 @@ class _WritePageState extends State<WritePage> {
   late PostViewModel viewModel;
 
   late TextEditingController titleController, contentController;
+  late FocusNode focusNode;
   final titleFormKey = GlobalKey<FormState>();
   final contentFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    focusNode = FocusNode();
     titleController = TextEditingController();
     contentController = TextEditingController();
   }
@@ -26,6 +28,7 @@ class _WritePageState extends State<WritePage> {
   @override
   void dispose() {
     super.dispose();
+    focusNode.dispose();
     titleController.dispose();
     contentController.dispose();
   }
@@ -83,6 +86,7 @@ class _WritePageState extends State<WritePage> {
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
+                    onFieldSubmitted: (value) => focusNode.requestFocus(),
                   ),
                 ),
               ),
@@ -105,6 +109,7 @@ class _WritePageState extends State<WritePage> {
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
                     maxLines: null,
+                    focusNode: focusNode,
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
                     decoration: const InputDecoration(
