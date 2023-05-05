@@ -16,6 +16,10 @@ class WriteScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
         actions: [
           IconButton(
             onPressed: () => viewModel.createPost(
