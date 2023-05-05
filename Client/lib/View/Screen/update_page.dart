@@ -67,7 +67,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     widget.id, titleController.text, contentController.text);
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => PostPage()),
-                        (route) => false);
+                    (route) => false);
               }
             },
             child: const Text("수정", style: TextStyle(color: Colors.black)),
@@ -94,12 +94,14 @@ class _UpdatePageState extends State<UpdatePage> {
                   child: TextFormField(
                     validator: (value) => value!.isEmpty ? '제목을 입력해주세요.' : null,
                     maxLines: 1,
+                    maxLength: 20,
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
                     keyboardType: TextInputType.text,
                     controller: titleController,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
+                      counterText: '',
                     ),
                     onFieldSubmitted: (value) => focusNode.requestFocus(),
                   ),

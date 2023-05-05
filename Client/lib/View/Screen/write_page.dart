@@ -79,12 +79,14 @@ class _WritePageState extends State<WritePage> {
                   child: TextFormField(
                     validator: (value) => value!.isEmpty ? '제목을 입력해주세요.' : null,
                     maxLines: 1,
+                    maxLength: 20,
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
                     keyboardType: TextInputType.text,
                     controller: titleController,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
+                      counterText: '',
                     ),
                     onFieldSubmitted: (value) => focusNode.requestFocus(),
                   ),
