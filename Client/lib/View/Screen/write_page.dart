@@ -31,50 +31,53 @@ class WritePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              border: Border.all(width: 1, color: Colors.black12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: TextField(
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.05),
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-                controller: titleController,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                border: Border.all(width: 1, color: Colors.black12),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                child: TextField(
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.05),
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
+                  controller: titleController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              border: Border.all(width: 1, color: Colors.black12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: TextField(
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.05),
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                controller: contentController,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                border: Border.all(width: 1, color: Colors.black12),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                child: TextField(
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.05),
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  controller: contentController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
