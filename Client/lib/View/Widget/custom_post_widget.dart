@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:client/View/Screen/content_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +34,41 @@ class CustomPostWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const IconButton(onPressed: null, icon: Icon(Icons.more_vert))
+            IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "수정하기",
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05),
+                            Text(
+                              "삭제하기",
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.more_vert)),
           ],
         ),
       ),
