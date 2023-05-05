@@ -55,7 +55,9 @@ class UpdatePage extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.black12),
               ),
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    right: MediaQuery.of(context).size.width * 0.03),
                 child: TextField(
                   maxLines: 1,
                   style: TextStyle(
@@ -75,7 +77,9 @@ class UpdatePage extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.black12),
               ),
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    right: MediaQuery.of(context).size.width * 0.03),
                 child: TextField(
                   maxLines: null,
                   style: TextStyle(

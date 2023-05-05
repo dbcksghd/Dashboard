@@ -43,7 +43,9 @@ class WritePage extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.black12),
               ),
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    right: MediaQuery.of(context).size.width * 0.03),
                 child: TextField(
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.05),
@@ -63,7 +65,10 @@ class WritePage extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.black12),
               ),
               child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+                padding:
+                    EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.03,
+                        right: MediaQuery.of(context).size.width * 0.03),
                 child: TextField(
                   style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width * 0.05),
