@@ -27,7 +27,9 @@ class UpdatePage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => PostPage()),
+              (route) => false),
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         actions: [
