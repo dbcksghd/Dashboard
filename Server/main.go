@@ -57,6 +57,18 @@ func main() {
 		return c.JSON(200, posts)
 	})
 
+	e.PATCH("/post", func(c echo.Context) error {
+		requestBody := new(Dashboard)
+		if err = c.Bind(requestBody); err != nil {
+			panic(err)
+		}
+		_, err := db.Exec("update board set title = ?, content = ? where id = ?", requestBody.Title, requestBody.Content, requestBody.Id)
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		return c.NoContent(201)
+	})
+
 	e.DELETE("/post", func(c echo.Context) error {
 		id := c.QueryParam("id")
 		_, err := db.Exec("delete from board where id = ?", id)
