@@ -2,6 +2,7 @@ import 'package:client/View/Screen/write_page.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:client/View/Widget/custom_post_widget.dart';
 
 class PostPage extends StatelessWidget {
   PostPage({Key? key}) : super(key: key);
@@ -18,9 +19,16 @@ class PostPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height - 200,
           child: ListView.builder(
             itemCount: viewModel.postList.length,
-            itemBuilder: (context, index) => ListTile(
-              title: Text(viewModel.postList[index].title.toString()),
-            ),
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  CustomPostWidget(
+                    title: viewModel.postList[index].title.toString(),
+                  ),
+                  const SizedBox(height: 20.0),
+                ],
+              );
+            },
           ),
         ),
       ),
