@@ -15,13 +15,21 @@ class CustomPostWidget extends StatelessWidget {
       ),
       width: MediaQuery.of(context).size.width - 20,
       height: MediaQuery.of(context).size.height - 600,
-      child: Center(
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16.0,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
           ),
-        ),
+          const IconButton(onPressed: null, icon: Icon(Icons.more_vert))
+        ],
       ),
     );
   }
