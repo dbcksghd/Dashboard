@@ -9,11 +9,21 @@ class PostViewModel with ChangeNotifier {
 
   PostViewModel() {
     _repository = PostRepository();
-    _readPost();
+    readPost();
   }
 
-  Future _readPost() async {
+  Future<void> readPost() async {
     _postList = await _repository.readPost();
     notifyListeners();
+  }
+
+  Future<void> createPost(Post post) async {
+    _repository.createPost(post);
+    readPost();
+  }
+
+  Future<void> deletePost(Post post) async {
+    _repository.deletePost(post);
+    readPost();
   }
 }
