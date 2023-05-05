@@ -40,8 +40,8 @@ class CustomPostWidget extends StatelessWidget {
               padding: const EdgeInsets.only(left: 15.0),
               child: Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16.0,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                 ),
               ),
             ),
