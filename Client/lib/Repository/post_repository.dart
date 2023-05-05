@@ -4,7 +4,8 @@ import 'package:client/Model/post.dart';
 class PostRepository {
   final PostDataSource _dataSource = PostDataSource();
 
-  Future<void> createPost(Post post) async => _dataSource.createPost(post);
+  Future<void> createPost(String title, content) async =>
+      _dataSource.createPost(title, content);
 
   Future<List<Post>> readPost() async => _dataSource.readPost();
 
