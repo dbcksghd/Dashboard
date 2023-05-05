@@ -11,4 +11,13 @@ class PostDataSource {
       throw Exception("게시글 동록 실패");
     }
   }
+
+  Future<List<Post>> readPost() async {
+    final response = await http.get(Uri.parse(postUrl));
+    if (response.statusCode == 200) {
+      return (response.body as List).map((e) => Post.fromJson(e)).toList();
+    } else {
+      throw Exception("게시글 불러오기 실패");
+    }
+  }
 }
