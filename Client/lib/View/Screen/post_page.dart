@@ -23,6 +23,10 @@ class PostPage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
