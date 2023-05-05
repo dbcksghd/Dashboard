@@ -27,7 +27,7 @@ class PostPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => WriteScreen())),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.edit),
       ),
     );
   }
