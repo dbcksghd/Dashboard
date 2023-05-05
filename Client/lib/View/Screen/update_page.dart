@@ -1,3 +1,4 @@
+import 'package:client/View/Screen/post_page.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,11 @@ class UpdatePage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              viewModel.updatePost(id, title, content);
-              Navigator.of(context).pop();
+              viewModel.updatePost(
+                  id, titleController.text, contentController.text);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => PostPage()),
+                  (route) => false);
             },
             child: const Text("수정", style: TextStyle(color: Colors.black)),
           ),
