@@ -35,7 +35,7 @@ func main() {
 	})
 
 	e.GET("/post", func(c echo.Context) error {
-		rows, err := db.Query("select * from board")
+		rows, err := db.Query("select * from board order by id desc ")
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
