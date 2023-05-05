@@ -15,8 +15,8 @@ class PostPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width - 50,
-          height: MediaQuery.of(context).size.height - 200,
+          width: MediaQuery.of(context).size.width - 40,
+          height: MediaQuery.of(context).size.height,
           child: ListView.builder(
             reverse: true,
             itemCount: viewModel.postList.length,
