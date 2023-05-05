@@ -100,6 +100,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     keyboardType: TextInputType.text,
                     controller: titleController,
                     decoration: const InputDecoration(
+                      hintText: "제목을 입력해주세요",
                       border: InputBorder.none,
                       counterText: '',
                     ),
@@ -130,6 +131,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
                     decoration: const InputDecoration(
+                      hintText: "내용을 입력해주세요",
                       border: InputBorder.none,
                     ),
                   ),

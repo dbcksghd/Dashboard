@@ -85,6 +85,7 @@ class _WritePageState extends State<WritePage> {
                     keyboardType: TextInputType.text,
                     controller: titleController,
                     decoration: const InputDecoration(
+                      hintText: "제목을 입력해주세요",
                       border: InputBorder.none,
                       counterText: '',
                     ),
@@ -115,6 +116,7 @@ class _WritePageState extends State<WritePage> {
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
                     decoration: const InputDecoration(
+                      hintText: "내용을 입력해주세요",
                       border: InputBorder.none,
                     ),
                   ),
