@@ -24,6 +24,7 @@ class PostPage extends StatelessWidget {
                 children: [
                   CustomPostWidget(
                     title: viewModel.postList[index].title.toString(),
+                    content: viewModel.postList[index].content.toString(),
                   ),
                   const SizedBox(height: 20.0),
                 ],
