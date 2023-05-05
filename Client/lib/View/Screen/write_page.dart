@@ -2,8 +2,8 @@ import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class WriteScreen extends StatelessWidget {
-  WriteScreen({Key? key}) : super(key: key);
+class WritePage extends StatelessWidget {
+  WritePage({Key? key}) : super(key: key);
   late PostViewModel viewModel;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();

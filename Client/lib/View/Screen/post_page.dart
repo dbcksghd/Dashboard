@@ -1,9 +1,8 @@
-import 'package:client/View/Screen/write_page.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:client/View/Widget/custom_post_widget.dart';
-
+import 'package:client/View/Screen/write_page.dart';
 class PostPage extends StatelessWidget {
   PostPage({Key? key}) : super(key: key);
   late PostViewModel viewModel;
@@ -35,7 +34,7 @@ class PostPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => WriteScreen())),
+            .push(MaterialPageRoute(builder: (context) => WritePage())),
         child: const Icon(Icons.edit),
       ),
     );
