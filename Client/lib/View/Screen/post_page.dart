@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:client/View/Widget/custom_post_widget.dart';
 import 'package:client/View/Screen/write_page.dart';
+
 class PostPage extends StatelessWidget {
   PostPage({Key? key}) : super(key: key);
   late PostViewModel viewModel;
@@ -12,26 +13,32 @@ class PostPage extends StatelessWidget {
     viewModel = Provider.of<PostViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width - 40,
-          height: MediaQuery.of(context).size.height,
-          child: ListView.builder(
-            reverse: true,
-            itemCount: viewModel.postList.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  CustomPostWidget(
-                    id: viewModel.postList[index].id!.toInt(),
-                    title: viewModel.postList[index].title.toString(),
-                    content: viewModel.postList[index].content.toString(),
-                  ),
-                  const SizedBox(height: 20.0),
-                ],
-              );
-            },
-          ),
+      body: Container(
+        margin: const EdgeInsets.only(left: 20, right: 20),
+        width: MediaQuery.of(context).size.width - 40,
+        height: (viewModel.postList.length + 1) *
+                        (MediaQuery.of(context).size.height - 600) +
+                    40 <
+                MediaQuery.of(context).size.height
+            ? (viewModel.postList.length + 1) *
+                    (MediaQuery.of(context).size.height - 600) +
+                40
+            : MediaQuery.of(context).size.height,
+        child: ListView.builder(
+          reverse: true,
+          itemCount: viewModel.postList.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                CustomPostWidget(
+                  id: viewModel.postList[index].id!.toInt(),
+                  title: viewModel.postList[index].title.toString(),
+                  content: viewModel.postList[index].content.toString(),
+                ),
+                const SizedBox(height: 20.0),
+              ],
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
