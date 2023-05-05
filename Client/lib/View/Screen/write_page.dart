@@ -21,10 +21,13 @@ class WriteScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         actions: [
-          IconButton(
-            onPressed: () => viewModel.createPost(
-                titleController.text, contentController.text),
-            icon: Icon(Icons.add),
+          TextButton(
+            onPressed: () {
+              viewModel.createPost(
+                  titleController.text, contentController.text);
+              Navigator.of(context).pop();
+            },
+            child: const Text("완료", style: TextStyle(color: Colors.black)),
           ),
         ],
       ),
