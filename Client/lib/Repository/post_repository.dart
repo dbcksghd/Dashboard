@@ -9,5 +9,5 @@ class PostRepository {
 
   Future<List<Post>> readPost() async => _dataSource.readPost();
 
-  Future<void> deletePost(Post post) async => _dataSource.deletePost(post);
+  Future<void> deletePost(int id) async => _dataSource.deletePost(id);
 }

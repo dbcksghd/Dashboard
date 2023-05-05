@@ -25,8 +25,7 @@ class PostViewModel with ChangeNotifier {
   }
 
   Future<void> deletePost(int id) async {
-    Post post = Post(id: id);
-    _repository.deletePost(post);
+    _repository.deletePost(id);
     readPost();
   }
 }

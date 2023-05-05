@@ -30,8 +30,8 @@ class PostDataSource {
   Future<List<Post>> readPost() async =>
       _readPost().then((value) => value.post!);
 
-  Future<void> deletePost(Post post) async {
-    final response = await http.delete(Uri.parse("$postUrl/id?${post.id}"));
+  Future<void> deletePost(int id) async {
+    final response = await http.delete(Uri.parse("$postUrl/id?$id"));
     if (response.statusCode == 500) throw Exception("게시글 삭제 실패");
   }
 }
