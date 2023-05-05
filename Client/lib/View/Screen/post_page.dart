@@ -1,3 +1,4 @@
+import 'package:client/View/Screen/write_page.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,8 @@ class PostPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => WriteScreen())),
         child: Icon(Icons.add),
       ),
     );
