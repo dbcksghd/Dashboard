@@ -7,6 +7,8 @@ class PostViewModel with ChangeNotifier {
 
   List<Post> _postList = List.empty(growable: true);
 
+  List<Post> get postList => _postList;
+
   PostViewModel() {
     _repository = PostRepository();
     readPost();
