@@ -1,4 +1,5 @@
 import 'package:client/View/Screen/content_page.dart';
+import 'package:client/View/Screen/update_page.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,12 @@ class CustomPostWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextButton(
-                              onPressed: null,
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => UpdatePage(
+                                      id: id, title: title, content: content),
+                                ),
+                              ),
                               child: Text(
                                 "수정하기",
                                 style: TextStyle(
