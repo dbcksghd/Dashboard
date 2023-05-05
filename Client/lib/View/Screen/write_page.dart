@@ -12,7 +12,10 @@ class WriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel = Provider.of<PostViewModel>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () => viewModel.createPost(
