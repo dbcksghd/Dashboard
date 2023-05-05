@@ -43,6 +43,8 @@ class WritePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: TextField(
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 controller: titleController,
@@ -61,6 +63,8 @@ class WritePage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: TextField(
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 controller: contentController,

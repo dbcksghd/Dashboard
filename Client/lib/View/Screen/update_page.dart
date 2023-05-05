@@ -56,6 +56,8 @@ class UpdatePage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 15.0),
               child: TextField(
                 maxLines: 1,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
                 keyboardType: TextInputType.text,
                 controller: titleController,
                 decoration: const InputDecoration(
@@ -74,6 +76,8 @@ class UpdatePage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 15.0),
               child: TextField(
                 maxLines: null,
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
                 keyboardType: TextInputType.multiline,
                 controller: contentController,
                 decoration: const InputDecoration(
