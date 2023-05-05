@@ -50,6 +50,9 @@ func main() {
 		if err := rows.Err(); err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
+		if len(posts) == 0 {
+			return c.NoContent(204)
+		}
 
 		return c.JSON(200, posts)
 	})
