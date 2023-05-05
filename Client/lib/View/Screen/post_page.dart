@@ -23,6 +23,7 @@ class PostPage extends StatelessWidget {
               return Column(
                 children: [
                   CustomPostWidget(
+                    id: viewModel.postList[index].id!.toInt(),
                     title: viewModel.postList[index].title.toString(),
                     content: viewModel.postList[index].content.toString(),
                   ),
