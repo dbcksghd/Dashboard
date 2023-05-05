@@ -9,6 +9,20 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     viewModel = Provider.of<PostViewModel>(context);
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 50,
+          height: MediaQuery.of(context).size.height - 200,
+          child: ListView.builder(
+            itemCount: viewModel.postList.length,
+            itemBuilder: (context, index) => ListTile(
+              title: Text(viewModel.postList[index].title.toString()),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
