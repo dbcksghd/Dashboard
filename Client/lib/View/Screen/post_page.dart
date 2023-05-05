@@ -18,6 +18,7 @@ class PostPage extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 50,
           height: MediaQuery.of(context).size.height - 200,
           child: ListView.builder(
+            reverse: true,
             itemCount: viewModel.postList.length,
             itemBuilder: (context, index) {
               return Column(
