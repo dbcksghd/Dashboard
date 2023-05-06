@@ -62,7 +62,7 @@ class _WritePageState extends State<WritePage> {
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -94,6 +94,7 @@ class _WritePageState extends State<WritePage> {
                 ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
@@ -111,7 +112,7 @@ class _WritePageState extends State<WritePage> {
                         value!.isEmpty ? '게시글을 입력해주세요.' : null,
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
-                    maxLines: null,
+                    maxLines: (MediaQuery.of(context).size.height * 0.03).toInt(),
                     focusNode: focusNode,
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
