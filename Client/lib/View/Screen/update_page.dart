@@ -95,6 +95,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     validator: (value) => value!.isEmpty ? '제목을 입력해주세요.' : null,
                     maxLines: 1,
                     maxLength: 20,
+                    cursorColor: Colors.black,
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
                     keyboardType: TextInputType.text,
@@ -125,9 +126,11 @@ class _UpdatePageState extends State<UpdatePage> {
                   child: TextFormField(
                     validator: (value) =>
                         value!.isEmpty ? '게시글을 입력해주세요.' : null,
+                    cursorColor: Colors.black,
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.width * 0.05),
-                    maxLines: (MediaQuery.of(context).size.height * 0.03).toInt(),
+                    maxLines:
+                        (MediaQuery.of(context).size.height * 0.03).toInt(),
                     focusNode: focusNode,
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
