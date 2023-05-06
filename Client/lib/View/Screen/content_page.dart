@@ -18,12 +18,25 @@ class ContentPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-        child: ListView(
+        child: Column(
           children: [
-            Text(
-              content,
-              style:
-                  TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05),
+            Flexible(
+              flex: 13,
+              child: ListView(
+                children: [
+                  Text(
+                    content,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width * 0.05),
+                  ),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 3,
+              child: Container(
+                color: Colors.black,
+              ),
             ),
           ],
         ),
