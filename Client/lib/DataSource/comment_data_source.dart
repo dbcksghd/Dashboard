@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:client/Model/comment.dart';
+import 'package:client/Model/comment_list.dart';
 import 'package:http/http.dart' as http;
 
 class CommentDataSource {
@@ -15,4 +17,18 @@ class CommentDataSource {
       throw Exception("게시글 동록 실패");
     }
   }
+
+  Future<CommentList> _readComments() async {
+    final response = await http.get(Uri.parse(commentUrl));
+    if (response.statusCode == 200) {
+      return CommentList.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 204) {
+      return CommentList.fromJson(jsonDecode("[]"));
+    } else {
+      throw Exception("게시글 불러오기 실패");
+    }
+  }
+
+  Future<List<Comment>> readComments() async =>
+      _readComments().then((value) => value.comments!);
 }
