@@ -15,6 +15,7 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   late CommentViewModel viewModel;
   late TextEditingController commentController;
+  bool controllerIsNotEmpty = false;
 
   @override
   void initState() {
@@ -125,10 +126,24 @@ class _ContentPageState extends State<ContentPage> {
                                         fontSize:
                                             MediaQuery.of(context).size.width *
                                                 0.04),
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty) {
+                                        setState(() {
+                                          controllerIsNotEmpty = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          controllerIsNotEmpty = false;
+                                        });
+                                      }
+                                    },
                                     cursorColor: Colors.black,
                                     controller: commentController,
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
+                                          color: controllerIsNotEmpty
+                                              ? Colors.blueAccent
+                                              : Colors.grey,
                                           onPressed: () {
                                             if (commentController
                                                 .text.isNotEmpty) {
