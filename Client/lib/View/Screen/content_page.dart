@@ -149,6 +149,7 @@ class _ContentPageState extends State<ContentPage> {
                                                 .text.isNotEmpty) {
                                               viewModel.createComment(widget.id,
                                                   commentController.text);
+                                              commentController.clear();
                                             }
                                           },
                                           icon: const Icon(Icons.send)),
