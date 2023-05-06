@@ -16,7 +16,10 @@ class ContentPage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            viewModel.recovery();
+            Navigator.pop(context);
+          },
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
       ),
@@ -76,31 +79,21 @@ class ContentPage extends StatelessWidget {
                         Text("댓글 ${viewModel.commentList.length}개"),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.025),
-                        viewModel.commentList.isNotEmpty
-                            ? Text(
-                                viewModel.commentList[0].comment.toString(),
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.04,
-                                ),
-                              )
-                            : Container(
-                                width: double.infinity,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.04,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  border: Border.all(width: 0.5),
-                                ),
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.03),
-                                  alignment: Alignment.centerLeft,
-                                  child: const Text('댓글 쓰러가기'),
-                                ),
-                              ),
+                        Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(width: 0.5),
+                          ),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.03),
+                            alignment: Alignment.centerLeft,
+                            child: const Text('댓글 쓰러가기'),
+                          ),
+                        ),
                       ],
                     ),
                   ),
