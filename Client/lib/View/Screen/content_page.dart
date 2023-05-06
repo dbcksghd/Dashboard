@@ -59,6 +59,7 @@ class ContentPage extends StatelessWidget {
                   padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.04,
                     top: MediaQuery.of(context).size.height * 0.02,
+                    right: MediaQuery.of(context).size.width * 0.04,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,22 @@ class ContentPage extends StatelessWidget {
                                     MediaQuery.of(context).size.width * 0.04,
                               ),
                             )
-                          : const Text('댓글 쓰러가기'),
+                          : Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.04,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(width: 0.5),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.03),
+                                alignment: Alignment.centerLeft,
+                                child: const Text('댓글 쓰러가기'),
+                              ),
+                            ),
                     ],
                   ),
                 ),
