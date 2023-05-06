@@ -84,5 +84,19 @@ func main() {
 		return c.NoContent(201)
 	})
 
+	e.POST("/comment", func(c echo.Context) error {
+		requestBody := new(Comment)
+
+		if err = c.Bind(requestBody); err != nil {
+			panic(err)
+		}
+
+		_, err := db.Exec("INSERT INTO comment (id, comment, writeTime) VALUES (?, ?, ?)",
+			requestBody.Id, requestBody.Comment, requestBody.WriteTime)
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		return c.NoContent(201)
+	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
