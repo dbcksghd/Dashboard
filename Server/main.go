@@ -13,6 +13,11 @@ type Dashboard struct {
 	Content string `json:"content"`
 }
 
+type Comment struct {
+	Id      int    `json:"id"`
+	Comment string `json:"comment"`
+}
+
 func main() {
 	password := os.Getenv("PASSWORD")
 	db, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
@@ -77,5 +82,6 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
+	
 	e.Logger.Fatal(e.Start(":8080"))
 }
