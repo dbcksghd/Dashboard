@@ -25,19 +25,26 @@ class ContentPage extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 13,
-              child: ListView(
-                children: [
-                  Text(
-                    content,
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.05),
-                  ),
-                ],
+              flex: 17,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(width: 1),
+                ),
+                child: ListView(
+                  children: [
+                    Text(
+                      content,
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.05),
+                    ),
+                  ],
+                ),
               ),
             ),
+            Flexible(flex: 1, child: Container()),
             Flexible(
-              flex: 3,
+              flex: 4,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
