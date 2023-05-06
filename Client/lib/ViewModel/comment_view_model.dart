@@ -6,11 +6,17 @@ class CommentViewModel with ChangeNotifier {
   late final CommentRepository _repository;
 
   List<Comment> _commentList = List.empty(growable: true);
+  bool isCommentWidgetClicked = false;
 
   List<Comment> get commentList => _commentList;
 
   CommentViewModel() {
     _repository = CommentRepository();
+  }
+
+  void click() {
+    isCommentWidgetClicked = !isCommentWidgetClicked ? true : false;
+    notifyListeners();
   }
 
   Future<void> createPost(int id, String comment) async {
