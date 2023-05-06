@@ -39,7 +39,35 @@ class ContentPage extends StatelessWidget {
             Flexible(
               flex: 3,
               child: Container(
-                child: Text(viewModel.postList[0].comment.toString()),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  border: Border.all(width: 1),
+                ),
+                width: double.infinity,
+                height: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.04,
+                    top: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("댓글 ${viewModel.commentList.length}개"),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.025),
+                      viewModel.commentList.isNotEmpty
+                          ? Text(
+                              viewModel.commentList[0].comment.toString(),
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04,
+                              ),
+                            )
+                          : const Text('댓글 쓰러가기'),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
