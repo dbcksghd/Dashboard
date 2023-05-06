@@ -91,7 +91,7 @@ class ContentPage extends StatelessWidget {
                             margin: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.03),
                             alignment: Alignment.centerLeft,
-                            child: const Text('댓글 쓰러가기'),
+                            child: Text(viewModel.isCommentWidgetClicked ? '댓글 쓰기' : '댓글 쓰러가기'),
                           ),
                         ),
                         if (viewModel.isCommentWidgetClicked)
