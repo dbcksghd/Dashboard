@@ -2,10 +2,31 @@ import 'package:client/ViewModel/comment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ContentPage extends StatelessWidget {
-  ContentPage({Key? key, required this.content}) : super(key: key);
+class ContentPage extends StatefulWidget {
+  ContentPage({Key? key, required this.id, required this.content})
+      : super(key: key);
+  int id;
   String content;
+
+  @override
+  State<ContentPage> createState() => _ContentPageState();
+}
+
+class _ContentPageState extends State<ContentPage> {
   late CommentViewModel viewModel;
+  late TextEditingController commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    commentController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    commentController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +66,7 @@ class ContentPage extends StatelessWidget {
                         MediaQuery.of(context).size.width * 0.02),
                     children: [
                       Text(
-                        content,
+                        widget.content,
                         style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.05),
                       ),
@@ -98,7 +119,14 @@ class ContentPage extends StatelessWidget {
                                             MediaQuery.of(context).size.width *
                                                 0.04),
                                     cursorColor: Colors.black,
-                                    decoration: const InputDecoration(
+                                    controller: commentController,
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                          onPressed: () {
+                                            viewModel.createComment(widget.id,
+                                                commentController.text);
+                                          },
+                                          icon: const Icon(Icons.send)),
                                       hintText: "댓글을 입력해주세요",
                                       border: InputBorder.none,
                                       counterText: '',
