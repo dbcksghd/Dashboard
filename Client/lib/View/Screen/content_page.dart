@@ -21,7 +21,7 @@ class ContentPage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
         child: Column(
           children: [
             Flexible(
@@ -32,6 +32,8 @@ class ContentPage extends StatelessWidget {
                   border: Border.all(width: 1),
                 ),
                 child: ListView(
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
                   children: [
                     Text(
                       content,
