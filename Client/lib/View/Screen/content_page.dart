@@ -49,6 +49,7 @@ class ContentPage extends StatelessWidget {
               flex: 4,
               child: Container(
                 decoration: BoxDecoration(
+                  color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(15.0),
                   border: Border.all(width: 1),
                 ),
