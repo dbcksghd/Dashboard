@@ -1,0 +1,18 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class CommentDataSource {
+  final String commentUrl = 'http://localhost:8080/comment';
+
+  Future<void> createComment(int id, String comment) async {
+    var writeTime = DateTime.now();
+    final response = await http.post(
+      Uri.parse(commentUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'id': id, 'writeTime': writeTime, 'comment': comment}),
+    );
+    if (response.statusCode == 500) {
+      throw Exception("게시글 동록 실패");
+    }
+  }
+}
