@@ -1,4 +1,4 @@
-import 'package:client/DataSource/data_source.dart';
+import 'package:client/DataSource/post_data_source.dart';
 import 'package:client/Model/post.dart';
 
 class PostRepository {
