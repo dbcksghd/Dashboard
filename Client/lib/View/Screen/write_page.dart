@@ -96,33 +96,35 @@ class _WritePageState extends State<WritePage> {
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.09),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                border: Border.all(width: 1, color: Colors.black12),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.03,
-                    right: MediaQuery.of(context).size.width * 0.03),
-                child: Form(
-                  key: contentFormKey,
-                  child: TextFormField(
-                    validator: (value) =>
-                        value!.isEmpty ? '게시글을 입력해주세요.' : null,
-                    cursorColor: Colors.black,
-                    style: TextStyle(
-                        height: 1.2,
-                        fontSize: MediaQuery.of(context).size.width * 0.05),
-                    maxLines:
-                        (MediaQuery.of(context).size.height * 0.029).toInt(),
-                    focusNode: focusNode,
-                    keyboardType: TextInputType.multiline,
-                    controller: contentController,
-                    decoration: const InputDecoration(
-                      hintText: "내용을 입력해주세요",
-                      border: InputBorder.none,
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  border: Border.all(width: 1, color: Colors.black12),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.03,
+                      right: MediaQuery.of(context).size.width * 0.03),
+                  child: Form(
+                    key: contentFormKey,
+                    child: TextFormField(
+                      expands: true,
+                      validator: (value) =>
+                          value!.isEmpty ? '게시글을 입력해주세요.' : null,
+                      cursorColor: Colors.black,
+                      style: TextStyle(
+                          height: 1.2,
+                          fontSize: MediaQuery.of(context).size.width * 0.05),
+                      focusNode: focusNode,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      controller: contentController,
+                      decoration: const InputDecoration(
+                        hintText: "내용을 입력해주세요",
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
