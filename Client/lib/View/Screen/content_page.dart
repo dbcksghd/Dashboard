@@ -94,6 +94,25 @@ class ContentPage extends StatelessWidget {
                             child: const Text('댓글 쓰러가기'),
                           ),
                         ),
+                        if (viewModel.isCommentWidgetClicked)
+                          Container(
+                            margin: EdgeInsets.all(
+                                MediaQuery.of(context).size.width * 0.03),
+                            height: MediaQuery.of(context).size.height * 0.29,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              itemCount: viewModel.commentList.length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.02),
+                                child: Text(
+                                  viewModel.commentList[index].comment
+                                      .toString(),
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
