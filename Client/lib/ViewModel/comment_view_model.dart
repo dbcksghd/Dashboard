@@ -19,6 +19,11 @@ class CommentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void recovery() {
+    isCommentWidgetClicked = false;
+    notifyListeners();
+  }
+
   Future<void> createPost(int id, String comment) async {
     await _repository.createComment(id, comment);
     readComments(id);
