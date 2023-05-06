@@ -11,7 +11,8 @@ class CommentDataSource {
     final response = await http.post(
       Uri.parse(commentUrl),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'id': id, 'writeTime': writeTime, 'comment': comment}),
+      body: jsonEncode(
+          {'id': id, 'writeTime': writeTime.toString(), 'comment': comment}),
     );
     if (response.statusCode == 500) {
       throw Exception("게시글 동록 실패");
