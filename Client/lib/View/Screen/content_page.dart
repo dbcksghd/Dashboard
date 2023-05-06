@@ -91,7 +91,20 @@ class ContentPage extends StatelessWidget {
                             margin: EdgeInsets.only(
                                 left: MediaQuery.of(context).size.width * 0.03),
                             alignment: Alignment.centerLeft,
-                            child: Text(viewModel.isCommentWidgetClicked ? '댓글 쓰기' : '댓글 쓰러가기'),
+                            child: viewModel.isCommentWidgetClicked
+                                ? TextField(
+                                    style: TextStyle(
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04),
+                                    cursorColor: Colors.black,
+                                    decoration: const InputDecoration(
+                                      hintText: "댓글을 입력해주세요",
+                                      border: InputBorder.none,
+                                      counterText: '',
+                                    ),
+                                  )
+                                : const Text('댓글 쓰러가기'),
                           ),
                         ),
                         if (viewModel.isCommentWidgetClicked)
