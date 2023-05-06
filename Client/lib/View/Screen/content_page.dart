@@ -25,73 +25,84 @@ class ContentPage extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 17,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(width: 1),
-                ),
-                child: ListView(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-                  children: [
-                    Text(
-                      content,
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.05),
-                    ),
-                  ],
+              flex: !viewModel.isCommentWidgetClicked ? 17 : 9,
+              child: GestureDetector(
+                onTap: () {
+                  if (viewModel.isCommentWidgetClicked == true) {
+                    viewModel.click();
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 1),
+                  ),
+                  child: ListView(
+                    padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.width * 0.02),
+                    children: [
+                      Text(
+                        content,
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.05),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             Flexible(flex: 1, child: Container()),
             Flexible(
-              flex: 4,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(15.0),
-                  border: Border.all(width: 1),
-                ),
-                width: double.infinity,
-                height: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.04,
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    right: MediaQuery.of(context).size.width * 0.04,
+              flex: !viewModel.isCommentWidgetClicked ? 4 : 12,
+              child: GestureDetector(
+                onTap: () => viewModel.click(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(width: 1),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("댓글 ${viewModel.commentList.length}개"),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.025),
-                      viewModel.commentList.isNotEmpty
-                          ? Text(
-                              viewModel.commentList[0].comment.toString(),
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.04,
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.04,
+                      top: MediaQuery.of(context).size.height * 0.02,
+                      right: MediaQuery.of(context).size.width * 0.04,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("댓글 ${viewModel.commentList.length}개"),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.025),
+                        viewModel.commentList.isNotEmpty
+                            ? Text(
+                                viewModel.commentList[0].comment.toString(),
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                ),
+                              )
+                            : Container(
+                                width: double.infinity,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.04,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  border: Border.all(width: 0.5),
+                                ),
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.03),
+                                  alignment: Alignment.centerLeft,
+                                  child: const Text('댓글 쓰러가기'),
+                                ),
                               ),
-                            )
-                          : Container(
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height * 0.04,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(width: 0.5),
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.03),
-                                alignment: Alignment.centerLeft,
-                                child: const Text('댓글 쓰러가기'),
-                              ),
-                            ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
