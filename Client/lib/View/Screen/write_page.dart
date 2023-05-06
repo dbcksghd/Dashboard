@@ -95,7 +95,7 @@ class _WritePageState extends State<WritePage> {
                 ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.09),
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
@@ -113,8 +113,10 @@ class _WritePageState extends State<WritePage> {
                         value!.isEmpty ? '게시글을 입력해주세요.' : null,
                     cursorColor: Colors.black,
                     style: TextStyle(
+                        height: 1.2,
                         fontSize: MediaQuery.of(context).size.width * 0.05),
-                    maxLines: (MediaQuery.of(context).size.height * 0.03).toInt(),
+                    maxLines:
+                        (MediaQuery.of(context).size.height * 0.029).toInt(),
                     focusNode: focusNode,
                     keyboardType: TextInputType.multiline,
                     controller: contentController,
