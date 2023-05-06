@@ -106,7 +106,8 @@ class _ContentPageState extends State<ContentPage> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.025),
+                          margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.025),
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.06,
                           decoration: BoxDecoration(
@@ -119,7 +120,7 @@ class _ContentPageState extends State<ContentPage> {
                                 left: MediaQuery.of(context).size.width * 0.03),
                             alignment: Alignment.centerLeft,
                             child: viewModel.isCommentWidgetClicked
-                                ? TextField(
+                                ? TextFormField(
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
@@ -129,8 +130,11 @@ class _ContentPageState extends State<ContentPage> {
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
                                           onPressed: () {
-                                            viewModel.createComment(widget.id,
-                                                commentController.text);
+                                            if (commentController
+                                                .text.isNotEmpty) {
+                                              viewModel.createComment(widget.id,
+                                                  commentController.text);
+                                            }
                                           },
                                           icon: const Icon(Icons.send)),
                                       hintText: "댓글을 입력해주세요",
