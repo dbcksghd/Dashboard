@@ -1,5 +1,6 @@
 import 'package:client/View/Screen/content_page.dart';
 import 'package:client/View/Screen/update_page.dart';
+import 'package:client/ViewModel/comment_view_model.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +15,22 @@ class CustomPostWidget extends StatelessWidget {
 
   String title, content;
   int id;
-  late PostViewModel viewModel;
+  late PostViewModel postViewModel;
+  late CommentViewModel commentViewModel;
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<PostViewModel>(context);
+    postViewModel = Provider.of<PostViewModel>(context);
+    commentViewModel = Provider.of<CommentViewModel>(context);
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ContentPage(content: content),
-        ),
-      ),
+      onTap: () {
+        commentViewModel.readComments(id);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ContentPage(content: content),
+          ),
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -77,7 +83,7 @@ class CustomPostWidget extends StatelessWidget {
                                     MediaQuery.of(context).size.height * 0.05),
                             TextButton(
                               onPressed: () {
-                                viewModel.deletePost(id);
+                                postViewModel.deletePost(id);
                                 Navigator.of(context).pop();
                               },
                               child: Text(
