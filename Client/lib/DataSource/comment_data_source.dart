@@ -18,8 +18,8 @@ class CommentDataSource {
     }
   }
 
-  Future<CommentList> _readComments() async {
-    final response = await http.get(Uri.parse(commentUrl));
+  Future<CommentList> _readComments(int id) async {
+    final response = await http.get(Uri.parse("$commentUrl?id=$id"));
     if (response.statusCode == 200) {
       return CommentList.fromJson(jsonDecode(response.body));
     } else if (response.statusCode == 204) {
@@ -29,6 +29,6 @@ class CommentDataSource {
     }
   }
 
-  Future<List<Comment>> readComments() async =>
-      _readComments().then((value) => value.comments!);
+  Future<List<Comment>> readComments(int id) async =>
+      _readComments(id).then((value) => value.comments!);
 }

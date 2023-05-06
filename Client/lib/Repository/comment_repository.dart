@@ -7,5 +7,5 @@ class CommentRepository {
   Future<void> createComment(int id, String comment) async =>
       _dataSource.createComment(id, comment);
 
-  Future<List<Comment>> readPost() async => _dataSource.readComments();
+  Future<List<Comment>> readPost(int id) async => _dataSource.readComments(id);
 }
