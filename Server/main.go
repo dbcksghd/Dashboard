@@ -14,8 +14,9 @@ type Dashboard struct {
 }
 
 type Comment struct {
-	Id      int    `json:"id"`
-	Comment string `json:"comment"`
+	Id        int    `json:"id"`
+	WriteTime string `json:"writeTime"`
+	Comment   string `json:"comment"`
 }
 
 func main() {
@@ -82,6 +83,6 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
-	
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
