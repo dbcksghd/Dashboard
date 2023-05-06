@@ -1,4 +1,5 @@
 import 'package:client/View/Screen/post_page.dart';
+import 'package:client/ViewModel/comment_view_model.dart';
 import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PostViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => PostViewModel()),
+        ChangeNotifierProvider(create: (context) => CommentViewModel()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: PostPage(),
