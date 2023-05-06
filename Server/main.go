@@ -98,5 +98,29 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
+
+	e.GET("/comment", func(c echo.Context) error {
+		id := c.QueryParam("id")
+		rows, err := db.Query("select * from comment where id = ? order by writeTime desc", id)
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		var comments []Comment
+		for rows.Next() {
+			var comment Comment
+			if err := rows.Scan(&comment.Id, &comment.Comment, &comment.WriteTime); err != nil {
+				return c.JSON(500, map[string]string{"error": err.Error()})
+			}
+			comments = append(comments, comment)
+		}
+		if err := rows.Err(); err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		if len(comments) == 0 {
+			return c.NoContent(204)
+		}
+
+		return c.JSON(200, comments)
+	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
