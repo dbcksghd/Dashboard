@@ -50,28 +50,21 @@ class _ContentPageState extends State<ContentPage> {
           children: [
             Flexible(
               flex: !viewModel.isCommentWidgetClicked ? 17 : 9,
-              child: GestureDetector(
-                onTap: () {
-                  if (viewModel.isCommentWidgetClicked == true) {
-                    viewModel.click();
-                  }
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(width: 1),
-                  ),
-                  child: ListView(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.width * 0.02),
-                    children: [
-                      Text(
-                        widget.content,
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.05),
-                      ),
-                    ],
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(width: 1),
+                ),
+                child: ListView(
+                  padding:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                  children: [
+                    Text(
+                      widget.content,
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.05),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -79,7 +72,11 @@ class _ContentPageState extends State<ContentPage> {
             Flexible(
               flex: !viewModel.isCommentWidgetClicked ? 4 : 12,
               child: GestureDetector(
-                onTap: () => viewModel.click(),
+                onTap: () {
+                  if (!viewModel.isCommentWidgetClicked) {
+                    viewModel.click();
+                  }
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
@@ -91,16 +88,25 @@ class _ContentPageState extends State<ContentPage> {
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * 0.04,
-                      top: MediaQuery.of(context).size.height * 0.02,
-                      right: MediaQuery.of(context).size.width * 0.04,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("댓글 ${viewModel.commentList.length}개"),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.025),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("댓글 ${viewModel.commentList.length}개"),
+                            IconButton(
+                                onPressed: () {
+                                  if (viewModel.isCommentWidgetClicked) {
+                                    viewModel.click();
+                                  }
+                                },
+                                icon: const Icon(Icons.close)),
+                          ],
+                        ),
                         Container(
+                          margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.025),
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.06,
                           decoration: BoxDecoration(
