@@ -58,7 +58,7 @@ class _ContentPageState extends State<ContentPage> {
                 ),
                 child: ListView(
                   padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
                   children: [
                     Text(
                       widget.content,

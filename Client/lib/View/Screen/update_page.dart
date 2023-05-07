@@ -120,8 +120,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.03,
-                      right: MediaQuery.of(context).size.width * 0.03),
+                      left: MediaQuery.of(context).size.width * 0.04,
+                      right: MediaQuery.of(context).size.width * 0.04),
                   child: Form(
                     key: contentFormKey,
                     child: TextFormField(
