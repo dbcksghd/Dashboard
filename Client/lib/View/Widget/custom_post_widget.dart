@@ -13,8 +13,8 @@ class CustomPostWidget extends StatelessWidget {
     required this.id,
   }) : super(key: key);
 
-  String title, content;
-  int id;
+  final String title, content;
+  final int id;
   late PostViewModel postViewModel;
   late CommentViewModel commentViewModel;
 
