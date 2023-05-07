@@ -1,7 +1,7 @@
 import 'package:client/View/Screen/content_page.dart';
 import 'package:client/View/Screen/update_page.dart';
 import 'package:client/ViewModel/comment_view_model.dart';
-import 'package:client/ViewModel/post_view_model.dart';
+import 'package:client/ViewModel/feed_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +15,12 @@ class CustomPostWidget extends StatelessWidget {
 
   final String title, content;
   final int id;
-  late PostViewModel postViewModel;
+  late FeedViewModel postViewModel;
   late CommentViewModel commentViewModel;
 
   @override
   Widget build(BuildContext context) {
-    postViewModel = Provider.of<PostViewModel>(context);
+    postViewModel = Provider.of<FeedViewModel>(context);
     commentViewModel = Provider.of<CommentViewModel>(context);
     return GestureDetector(
       onTap: () {
@@ -83,7 +83,7 @@ class CustomPostWidget extends StatelessWidget {
                                     MediaQuery.of(context).size.height * 0.05),
                             TextButton(
                               onPressed: () {
-                                postViewModel.deletePost(id);
+                                postViewModel.deleteFeed(id);
                                 Navigator.of(context).pop();
                               },
                               child: Text(

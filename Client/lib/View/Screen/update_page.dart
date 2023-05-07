@@ -1,7 +1,7 @@
-import 'package:client/View/Screen/post_page.dart';
-import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:client/View/Screen/feed_page.dart';
+import 'package:client/ViewModel/feed_view_model.dart';
 
 class UpdatePage extends StatefulWidget {
   const UpdatePage({
@@ -19,7 +19,7 @@ class UpdatePage extends StatefulWidget {
 }
 
 class _UpdatePageState extends State<UpdatePage> {
-  late PostViewModel viewModel;
+  late FeedViewModel viewModel;
 
   late TextEditingController titleController, contentController;
   late FocusNode focusNode;
@@ -44,7 +44,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<PostViewModel>(context);
+    viewModel = Provider.of<FeedViewModel>(context);
     titleController = TextEditingController(text: widget.title);
     contentController = TextEditingController(text: widget.content);
     return Scaffold(
@@ -54,7 +54,7 @@ class _UpdatePageState extends State<UpdatePage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => PostPage()),
+              MaterialPageRoute(builder: (context) => FeedPage()),
               (route) => false),
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
@@ -63,10 +63,10 @@ class _UpdatePageState extends State<UpdatePage> {
             onPressed: () {
               if (titleFormKey.currentState!.validate() &&
                   contentFormKey.currentState!.validate()) {
-                viewModel.updatePost(
+                viewModel.updateFeed(
                     widget.id, titleController.text, contentController.text);
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => PostPage()),
+                    MaterialPageRoute(builder: (context) => FeedPage()),
                     (route) => false);
               }
             },

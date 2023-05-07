@@ -1,12 +1,12 @@
-class Post {
+class Feed {
   int? id;
   String? title;
   String? content;
 
-  Post({this.id, this.title, this.content});
+  Feed({this.id, this.title, this.content});
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
+  factory Feed.fromJson(Map<String, dynamic> json) {
+    return Feed(
       id: json['id'],
       title: json['title'],
       content: json['content'],

@@ -1,16 +1,16 @@
-import 'package:client/ViewModel/post_view_model.dart';
+import 'package:client/ViewModel/feed_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:client/View/Widget/custom_post_widget.dart';
 import 'package:client/View/Screen/write_page.dart';
 
-class PostPage extends StatelessWidget {
-  PostPage({Key? key}) : super(key: key);
-  late PostViewModel viewModel;
+class FeedPage extends StatelessWidget {
+  FeedPage({Key? key}) : super(key: key);
+  late FeedViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<PostViewModel>(context);
+    viewModel = Provider.of<FeedViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: ScrollConfiguration(
@@ -20,14 +20,14 @@ class PostPage extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 40,
           height: MediaQuery.of(context).size.height,
           child: ListView.builder(
-            itemCount: viewModel.postList.length,
+            itemCount: viewModel.feedList.length,
             itemBuilder: (context, index) {
               return Column(
                 children: [
                   CustomPostWidget(
-                    id: viewModel.postList[index].id!.toInt(),
-                    title: viewModel.postList[index].title.toString(),
-                    content: viewModel.postList[index].content.toString(),
+                    id: viewModel.feedList[index].id!.toInt(),
+                    title: viewModel.feedList[index].title.toString(),
+                    content: viewModel.feedList[index].content.toString(),
                   ),
                   const SizedBox(height: 20.0),
                 ],

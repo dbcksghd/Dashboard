@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-type Dashboard struct {
+type Feed struct {
 	Id      int    `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
@@ -30,12 +30,12 @@ func main() {
 
 	e := echo.New()
 	e.POST("/post", func(c echo.Context) error {
-		requestBody := new(Dashboard)
+		requestBody := new(Feed)
 
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		_, err := db.Exec("INSERT INTO board (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
+		_, err := db.Exec("INSERT INTO feed (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
@@ -43,34 +43,34 @@ func main() {
 	})
 
 	e.GET("/post", func(c echo.Context) error {
-		rows, err := db.Query("select * from board order by id desc ")
+		rows, err := db.Query("select * from feed order by id desc ")
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		var posts []Dashboard
+		var feeds []Feed
 		for rows.Next() {
-			var post Dashboard
-			if err := rows.Scan(&post.Id, &post.Title, &post.Content); err != nil {
+			var feed Feed
+			if err := rows.Scan(&feed.Id, &feed.Title, &feed.Content); err != nil {
 				return c.JSON(500, map[string]string{"error": err.Error()})
 			}
-			posts = append(posts, post)
+			feeds = append(feeds, feed)
 		}
 		if err := rows.Err(); err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		if len(posts) == 0 {
+		if len(feeds) == 0 {
 			return c.NoContent(204)
 		}
 
-		return c.JSON(200, posts)
+		return c.JSON(200, feeds)
 	})
 
 	e.PATCH("/post", func(c echo.Context) error {
-		requestBody := new(Dashboard)
+		requestBody := new(Feed)
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		_, err := db.Exec("update board set title = ?, content = ? where id = ?", requestBody.Title, requestBody.Content, requestBody.Id)
+		_, err := db.Exec("update feed set title = ?, content = ? where id = ?", requestBody.Title, requestBody.Content, requestBody.Id)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
@@ -79,7 +79,7 @@ func main() {
 
 	e.DELETE("/post", func(c echo.Context) error {
 		id := c.QueryParam("id")
-		_, err := db.Exec("delete from board where id = ?", id)
+		_, err := db.Exec("delete from feed where id = ?", id)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}

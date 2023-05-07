@@ -1,6 +1,6 @@
-import 'package:client/ViewModel/post_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:client/ViewModel/feed_view_model.dart';
 
 class WritePage extends StatefulWidget {
   const WritePage({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class WritePage extends StatefulWidget {
 }
 
 class _WritePageState extends State<WritePage> {
-  late PostViewModel viewModel;
+  late FeedViewModel viewModel;
 
   late TextEditingController titleController, contentController;
   late FocusNode focusNode;
@@ -35,7 +35,7 @@ class _WritePageState extends State<WritePage> {
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<PostViewModel>(context);
+    viewModel = Provider.of<FeedViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -50,7 +50,7 @@ class _WritePageState extends State<WritePage> {
             onPressed: () {
               if (titleFormKey.currentState!.validate() &&
                   contentFormKey.currentState!.validate()) {
-                viewModel.createPost(
+                viewModel.createFeed(
                     titleController.text, contentController.text);
                 Navigator.of(context).pop();
               }
