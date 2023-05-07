@@ -116,49 +116,61 @@ class _ContentPageState extends State<ContentPage> {
                             borderRadius: BorderRadius.circular(15.0),
                             border: Border.all(width: 0.5),
                           ),
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.03),
-                            alignment: Alignment.centerLeft,
-                            child: viewModel.isCommentWidgetClicked
-                                ? TextFormField(
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.04),
-                                    onChanged: (value) {
-                                      if (value.isNotEmpty) {
-                                        setState(() {
-                                          controllerIsNotEmpty = true;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          controllerIsNotEmpty = false;
-                                        });
-                                      }
-                                    },
-                                    cursorColor: Colors.black,
-                                    controller: commentController,
-                                    decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                          color: controllerIsNotEmpty
-                                              ? Colors.blueAccent
-                                              : Colors.grey,
-                                          onPressed: () {
-                                            if (commentController
-                                                .text.isNotEmpty) {
-                                              viewModel.createComment(widget.id,
-                                                  commentController.text);
-                                              commentController.clear();
-                                            }
-                                          },
-                                          icon: const Icon(Icons.send)),
-                                      hintText: "댓글을 입력해주세요",
-                                      border: InputBorder.none,
-                                      counterText: '',
-                                    ),
-                                  )
-                                : const Text('댓글 쓰러가기'),
+                          child: GestureDetector(
+                            onTap: () {
+                              viewModel.click();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.03),
+                              alignment: Alignment.centerLeft,
+                              child: viewModel.isCommentWidgetClicked
+                                  ? TextField(
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04),
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          setState(() {
+                                            controllerIsNotEmpty = true;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            controllerIsNotEmpty = false;
+                                          });
+                                        }
+                                      },
+                                      cursorColor: Colors.black,
+                                      keyboardType: TextInputType.multiline,
+                                      controller: commentController,
+                                      decoration: InputDecoration(
+                                        suffixIcon: IconButton(
+                                            color: controllerIsNotEmpty
+                                                ? Colors.blueAccent
+                                                : Colors.grey,
+                                            onPressed: () {
+                                              if (commentController
+                                                  .text.isNotEmpty) {
+                                                viewModel.createComment(
+                                                    widget.id,
+                                                    commentController.text);
+                                                commentController.clear();
+                                                setState(() {
+                                                  controllerIsNotEmpty = false;
+                                                });
+                                              }
+                                            },
+                                            icon: const Icon(Icons.send)),
+                                        hintText: "댓글을 입력해주세요",
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                      ),
+                                    )
+                                  : const Text('댓글 쓰러가기'),
+                            ),
                           ),
                         ),
                         if (viewModel.isCommentWidgetClicked)
