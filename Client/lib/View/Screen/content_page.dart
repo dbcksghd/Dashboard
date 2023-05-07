@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContentPage extends StatefulWidget {
-  ContentPage({Key? key, required this.id, required this.content})
+  const ContentPage({Key? key, required this.id, required this.content})
       : super(key: key);
-  int id;
-  String content;
+  final int id;
+  final String content;
 
   @override
   State<ContentPage> createState() => _ContentPageState();

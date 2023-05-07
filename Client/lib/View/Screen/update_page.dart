@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UpdatePage extends StatefulWidget {
-  UpdatePage({
+  const UpdatePage({
     Key? key,
     required this.id,
     required this.title,
     required this.content,
   }) : super(key: key);
 
-  int id;
-  String title, content;
+  final int id;
+  final String title, content;
 
   @override
   State<UpdatePage> createState() => _UpdatePageState();
