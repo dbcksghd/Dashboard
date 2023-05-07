@@ -24,13 +24,13 @@ class CommentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createComment(int id, String comment) async {
-    await _repository.createComment(id, comment);
-    readComments(id);
+  Future<void> createComment(int postId, String comment) async {
+    await _repository.createComment(postId, comment);
+    readComments(postId);
   }
 
-  Future<void> readComments(int id) async {
-    _commentList = await _repository.readPost(id);
+  Future<void> readComments(int postId) async {
+    _commentList = await _repository.readPost(postId);
     notifyListeners();
   }
 }
