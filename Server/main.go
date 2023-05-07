@@ -15,6 +15,7 @@ type Dashboard struct {
 
 type Comment struct {
 	Id        int    `json:"id"`
+	PostId    int    `json:"postId"`
 	WriteTime string `json:"writeTime"`
 	Comment   string `json:"comment"`
 }
@@ -91,8 +92,8 @@ func main() {
 			panic(err)
 		}
 
-		_, err := db.Exec("INSERT INTO comment (id, comment, writeTime) VALUES (?, ?, ?)",
-			requestBody.Id, requestBody.Comment, requestBody.WriteTime)
+		_, err := db.Exec("INSERT INTO comment (postId, comment, writeTime) VALUES (?, ?, ?)",
+			requestBody.PostId, requestBody.Comment, requestBody.WriteTime)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
@@ -100,15 +101,15 @@ func main() {
 	})
 
 	e.GET("/comment", func(c echo.Context) error {
-		id := c.QueryParam("id")
-		rows, err := db.Query("select * from comment where id = ? order by writeTime desc", id)
+		postId := c.QueryParam("postId")
+		rows, err := db.Query("select * from comment where postId = ? order by id desc", postId)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		var comments []Comment
 		for rows.Next() {
 			var comment Comment
-			if err := rows.Scan(&comment.Id, &comment.Comment, &comment.WriteTime); err != nil {
+			if err := rows.Scan(&comment.Id, &comment.PostId, &comment.Comment, &comment.WriteTime); err != nil {
 				return c.JSON(500, map[string]string{"error": err.Error()})
 			}
 			comments = append(comments, comment)
