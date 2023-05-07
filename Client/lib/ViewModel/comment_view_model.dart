@@ -7,6 +7,7 @@ class CommentViewModel with ChangeNotifier {
 
   List<Comment> _commentList = List.empty(growable: true);
   bool isCommentWidgetClicked = false;
+  bool isTextControllerEmpty = true;
 
   List<Comment> get commentList => _commentList;
 
@@ -16,6 +17,16 @@ class CommentViewModel with ChangeNotifier {
 
   void click() {
     isCommentWidgetClicked = !isCommentWidgetClicked ? true : false;
+    notifyListeners();
+  }
+
+  void textFieldHaveText() {
+    isTextControllerEmpty = false;
+    notifyListeners();
+  }
+
+  void textFieldClear() {
+    isTextControllerEmpty = true;
     notifyListeners();
   }
 

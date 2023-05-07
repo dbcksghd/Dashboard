@@ -15,7 +15,6 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage> {
   late CommentViewModel viewModel;
   late TextEditingController commentController;
-  bool controllerIsNotEmpty = false;
 
   @override
   void initState() {
@@ -133,14 +132,10 @@ class _ContentPageState extends State<ContentPage> {
                                                   .width *
                                               0.04),
                                       onChanged: (value) {
-                                        if (value.isNotEmpty) {
-                                          setState(() {
-                                            controllerIsNotEmpty = true;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            controllerIsNotEmpty = false;
-                                          });
+                                        if (viewModel.isTextControllerEmpty) {
+                                          viewModel.textFieldHaveText();
+                                        } else if (value.isEmpty) {
+                                          viewModel.textFieldClear();
                                         }
                                       },
                                       cursorColor: Colors.black,
@@ -148,9 +143,10 @@ class _ContentPageState extends State<ContentPage> {
                                       controller: commentController,
                                       decoration: InputDecoration(
                                         suffixIcon: IconButton(
-                                            color: controllerIsNotEmpty
-                                                ? Colors.blueAccent
-                                                : Colors.grey,
+                                            color:
+                                                viewModel.isTextControllerEmpty
+                                                    ? Colors.grey
+                                                    : Colors.blueAccent,
                                             onPressed: () {
                                               if (commentController
                                                   .text.isNotEmpty) {
@@ -158,9 +154,7 @@ class _ContentPageState extends State<ContentPage> {
                                                     widget.id,
                                                     commentController.text);
                                                 commentController.clear();
-                                                setState(() {
-                                                  controllerIsNotEmpty = false;
-                                                });
+                                                viewModel.textFieldClear();
                                               }
                                             },
                                             icon: const Icon(Icons.send)),
