@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
+	_ "github.com/labstack/echo/v4"
 	"os"
 )
 
@@ -123,5 +124,5 @@ func main() {
 
 		return c.JSON(200, comments)
 	})
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
 }

@@ -4,7 +4,7 @@ import 'package:client/Model/comment_list.dart';
 import 'package:http/http.dart' as http;
 
 class CommentDataSource {
-  final String commentUrl = 'http://localhost:8080/comment';
+  final String commentUrl = 'http://192.168.56.35:8080/comment';
 
   Future<void> createComment(int postId, String comment) async {
     var writeTime = DateTime.now();

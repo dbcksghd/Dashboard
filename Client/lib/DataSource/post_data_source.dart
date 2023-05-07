@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:client/Model/post.dart';
 
 class PostDataSource {
-  final String postUrl = 'http://localhost:8080/post';
+  final String postUrl = 'http://192.168.56.35:8080/post';
 
   Future<void> createPost(String title, content) async {
     final response = await http.post(
