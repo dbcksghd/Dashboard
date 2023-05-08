@@ -3,6 +3,7 @@ module Server
 go 1.20
 
 require (
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/labstack/echo/v4 v4.10.2 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
