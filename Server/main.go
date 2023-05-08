@@ -143,5 +143,18 @@ func main() {
 		}
 		return c.NoContent(200)
 	})
+
+	e.POST("/sign-in", func(c echo.Context) error {
+		requestBody := new(User)
+		if err = c.Bind(requestBody); err != nil {
+			panic(err)
+		}
+		err = db.QueryRow("SELECT * from user WHERE id = ? AND password = ?", requestBody.Id, requestBody.Password).
+			Scan(&requestBody.Id, &requestBody.Password, &requestBody.Name)
+		if err != nil {
+			return c.NoContent(500)
+		}
+		return c.NoContent(201)
+	})
 	e.Logger.Fatal(e.Start(":8080"))
 }
