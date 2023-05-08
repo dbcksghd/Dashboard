@@ -129,5 +129,19 @@ func main() {
 
 		return c.JSON(200, comments)
 	})
-	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
+
+	e.POST("/sign-up", func(c echo.Context) error {
+		requestBody := new(User)
+
+		if err = c.Bind(requestBody); err != nil {
+			panic(err)
+		}
+		_, err = db.Exec("insert into user (id, password, name) values (?, ?, ?)",
+			requestBody.Id, requestBody.Password, requestBody.Name)
+		if err != nil {
+			return c.NoContent(409)
+		}
+		return c.NoContent(200)
+	})
+	e.Logger.Fatal(e.Start(":8080"))
 }
