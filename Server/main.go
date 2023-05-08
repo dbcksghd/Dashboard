@@ -171,6 +171,21 @@ func main() {
 		}
 		tcToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tc)
 		accessToken, err := tcToken.SignedString([]byte("qlalfzl"))
+		if err != nil {
+			panic(err)
+		}
+		rf := TokenClaims{
+			Id:   requestBody.Id,
+			Name: requestBody.Name,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 120)),
+			},
+		}
+		rfToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &rf)
+		refreshToken, err := rfToken.SignedString([]byte("qlalfzl"))
+		if err != nil {
+			panic(err)
+		}
 		return c.NoContent(201)
 	})
 	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
