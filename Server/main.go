@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
 	"os"
@@ -24,6 +25,12 @@ type User struct {
 	Id       string `json:"id"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
+}
+
+type TokenClaims struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
+	jwt.StandardClaims
 }
 
 func main() {
@@ -156,5 +163,5 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
 }
