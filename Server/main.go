@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
 	"os"
+	"time"
 )
 
 type Feed struct {
@@ -161,6 +162,15 @@ func main() {
 		if err != nil {
 			return c.NoContent(500)
 		}
+		tc := TokenClaims{
+			Id:   requestBody.Id,
+			Name: requestBody.Name,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
+			},
+		}
+		tcToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tc)
+		accessToken, err := tcToken.SignedString([]byte("qlalfzl"))
 		return c.NoContent(201)
 	})
 	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
