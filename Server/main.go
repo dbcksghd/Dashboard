@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
-	_ "github.com/labstack/echo/v4"
 	"os"
 )
 
@@ -19,6 +18,12 @@ type Comment struct {
 	PostId    int    `json:"postId"`
 	WriteTime string `json:"writeTime"`
 	Comment   string `json:"comment"`
+}
+
+type User struct {
+	Id       string `json:"id"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
 }
 
 func main() {
