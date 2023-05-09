@@ -56,6 +56,15 @@ func main() {
 		if !token.Valid || err != nil {
 			return c.NoContent(403)
 		}
+		claims, ok := token.Claims.(*TokenClaims)
+		if !ok {
+			return c.NoContent(403)
+		}
+		var user User
+		err = db.QueryRow("select id, name from user where id = ? and name = ?", claims.ID, claims.Name).Scan(&user.Id, &user.Password, &user.Name)
+		if err != nil || claims.Name != user.Name || claims.Id != user.Id {
+			return c.NoContent(403)
+		}
 		
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
