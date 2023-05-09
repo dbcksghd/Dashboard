@@ -44,7 +44,11 @@ func main() {
 	e := echo.New()
 	e.POST("/post", func(c echo.Context) error {
 		requestBody := new(Feed)
-
+		authToken := c.Request().Header.Get("Authorization")
+		if authToken == "" {
+			return c.NoContent(403)
+		}
+		
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
