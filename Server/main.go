@@ -199,8 +199,7 @@ func main() {
 			return c.NoContent(500)
 		}
 		tc := TokenClaims{
-			Id:   requestBody.Id,
-			Name: requestBody.Name,
+			Id: requestBody.Id,
 			StandardClaims: jwt.StandardClaims{
 				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
 			},
@@ -211,8 +210,7 @@ func main() {
 			panic(err)
 		}
 		rf := TokenClaims{
-			Id:   requestBody.Id,
-			Name: requestBody.Name,
+			Id: requestBody.Id,
 			StandardClaims: jwt.StandardClaims{
 				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 120)),
 			},
@@ -248,8 +246,7 @@ func main() {
 		}
 		claims, _ := token.Claims.(*TokenClaims)
 		tc := TokenClaims{
-			Id:   claims.Id,
-			Name: claims.Name,
+			Id: claims.Id,
 			StandardClaims: jwt.StandardClaims{
 				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
 			},
@@ -280,11 +277,11 @@ func verifyToken(db *sql.DB, authToken string) error {
 		return errors.New("토큰 파싱이 안됨")
 	}
 	var user User
-	err = db.QueryRow("select id, name from user where id = ? and name = ?", claims.Id, claims.Name).Scan(&user.Id, &user.Name)
+	err = db.QueryRow("select id from user where id = ?", claims.Id).Scan(&user.Id)
 	if err != nil {
 		return err
 	}
-	if claims.Name != user.Name || claims.Id != user.Id {
+	if claims.Id != user.Id {
 		return errors.New("토큰 클레임 부분이 안맞는게 있음")
 	}
 	return nil
