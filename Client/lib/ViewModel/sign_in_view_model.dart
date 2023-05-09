@@ -14,8 +14,8 @@ class SignInViewModel with ChangeNotifier {
     _repository = SignInRepository();
   }
 
-  Future<void> signIn(String id, password, name) async {
-    _response = await _repository.signIn(id, password, name);
+  Future<void> signIn(String id, password) async {
+    _response = await _repository.signIn(id, password);
     if (_response != null) {
       _success = true;
     }
