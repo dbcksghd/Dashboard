@@ -51,7 +51,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
@@ -68,7 +68,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		rows, err := db.Query("select * from feed order by id desc ")
 		if err != nil {
@@ -97,7 +97,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		requestBody := new(Feed)
 		if err = c.Bind(requestBody); err != nil {
@@ -115,7 +115,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		id := c.QueryParam("id")
 		_, err := db.Exec("delete from feed where id = ?", id)
@@ -130,7 +130,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		requestBody := new(Comment)
 		if err = c.Bind(requestBody); err != nil {
@@ -149,7 +149,7 @@ func main() {
 		err = verifyToken(db, authToken)
 		if err != nil {
 			fmt.Println(err)
-			return c.NoContent(403)
+			return c.NoContent(401)
 		}
 		postId := c.QueryParam("postId")
 		rows, err := db.Query("select * from comment where postId = ? order by id desc", postId)
