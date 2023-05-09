@@ -1,4 +1,8 @@
+import 'package:client/View/Screen/feed_page.dart';
+import 'package:client/ViewModel/feed_view_model.dart';
+import 'package:client/ViewModel/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -11,6 +15,8 @@ class _SignInPageState extends State<SignInPage> {
   late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController passwordController;
+  late SignInViewModel signInViewModel;
+  late FeedViewModel feedViewModel;
 
   @override
   void initState() {
@@ -30,6 +36,8 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    signInViewModel = Provider.of<SignInViewModel>(context);
+    feedViewModel = Provider.of<FeedViewModel>(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -109,6 +117,30 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    signInViewModel
+                        .signIn(idController.text, passwordController.text)
+                        .then((value) {
+                      if (signInViewModel.success == true) {
+                        feedViewModel.readFeed();
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => FeedPage()),
+                            (route) => false);
+                      }
+                    });
+                  },
+                  child: const Text("로그인"),
+                ),
+                const TextButton(
+                  onPressed: null,
+                  child: Text("회원가입"),
+                ),
+              ],
             ),
           ],
         ),
