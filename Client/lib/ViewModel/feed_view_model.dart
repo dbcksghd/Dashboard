@@ -11,7 +11,6 @@ class FeedViewModel with ChangeNotifier {
 
   FeedViewModel() {
     _repository = FeedRepository();
-    readFeed();
   }
 
   Future<void> createFeed(String title, content) async {
