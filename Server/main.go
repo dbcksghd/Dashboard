@@ -45,7 +45,7 @@ func main() {
 	}
 
 	e := echo.New()
-	e.POST("/post", func(c echo.Context) error {
+	e.POST("/feed", func(c echo.Context) error {
 		requestBody := new(Feed)
 		authToken := c.Request().Header.Get("Authorization")
 		err = verifyToken(db, authToken)
@@ -63,7 +63,7 @@ func main() {
 		return c.NoContent(201)
 	})
 
-	e.GET("/post", func(c echo.Context) error {
+	e.GET("/feed", func(c echo.Context) error {
 		rows, err := db.Query("select * from feed order by id desc ")
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
@@ -86,7 +86,7 @@ func main() {
 		return c.JSON(200, feeds)
 	})
 
-	e.PATCH("/post", func(c echo.Context) error {
+	e.PATCH("/feed", func(c echo.Context) error {
 		requestBody := new(Feed)
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
@@ -98,7 +98,7 @@ func main() {
 		return c.NoContent(201)
 	})
 
-	e.DELETE("/post", func(c echo.Context) error {
+	e.DELETE("/feed", func(c echo.Context) error {
 		id := c.QueryParam("id")
 		_, err := db.Exec("delete from feed where id = ?", id)
 		if err != nil {
