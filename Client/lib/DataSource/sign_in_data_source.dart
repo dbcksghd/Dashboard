@@ -3,13 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:client/Model/sign_in_response.dart';
 
 class SignInDataSource {
-  final String signInUrl = 'http://192.168.56.35:8080/sign-in';
+  final String signInUrl = 'http://localhost:8080/sign-in';
 
-  Future<SignInResponse> signIn(String id, password, name) async {
+  Future<SignInResponse> signIn(String id, password) async {
     final response = await http.post(
       Uri.parse(signInUrl),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'id': id, 'password': password, 'name': name}),
+      body: jsonEncode({'id': id, 'password': password}),
     );
     if (response.statusCode == 200) {
       return SignInResponse.fromJson(jsonDecode(response.body));
