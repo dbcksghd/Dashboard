@@ -223,8 +223,41 @@ func main() {
 			panic(err)
 		}
 		return c.JSON(200, map[string]interface{}{
-			"accessToken":  accessToken,
-			"refreshToken": refreshToken,
+			"access_token":  accessToken,
+			"refresh_token": refreshToken,
+		})
+	})
+
+	e.GET("/check-refresh-token", func(c echo.Context) error {
+		type a struct {
+			RefreshToken string `json:"refresh_token"`
+		}
+		requestBody := new(a)
+		if err = c.Bind(requestBody); err != nil {
+			panic(err)
+		}
+		err = verifyToken(db, requestBody.RefreshToken)
+		if err != nil {
+			return c.NoContent(500)
+		}
+		token, err := jwt.ParseWithClaims(requestBody.RefreshToken, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+			return []byte("qlalfzl"), nil
+		})
+		if !token.Valid || err != nil {
+			return errors.New("토큰이 만료됨")
+		}
+		claims, _ := token.Claims.(*TokenClaims)
+		tc := TokenClaims{
+			Id:   claims.Id,
+			Name: claims.Name,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
+			},
+		}
+		tcToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tc)
+		accessToken, _ := tcToken.SignedString([]byte("qlalfzl"))
+		return c.JSON(200, map[string]interface{}{
+			"access_token": accessToken,
 		})
 	})
 
