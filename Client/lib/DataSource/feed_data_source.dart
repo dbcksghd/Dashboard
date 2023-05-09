@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:client/Model/feed_list.dart';
 
 class FeedDataSource {
-  final String postUrl = 'http://192.168.56.35:8080/post';
+  final String postUrl = 'http://192.168.56.35:8080/feed';
 
   Future<void> createFeed(String title, content) async {
     final response = await http.post(
