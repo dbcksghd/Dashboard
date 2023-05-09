@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  late TextEditingController idController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    idController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    idController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +45,7 @@ class SignInPage extends StatelessWidget {
                 child: TextFormField(
                   validator: (value) => value!.isEmpty ? '아이디를 입력해주세요.' : null,
                   cursorColor: Colors.black,
+                  controller: idController,
                   style: TextStyle(
                       height: 1.2,
                       fontSize: MediaQuery.of(context).size.width * 0.05),
@@ -47,6 +70,7 @@ class SignInPage extends StatelessWidget {
                 child: TextFormField(
                   validator: (value) => value!.isEmpty ? '비밀번호를 입력해주세요.' : null,
                   cursorColor: Colors.black,
+                  controller: passwordController,
                   style: TextStyle(
                       height: 1.2,
                       fontSize: MediaQuery.of(context).size.width * 0.05),
