@@ -64,6 +64,12 @@ func main() {
 	})
 
 	e.GET("/feed", func(c echo.Context) error {
+		authToken := c.Request().Header.Get("Authorization")
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
+			return c.NoContent(403)
+		}
 		rows, err := db.Query("select * from feed order by id desc ")
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
@@ -87,6 +93,12 @@ func main() {
 	})
 
 	e.PATCH("/feed", func(c echo.Context) error {
+		authToken := c.Request().Header.Get("Authorization")
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
+			return c.NoContent(403)
+		}
 		requestBody := new(Feed)
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
@@ -99,6 +111,12 @@ func main() {
 	})
 
 	e.DELETE("/feed", func(c echo.Context) error {
+		authToken := c.Request().Header.Get("Authorization")
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
+			return c.NoContent(403)
+		}
 		id := c.QueryParam("id")
 		_, err := db.Exec("delete from feed where id = ?", id)
 		if err != nil {
@@ -108,12 +126,16 @@ func main() {
 	})
 
 	e.POST("/comment", func(c echo.Context) error {
+		authToken := c.Request().Header.Get("Authorization")
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
+			return c.NoContent(403)
+		}
 		requestBody := new(Comment)
-
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-
 		_, err := db.Exec("INSERT INTO comment (postId, comment, writeTime) VALUES (?, ?, ?)",
 			requestBody.PostId, requestBody.Comment, requestBody.WriteTime)
 		if err != nil {
@@ -123,6 +145,12 @@ func main() {
 	})
 
 	e.GET("/comment", func(c echo.Context) error {
+		authToken := c.Request().Header.Get("Authorization")
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
+			return c.NoContent(403)
+		}
 		postId := c.QueryParam("postId")
 		rows, err := db.Query("select * from comment where postId = ? order by id desc", postId)
 		if err != nil {
@@ -165,7 +193,7 @@ func main() {
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		err = db.QueryRow("SELECT * from user WHERE id = ? AND password = ?", requestBody.Id, requestBody.Password).
+		err = db.QueryRow("SELECT * from user WHERE id = ? and password = ?", requestBody.Id, requestBody.Password).
 			Scan(&requestBody.Id, &requestBody.Password, &requestBody.Name)
 		if err != nil {
 			return c.NoContent(500)
