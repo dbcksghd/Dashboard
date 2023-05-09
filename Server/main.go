@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -48,11 +49,18 @@ func main() {
 		if authToken == "" {
 			return c.NoContent(403)
 		}
+		tokenString := strings.TrimPrefix(authToken, "Bearer ")
+		token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+			return []byte("qlalfzl"), nil
+		})
+		if !token.Valid || err != nil {
+			return c.NoContent(403)
+		}
 		
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		_, err := db.Exec("INSERT INTO feed (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
+		_, err = db.Exec("INSERT INTO feed (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
