@@ -1,11 +1,10 @@
 import 'package:client/Repository/sign_in_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Model/sign_in_response.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SignInViewModel with ChangeNotifier {
   late final SignInRepository _repository;
-
-  SignInResponse? _response = SignInResponse();
+  var storage = const FlutterSecureStorage();
   bool _success = false;
 
   bool get success => _success;
@@ -15,10 +14,13 @@ class SignInViewModel with ChangeNotifier {
   }
 
   Future<void> signIn(String id, password) async {
-    _response = await _repository.signIn(id, password);
-    if (_response != null) {
-      _success = true;
-    }
+    await _repository.signIn(id, password).then((value) {
+      if (value.accessToken!.isNotEmpty) {
+        _success = true;
+        storage.write(key: 'accessToken', value: value.accessToken);
+        storage.write(key: 'refreshToken', value: value.refreshToken);
+      }
+    });
     notifyListeners();
   }
 }
