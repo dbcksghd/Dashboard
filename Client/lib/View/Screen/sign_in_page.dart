@@ -9,12 +9,14 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   late TextEditingController idController;
+  late TextEditingController nameController;
   late TextEditingController passwordController;
 
   @override
   void initState() {
     super.initState();
     idController = TextEditingController();
+    nameController = TextEditingController();
     passwordController = TextEditingController();
   }
 
@@ -22,6 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   void dispose() {
     super.dispose();
     idController.dispose();
+    nameController.dispose();
     passwordController.dispose();
   }
 
@@ -77,6 +80,31 @@ class _SignInPageState extends State<SignInPage> {
                   keyboardType: TextInputType.multiline,
                   decoration: const InputDecoration(
                     hintText: "비밀번호를 입력해주세요",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                border: Border.all(width: 1, color: Colors.black12),
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.04,
+                    right: MediaQuery.of(context).size.width * 0.04),
+                child: TextFormField(
+                  validator: (value) => value!.isEmpty ? '이름을 입력해주세요.' : null,
+                  cursorColor: Colors.black,
+                  controller: nameController,
+                  style: TextStyle(
+                      height: 1.2,
+                      fontSize: MediaQuery.of(context).size.width * 0.05),
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    hintText: "이름를 입력해주세요",
                     border: InputBorder.none,
                   ),
                 ),
