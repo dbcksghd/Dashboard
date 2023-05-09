@@ -186,7 +186,10 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		return c.NoContent(201)
+		return c.JSON(200, map[string]interface{}{
+			"accessToken":  accessToken,
+			"refreshToken": refreshToken,
+		})
 	})
-	e.Logger.Fatal(e.Start("192.168.56.35:8080"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
