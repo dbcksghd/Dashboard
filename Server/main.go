@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
@@ -46,26 +48,11 @@ func main() {
 	e.POST("/post", func(c echo.Context) error {
 		requestBody := new(Feed)
 		authToken := c.Request().Header.Get("Authorization")
-		if authToken == "" {
+		err = verifyToken(db, authToken)
+		if err != nil {
+			fmt.Println(err)
 			return c.NoContent(403)
 		}
-		tokenString := strings.TrimPrefix(authToken, "Bearer ")
-		token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte("qlalfzl"), nil
-		})
-		if !token.Valid || err != nil {
-			return c.NoContent(403)
-		}
-		claims, ok := token.Claims.(*TokenClaims)
-		if !ok {
-			return c.NoContent(403)
-		}
-		var user User
-		err = db.QueryRow("select id, name from user where id = ? and name = ?", claims.ID, claims.Name).Scan(&user.Id, &user.Password, &user.Name)
-		if err != nil || claims.Name != user.Name || claims.Id != user.Id {
-			return c.NoContent(403)
-		}
-		
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
@@ -212,5 +199,32 @@ func main() {
 			"refreshToken": refreshToken,
 		})
 	})
+
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func verifyToken(db *sql.DB, authToken string) error {
+	if authToken == "" {
+		return errors.New("토큰이 비었음")
+	}
+	tokenString := strings.TrimPrefix(authToken, "Bearer ")
+	token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte("qlalfzl"), nil
+	})
+	if !token.Valid || err != nil {
+		return errors.New("토큰이 만료됨")
+	}
+	claims, ok := token.Claims.(*TokenClaims)
+	if !ok {
+		return errors.New("토큰 파싱이 안됨")
+	}
+	var user User
+	err = db.QueryRow("select id, name from user where id = ? and name = ?", claims.Id, claims.Name).Scan(&user.Id, &user.Name)
+	if err != nil {
+		return err
+	}
+	if claims.Name != user.Name || claims.Id != user.Id {
+		return errors.New("토큰 클레임 부분이 안맞는게 있음")
+	}
+	return nil
 }
