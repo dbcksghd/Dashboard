@@ -21,6 +21,7 @@ type Feed struct {
 }
 
 type Comment struct {
+	gorm.Model
 	Id        int    `json:"id"`
 	PostId    int    `json:"postId"`
 	WriteTime string `json:"writeTime"`
@@ -28,12 +29,14 @@ type Comment struct {
 }
 
 type User struct {
+	gorm.Model
 	Id       string `json:"id"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
 }
 
 type TokenClaims struct {
+	gorm.Model
 	Id   string `json:"id"`
 	Name string `json:"name"`
 	jwt.StandardClaims
