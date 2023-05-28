@@ -17,8 +17,8 @@ type Feed struct {
 
 type Comment struct {
 	Id        int    `json:"id"`
-	PostId    int    `json:"postId"`
-	WriteTime string `json:"writeTime"`
+	PostId    int    `gorm:"column:postId"`
+	WriteTime string `gorm:"column:writeTime"`
 	Comment   string `json:"comment"`
 }
 
@@ -139,36 +139,25 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
-	//
-	//e.GET("/comment", func(c echo.Context) error {
-	//	authToken := c.Request().Header.Get("Authorization")
-	//	err = verifyToken(db, authToken)
-	//	if err != nil {
-	//		fmt.Println(err)
-	//		return c.NoContent(401)
-	//	}
-	//	postId := c.QueryParam("postId")
-	//	rows, err := db.Query("select * from comment where postId = ? order by id desc", postId)
-	//	if err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	var comments []Comment
-	//	for rows.Next() {
-	//		var comment Comment
-	//		if err := rows.Scan(&comment.Id, &comment.PostId, &comment.Comment, &comment.WriteTime); err != nil {
-	//			return c.JSON(500, map[string]string{"error": err.Error()})
-	//		}
-	//		comments = append(comments, comment)
-	//	}
-	//	if err := rows.Err(); err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	if len(comments) == 0 {
-	//		return c.NoContent(204)
-	//	}
-	//
-	//	return c.JSON(200, comments)
-	//})
+
+	e.GET("/comment", func(c echo.Context) error {
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
+		var comments []Comment
+		postId := c.QueryParam("postId")
+		result := db.Table("comment").Find(&comments, "postId = ?", postId)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		if len(comments) == 0 {
+			return c.NoContent(204)
+		}
+		return c.JSON(200, comments)
+	})
 	//
 	//e.POST("/sign-up", func(c echo.Context) error {
 	//	requestBody := new(User)
