@@ -7,6 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"os"
 	"strings"
 	"time"
@@ -39,7 +41,8 @@ type TokenClaims struct {
 
 func main() {
 	password := os.Getenv("PASSWORD")
-	db, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
+	dsn := "root:" + password + "@tcp(localhost:3306)/dashboard"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
