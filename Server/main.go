@@ -46,24 +46,23 @@ func main() {
 	}
 
 	e := echo.New()
-	//e.POST("/feed", func(c echo.Context) error {
-	//	requestBody := new(Feed)
-	//	authToken := c.Request().Header.Get("Authorization")
-	//	err = verifyToken(db, authToken)
-	//	if err != nil {
-	//		fmt.Println(err)
-	//		return c.NoContent(401)
-	//	}
-	//	if err = c.Bind(requestBody); err != nil {
-	//		panic(err)
-	//	}
-	//	db.Table("feed").Create(&requestBody)
-	//	//_, err = db.Exec("INSERT INTO feed (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
-	//	if err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
+	e.POST("/feed", func(c echo.Context) error {
+		requestBody := new(Feed)
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
+		if err = c.Bind(requestBody); err != nil {
+			c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		result := db.Table("feed").Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		return c.NoContent(201)
+	})
 
 	e.GET("/feed", func(c echo.Context) error {
 		//authToken := c.Request().Header.Get("Authorization")
