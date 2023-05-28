@@ -16,7 +16,6 @@ type Feed struct {
 }
 
 type Comment struct {
-	gorm.Model
 	Id        int    `json:"id"`
 	PostId    int    `json:"postId"`
 	WriteTime string `json:"writeTime"`
@@ -24,14 +23,12 @@ type Comment struct {
 }
 
 type User struct {
-	gorm.Model
 	Id       string `json:"id"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
 }
 
 type TokenClaims struct {
-	gorm.Model
 	Id   string `json:"id"`
 	Name string `json:"name"`
 	jwt.StandardClaims
@@ -124,25 +121,24 @@ func main() {
 		}
 		return c.NoContent(201)
 	})
-	//
-	//e.POST("/comment", func(c echo.Context) error {
-	//	authToken := c.Request().Header.Get("Authorization")
-	//	err = verifyToken(db, authToken)
-	//	if err != nil {
-	//		fmt.Println(err)
-	//		return c.NoContent(401)
-	//	}
-	//	requestBody := new(Comment)
-	//	if err = c.Bind(requestBody); err != nil {
-	//		panic(err)
-	//	}
-	//	_, err := db.Exec("INSERT INTO comment (postId, comment, writeTime) VALUES (?, ?, ?)",
-	//		requestBody.PostId, requestBody.Comment, requestBody.WriteTime)
-	//	if err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
+
+	e.POST("/comment", func(c echo.Context) error {
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
+		requestBody := new(Comment)
+		if err = c.Bind(requestBody); err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		result := db.Table("comment").Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		return c.NoContent(201)
+	})
 	//
 	//e.GET("/comment", func(c echo.Context) error {
 	//	authToken := c.Request().Header.Get("Authorization")
