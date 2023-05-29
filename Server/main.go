@@ -50,7 +50,7 @@ func main() {
 		//	return c.NoContent(401)
 		//}
 		if err = c.Bind(requestBody); err != nil {
-			c.JSON(500, map[string]string{"error": err.Error()})
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		result := db.Table("feed").Create(&requestBody)
 		if result.Error != nil {
