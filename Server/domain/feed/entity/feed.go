@@ -6,9 +6,7 @@ type Feed struct {
 	Content string `json:"content"`
 }
 
-func Setter(feed *Feed) *Feed {
-	return &Feed{
-		Title:   feed.Title,
-		Content: feed.Content,
-	}
+func (f *Feed) Setter(feed *Feed) {
+	f.Title = feed.Title
+	f.Content = feed.Content
 }
