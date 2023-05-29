@@ -1,12 +1,14 @@
 package main
 
 import (
+	"errors"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -245,28 +247,28 @@ func main() {
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-//func verifyToken(db *gorm.DB, authToken string) error {
-//	if authToken == "" {
-//		return errors.New("토큰이 비었음")
-//	}
-//	tokenString := strings.TrimPrefix(authToken, "Bearer ")
-//	token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
-//		return []byte("qlalfzl"), nil
-//	})
-//	if !token.Valid || err != nil {
-//		return errors.New("토큰이 만료됨")
-//	}
-//	claims, ok := token.Claims.(*TokenClaims)
-//	if !ok {
-//		return errors.New("토큰 파싱이 안됨")
-//	}
-//	var user User
-//	err = db.QueryRow("select id from user where id = ?", claims.Id).Scan(&user.Id)
-//	if err != nil {
-//		return err
-//	}
-//	if claims.Id != user.Id {
-//		return errors.New("토큰 클레임 부분이 안맞는게 있음")
-//	}
-//	return nil
-//}
+func verifyToken(db *gorm.DB, authToken string) error {
+	if authToken == "" {
+		return errors.New("토큰이 비었음")
+	}
+	tokenString := strings.TrimPrefix(authToken, "Bearer ")
+	token, err := jwt.ParseWithClaims(tokenString, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte("qlalfzl"), nil
+	})
+	if !token.Valid || err != nil {
+		return errors.New("토큰이 만료됨")
+	}
+	claims, ok := token.Claims.(*TokenClaims)
+	if !ok {
+		return errors.New("토큰 파싱이 안됨")
+	}
+	var user User
+	result := db.Table("user").Select("id").Where("id = ?", claims.Id).Find(&user)
+	if result.Error != nil {
+		return result.Error
+	}
+	if claims.Id != user.Id {
+		return errors.New("토큰 클레임 부분이 안맞는게 있음")
+	}
+	return nil
+}
