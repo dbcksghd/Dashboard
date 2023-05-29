@@ -21,7 +21,12 @@ func (f *FeedService) CreateFeed(title, content string) error {
 	return nil
 }
 
-func (f *FeedService) UpdateFeed(feed *entity.Feed) error {
+func (f *FeedService) UpdateFeed(id int, title, content string) error {
+	feed := &entity.Feed{
+		Id:      id,
+		Title:   title,
+		Content: content,
+	}
 	if err := f.feedRepository.UpdateFeed(feed); err != nil {
 		return errors.New("게시글 수정 실패")
 	}
