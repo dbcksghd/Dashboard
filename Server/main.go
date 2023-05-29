@@ -158,21 +158,20 @@ func main() {
 		}
 		return c.JSON(200, comments)
 	})
-	//
-	//e.POST("/sign-up", func(c echo.Context) error {
-	//	requestBody := new(User)
-	//
-	//	if err = c.Bind(requestBody); err != nil {
-	//		panic(err)
-	//	}
-	//	_, err = db.Exec("insert into user (id, password, name) values (?, ?, ?)",
-	//		requestBody.Id, requestBody.Password, requestBody.Name)
-	//	if err != nil {
-	//		return c.NoContent(409)
-	//	}
-	//	return c.NoContent(200)
-	//})
-	//
+
+	e.POST("/sign-up", func(c echo.Context) error {
+		requestBody := new(User)
+
+		if err = c.Bind(requestBody); err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		result := db.Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		return c.NoContent(200)
+	})
+
 	//e.POST("/sign-in", func(c echo.Context) error {
 	//	requestBody := new(User)
 	//	if err = c.Bind(requestBody); err != nil {
