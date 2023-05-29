@@ -7,6 +7,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"time"
 )
 
 type Feed struct {
@@ -172,43 +173,42 @@ func main() {
 		return c.NoContent(200)
 	})
 
-	//e.POST("/sign-in", func(c echo.Context) error {
-	//	requestBody := new(User)
-	//	if err = c.Bind(requestBody); err != nil {
-	//		panic(err)
-	//	}
-	//	err = db.QueryRow("SELECT * from user WHERE id = ? and password = ?", requestBody.Id, requestBody.Password).
-	//		Scan(&requestBody.Id, &requestBody.Password, &requestBody.Name)
-	//	if err != nil {
-	//		return c.NoContent(500)
-	//	}
-	//	tc := TokenClaims{
-	//		Id: requestBody.Id,
-	//		StandardClaims: jwt.StandardClaims{
-	//			ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
-	//		},
-	//	}
-	//	tcToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tc)
-	//	accessToken, err := tcToken.SignedString([]byte("qlalfzl"))
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	rf := TokenClaims{
-	//		Id: requestBody.Id,
-	//		StandardClaims: jwt.StandardClaims{
-	//			ExpiresAt: jwt.At(time.Now().Add(time.Hour * 120)),
-	//		},
-	//	}
-	//	rfToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &rf)
-	//	refreshToken, err := rfToken.SignedString([]byte("qlalfzl"))
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	return c.JSON(200, map[string]interface{}{
-	//		"access_token":  accessToken,
-	//		"refresh_token": refreshToken,
-	//	})
-	//})
+	e.POST("/sign-in", func(c echo.Context) error {
+		requestBody := new(User)
+		if err = c.Bind(requestBody); err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		result := db.Table("user").Find(&requestBody, "id = ? and password = ?", requestBody.Id, &requestBody.Password)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		tc := TokenClaims{
+			Id: requestBody.Id,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 2)),
+			},
+		}
+		tcToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &tc)
+		accessToken, err := tcToken.SignedString([]byte("qlalfzl"))
+		if err != nil {
+			panic(err)
+		}
+		rf := TokenClaims{
+			Id: requestBody.Id,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: jwt.At(time.Now().Add(time.Hour * 120)),
+			},
+		}
+		rfToken := jwt.NewWithClaims(jwt.SigningMethodHS256, &rf)
+		refreshToken, err := rfToken.SignedString([]byte("qlalfzl"))
+		if err != nil {
+			panic(err)
+		}
+		return c.JSON(200, map[string]interface{}{
+			"access_token":  accessToken,
+			"refresh_token": refreshToken,
+		})
+	})
 	//
 	//e.GET("/check-refresh-token", func(c echo.Context) error {
 	//	type a struct {
