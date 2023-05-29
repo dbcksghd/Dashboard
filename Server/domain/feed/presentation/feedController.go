@@ -17,7 +17,7 @@ func NewFeedHandler(feedService service.FeedService) *FeedHandler {
 }
 
 func (h *FeedHandler) CreateFeed(c echo.Context) error {
-	req := new(requset.Request)
+	req := new(requset.CreateRequest)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
@@ -29,7 +29,7 @@ func (h *FeedHandler) CreateFeed(c echo.Context) error {
 }
 
 func (h *FeedHandler) UpdateFeed(c echo.Context) error {
-	req := new(requset.Request)
+	req := new(requset.UpdateRequest)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
