@@ -1,12 +1,12 @@
 package main
 
 import (
-	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"os"
 	"strings"
 	"time"
@@ -20,8 +20,8 @@ type Feed struct {
 
 type Comment struct {
 	Id        int    `json:"id"`
-	PostId    int    `json:"postId"`
-	WriteTime string `json:"writeTime"`
+	PostId    int    `gorm:"column:postId"`
+	WriteTime string `gorm:"column:writeTime"`
 	Comment   string `json:"comment"`
 }
 
@@ -39,7 +39,8 @@ type TokenClaims struct {
 
 func main() {
 	password := os.Getenv("PASSWORD")
-	db, err := sql.Open("mysql", "root:"+password+"@tcp(localhost:3306)/dashboard")
+	dsn := "root:" + password + "@tcp(localhost:3306)/dashboard"
+	db, err := gorm.Open(mysql.Open(dsn))
 	if err != nil {
 		panic(err)
 	}
@@ -47,130 +48,117 @@ func main() {
 	e := echo.New()
 	e.POST("/feed", func(c echo.Context) error {
 		requestBody := new(Feed)
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
 		if err = c.Bind(requestBody); err != nil {
-			panic(err)
+			c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		_, err = db.Exec("INSERT INTO feed (title, content) VALUES (?, ?)", requestBody.Title, requestBody.Content)
-		if err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
+		result := db.Table("feed").Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		return c.NoContent(201)
 	})
 
 	e.GET("/feed", func(c echo.Context) error {
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
-		rows, err := db.Query("select * from feed order by id desc ")
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
+
+		//rows, err := db.Query("select * from feed order by id desc ")
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		var feeds []Feed
-		for rows.Next() {
-			var feed Feed
-			if err := rows.Scan(&feed.Id, &feed.Title, &feed.Content); err != nil {
-				return c.JSON(500, map[string]string{"error": err.Error()})
-			}
-			feeds = append(feeds, feed)
-		}
-		if err := rows.Err(); err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
+		result := db.Table("feed").Find(&feeds)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		if len(feeds) == 0 {
 			return c.NoContent(204)
 		}
-
 		return c.JSON(200, feeds)
 	})
 
 	e.PATCH("/feed", func(c echo.Context) error {
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
 		requestBody := new(Feed)
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
-		_, err := db.Exec("update feed set title = ?, content = ? where id = ?", requestBody.Title, requestBody.Content, requestBody.Id)
-		if err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
+		result := db.Table("feed").Save(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		return c.NoContent(201)
 	})
 
 	e.DELETE("/feed", func(c echo.Context) error {
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
 		id := c.QueryParam("id")
-		_, err := db.Exec("delete from feed where id = ?", id)
-		if err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
+		var feed Feed
+		result := db.Table("feed").Find(&feed, "id = ? ", id)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
+		}
+		result = db.Table("feed").Delete(&feed)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		return c.NoContent(201)
 	})
 
 	e.POST("/comment", func(c echo.Context) error {
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
 		requestBody := new(Comment)
 		if err = c.Bind(requestBody); err != nil {
-			panic(err)
-		}
-		_, err := db.Exec("INSERT INTO comment (postId, comment, writeTime) VALUES (?, ?, ?)",
-			requestBody.PostId, requestBody.Comment, requestBody.WriteTime)
-		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		result := db.Table("comment").Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		return c.NoContent(201)
 	})
 
 	e.GET("/comment", func(c echo.Context) error {
-		authToken := c.Request().Header.Get("Authorization")
-		err = verifyToken(db, authToken)
-		if err != nil {
-			fmt.Println(err)
-			return c.NoContent(401)
-		}
-		postId := c.QueryParam("postId")
-		rows, err := db.Query("select * from comment where postId = ? order by id desc", postId)
-		if err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
-		}
+		//authToken := c.Request().Header.Get("Authorization")
+		//err = verifyToken(db, authToken)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	return c.NoContent(401)
+		//}
 		var comments []Comment
-		for rows.Next() {
-			var comment Comment
-			if err := rows.Scan(&comment.Id, &comment.PostId, &comment.Comment, &comment.WriteTime); err != nil {
-				return c.JSON(500, map[string]string{"error": err.Error()})
-			}
-			comments = append(comments, comment)
-		}
-		if err := rows.Err(); err != nil {
-			return c.JSON(500, map[string]string{"error": err.Error()})
+		postId := c.QueryParam("postId")
+		result := db.Table("comment").Find(&comments, "postId = ?", postId)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		if len(comments) == 0 {
 			return c.NoContent(204)
 		}
-
 		return c.JSON(200, comments)
 	})
 
@@ -178,12 +166,11 @@ func main() {
 		requestBody := new(User)
 
 		if err = c.Bind(requestBody); err != nil {
-			panic(err)
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		_, err = db.Exec("insert into user (id, password, name) values (?, ?, ?)",
-			requestBody.Id, requestBody.Password, requestBody.Name)
-		if err != nil {
-			return c.NoContent(409)
+		result := db.Create(&requestBody)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		return c.NoContent(200)
 	})
@@ -191,12 +178,11 @@ func main() {
 	e.POST("/sign-in", func(c echo.Context) error {
 		requestBody := new(User)
 		if err = c.Bind(requestBody); err != nil {
-			panic(err)
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		err = db.QueryRow("SELECT * from user WHERE id = ? and password = ?", requestBody.Id, requestBody.Password).
-			Scan(&requestBody.Id, &requestBody.Password, &requestBody.Name)
-		if err != nil {
-			return c.NoContent(500)
+		result := db.Table("user").Find(&requestBody, "id = ? and password = ?", requestBody.Id, &requestBody.Password)
+		if result.Error != nil {
+			return c.JSON(500, map[string]string{"error": result.Error.Error()})
 		}
 		tc := TokenClaims{
 			Id: requestBody.Id,
@@ -232,17 +218,17 @@ func main() {
 		}
 		requestBody := new(a)
 		if err = c.Bind(requestBody); err != nil {
-			panic(err)
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		err = verifyToken(db, requestBody.RefreshToken)
 		if err != nil {
-			return c.NoContent(500)
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		token, err := jwt.ParseWithClaims(requestBody.RefreshToken, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return []byte("qlalfzl"), nil
 		})
 		if !token.Valid || err != nil {
-			return errors.New("토큰이 만료됨")
+			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
 		claims, _ := token.Claims.(*TokenClaims)
 		tc := TokenClaims{
@@ -261,7 +247,7 @@ func main() {
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-func verifyToken(db *sql.DB, authToken string) error {
+func verifyToken(db *gorm.DB, authToken string) error {
 	if authToken == "" {
 		return errors.New("토큰이 비었음")
 	}
@@ -277,9 +263,9 @@ func verifyToken(db *sql.DB, authToken string) error {
 		return errors.New("토큰 파싱이 안됨")
 	}
 	var user User
-	err = db.QueryRow("select id from user where id = ?", claims.Id).Scan(&user.Id)
-	if err != nil {
-		return err
+	result := db.Table("user").Select("id").Where("id = ?", claims.Id).Find(&user)
+	if result.Error != nil {
+		return result.Error
 	}
 	if claims.Id != user.Id {
 		return errors.New("토큰 클레임 부분이 안맞는게 있음")
