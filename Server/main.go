@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Server/domain/feed/entity"
+	"Server/domain/feed/presentation/dto/requset"
 	"errors"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
@@ -42,7 +42,7 @@ func main() {
 
 	e := echo.New()
 	e.POST("/feed", func(c echo.Context) error {
-		requestBody := new(entity.Feed)
+		requestBody := new(requset.Request)
 		//authToken := c.Request().Header.Get("Authorization")
 		//err = verifyToken(db, authToken)
 		//if err != nil {
@@ -71,7 +71,7 @@ func main() {
 		if err != nil {
 			return c.JSON(500, map[string]string{"error": err.Error()})
 		}
-		var feeds []entity.Feed
+		var feeds []requset.Request
 		result := db.Table("feed").Find(&feeds)
 		if result.Error != nil {
 			return c.JSON(500, map[string]string{"error": result.Error.Error()})
@@ -89,7 +89,7 @@ func main() {
 		//	fmt.Println(err)
 		//	return c.NoContent(401)
 		//}
-		requestBody := new(entity.Feed)
+		requestBody := new(requset.Request)
 		if err = c.Bind(requestBody); err != nil {
 			panic(err)
 		}
@@ -108,7 +108,7 @@ func main() {
 		//	return c.NoContent(401)
 		//}
 		id := c.QueryParam("id")
-		var feed entity.Feed
+		var feed requset.Request
 		result := db.Table("feed").Find(&feed, "id = ? ", id)
 		if result.Error != nil {
 			return c.JSON(500, map[string]string{"error": result.Error.Error()})
