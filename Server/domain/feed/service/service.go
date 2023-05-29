@@ -11,10 +11,7 @@ type FeedService struct {
 }
 
 func (f *FeedService) CreateFeed(title, content string) error {
-	feed := &entity.Feed{
-		Title:   title,
-		Content: content,
-	}
+	feed := entity.NewFeed(title, content)
 	if err := f.feedRepository.CreateFeed(feed); err != nil {
 		return errors.New("게시글 생성 실패")
 	}
