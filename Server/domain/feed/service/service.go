@@ -2,6 +2,7 @@ package service
 
 import (
 	"Server/domain/feed/entity"
+	"Server/domain/feed/presentation/dto/response"
 	"Server/domain/feed/repository"
 	"errors"
 )
@@ -30,9 +31,17 @@ func (f *FeedService) UpdateFeed(feed *entity.Feed, id int) error {
 	return nil
 }
 
-func (f *FeedService) DeleteFeed(id int) error {
+func (f *FeedService) DeleteFeed(id string) error {
 	if err := f.repository.DeleteFeed(id); err != nil {
 		return errors.New("게시글 삭제 실패")
 	}
 	return nil
+}
+
+func (f *FeedService) FindAllFeeds() (response.FeedResponse, error) {
+	feeds := response.FeedResponse{}
+	if feeds, err := f.repository.FindAllFeeds(); err != nil {
+		return feeds, errors.New("게시글 불러우기 실패")
+	}
+	return feeds, nil
 }
