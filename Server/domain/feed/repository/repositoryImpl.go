@@ -24,3 +24,15 @@ func (receiver FeedRepositoryImpl) FindAllFeeds(db *gorm.DB) (response.FeedRespo
 	}
 	return res, nil
 }
+
+func (receiver FeedRepositoryImpl) UpdateFeed(feed *requset.UpdateRequest, db *gorm.DB) error {
+	result := db.Table("feed").Find(feed, "id = ?", feed.Id)
+	if result.Error != nil {
+		return result.Error
+	}
+	result = db.Table("feed").Save(feed)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
