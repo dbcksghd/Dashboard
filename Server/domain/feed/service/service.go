@@ -39,9 +39,9 @@ func (f *FeedService) DeleteFeed(id int) error {
 }
 
 func (f *FeedService) FindAllFeeds() (response.FeedResponse, error) {
-	feeds := response.FeedResponse{}
+	var feeds response.FeedResponse
 	if feeds, err := f.repository.FindAllFeeds(); err != nil {
-		return feeds, errors.New("게시글 불러우기 실패")
+		return feeds, errors.New("게시글 불러오기 실패")
 	}
 	return feeds, nil
 }
