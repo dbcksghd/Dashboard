@@ -17,7 +17,7 @@ func NewFeedRepository(db *gorm.DB) *FeedRepository {
 }
 
 func (r *FeedRepository) CrateFeed(feed *entity.Feed) error {
-	result := r.db.Table("feed").Create(feed)
+	result := r.db.Table("feed").Create(&feed)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -34,11 +34,11 @@ func (r *FeedRepository) FindAllFeeds() (response.FeedResponse, error) {
 }
 
 func (r *FeedRepository) UpdateFeed(feed *entity.Feed, id int) error {
-	result := r.db.Table("feed").Find(feed, "id = ?", id)
+	result := r.db.Table("feed").Find(&feed, "id = ?", id)
 	if result.Error != nil {
 		return result.Error
 	}
-	result = r.db.Table("feed").Save(feed)
+	result = r.db.Table("feed").Save(&feed)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -47,11 +47,7 @@ func (r *FeedRepository) UpdateFeed(feed *entity.Feed, id int) error {
 
 func (r *FeedRepository) DeleteFeed(id int) error {
 	feed := entity.Feed{}
-	result := r.db.Table("feed").Find(&feed, "id = ?", id)
-	if result.Error != nil {
-		return result.Error
-	}
-	result = r.db.Table("feed").Delete(&feed)
+	result := r.db.Table("feed").Delete(&feed, "id = ?", id)
 	if result.Error != nil {
 		return result.Error
 	}
