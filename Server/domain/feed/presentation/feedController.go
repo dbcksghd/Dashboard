@@ -42,3 +42,20 @@ func (h *FeedController) UpdateFeed(c echo.Context) error {
 	}
 	return c.NoContent(201)
 }
+
+func (h *FeedController) DeleteFeed(c echo.Context) error {
+	reqId := c.QueryParam("id")
+	err := h.feedService.DeleteFeed(reqId)
+	if err != nil {
+		return c.JSON(500, map[string]string{"error": err.Error()})
+	}
+	return c.NoContent(201)
+}
+
+func (h *FeedController) FindAllFeeds(c echo.Context) error {
+	feeds, err := h.feedService.FindAllFeeds()
+	if err != nil {
+		return c.JSON(500, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(200, feeds)
+}
