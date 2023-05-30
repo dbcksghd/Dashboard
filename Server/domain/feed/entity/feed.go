@@ -13,6 +13,14 @@ func NewFeed(title, content string) *Feed {
 	}
 }
 
+func NewUpdateFeed(id int, title, content string) *Feed {
+	return &Feed{
+		Id:      id,
+		Title:   title,
+		Content: content,
+	}
+}
+
 func (f *Feed) Setter(feed *Feed) {
 	f.Title = feed.Title
 	f.Content = feed.Content
