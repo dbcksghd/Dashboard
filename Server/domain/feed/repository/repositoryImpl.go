@@ -2,14 +2,15 @@ package repository
 
 import (
 	"Server/domain/feed/entity"
-	"Server/domain/feed/presentation/dto/requset"
 	"Server/domain/feed/presentation/dto/response"
 	"gorm.io/gorm"
 )
 
-type FeedRepositoryImpl struct{}
+type FeedRepositoryImpl struct {
+	repository FeedRepository
+}
 
-func (receiver FeedRepositoryImpl) CrateFeed(feed *requset.CreateRequest, db *gorm.DB) error {
+func (receiver FeedRepositoryImpl) CrateFeed(feed *entity.Feed, db *gorm.DB) error {
 	result := db.Table("feed").Create(feed)
 	if result.Error != nil {
 		return result.Error
@@ -26,8 +27,8 @@ func (receiver FeedRepositoryImpl) FindAllFeeds(db *gorm.DB) (response.FeedRespo
 	return res, nil
 }
 
-func (receiver FeedRepositoryImpl) UpdateFeed(feed *requset.UpdateRequest, db *gorm.DB) error {
-	result := db.Table("feed").Find(feed, "id = ?", feed.Id)
+func (receiver FeedRepositoryImpl) UpdateFeed(feed *entity.Feed, id int, db *gorm.DB) error {
+	result := db.Table("feed").Find(feed, "id = ?", id)
 	if result.Error != nil {
 		return result.Error
 	}
