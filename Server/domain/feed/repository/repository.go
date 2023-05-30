@@ -32,9 +32,8 @@ func (r *FeedRepository) FindAllFeeds() (*[]entity.Feed, error) {
 	return &res, nil
 }
 
-func (r *FeedRepository) UpdateFeed(newFeed *entity.Feed, id int) error {
-	newFeed.Id = id
-	result := r.db.Table("feed").Save(newFeed)
+func (r *FeedRepository) UpdateFeed(newFeed *entity.Feed) error {
+	result := r.db.Table("feed").Where("id = ?", newFeed.Id).Save(newFeed)
 	if result.Error != nil {
 		return result.Error
 	}
