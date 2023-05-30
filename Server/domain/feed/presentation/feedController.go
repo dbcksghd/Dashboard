@@ -11,7 +11,7 @@ type FeedController struct {
 	feedService service.FeedService
 }
 
-func NewFeedHandler(feedService service.FeedService) *FeedController {
+func NewFeedController(feedService service.FeedService) *FeedController {
 	return &FeedController{
 		feedService: feedService,
 	}
