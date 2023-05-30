@@ -2,7 +2,7 @@ package repository
 
 import (
 	"Server/domain/feed/entity"
-	"Server/domain/feed/presentation/dto/response"
+	"fmt"
 	"gorm.io/gorm"
 )
 
@@ -24,12 +24,13 @@ func (r *FeedRepository) CrateFeed(feed *entity.Feed) error {
 	return nil
 }
 
-func (r *FeedRepository) FindAllFeeds() (response.FeedResponse, error) {
-	var res response.FeedResponse
+func (r *FeedRepository) FindAllFeeds() ([]entity.Feed, error) {
+	res := []entity.Feed{}
 	result := r.db.Table("feed").Find(&res)
 	if result.Error != nil {
 		return res, result.Error
 	}
+	fmt.Println(res)
 	return res, nil
 }
 
@@ -38,7 +39,7 @@ func (r *FeedRepository) UpdateFeed(feed *entity.Feed, id int) error {
 	if result.Error != nil {
 		return result.Error
 	}
-	result = r.db.Table("feed").Save(&feed)
+	result = r.db.Table("feed").Save(feed)
 	if result.Error != nil {
 		return result.Error
 	}
