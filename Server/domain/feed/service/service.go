@@ -7,7 +7,13 @@ import (
 )
 
 type FeedService struct {
-	repository repository.BoardRepository
+	repository repository.FeedRepository
+}
+
+func NewFeedService(repository repository.FeedRepository) *FeedService {
+	return &FeedService{
+		repository: repository,
+	}
 }
 
 func (f *FeedService) CreateFeed(feed *entity.Feed) error {

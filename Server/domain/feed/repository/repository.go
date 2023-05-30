@@ -6,11 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type BoardRepository struct {
+type FeedRepository struct {
 	db *gorm.DB
 }
 
-func (r *BoardRepository) CrateFeed(feed *entity.Feed) error {
+func NewFeedRepository(db *gorm.DB) *FeedRepository {
+	return &FeedRepository{
+		db: db,
+	}
+}
+
+func (r *FeedRepository) CrateFeed(feed *entity.Feed) error {
 	result := r.db.Table("feed").Create(feed)
 	if result.Error != nil {
 		return result.Error
@@ -18,7 +24,7 @@ func (r *BoardRepository) CrateFeed(feed *entity.Feed) error {
 	return nil
 }
 
-func (r *BoardRepository) FindAllFeeds() (response.FeedResponse, error) {
+func (r *FeedRepository) FindAllFeeds() (response.FeedResponse, error) {
 	var res response.FeedResponse
 	result := r.db.Table("feed").Find(&res)
 	if result.Error != nil {
@@ -27,7 +33,7 @@ func (r *BoardRepository) FindAllFeeds() (response.FeedResponse, error) {
 	return res, nil
 }
 
-func (r *BoardRepository) UpdateFeed(feed *entity.Feed, id int) error {
+func (r *FeedRepository) UpdateFeed(feed *entity.Feed, id int) error {
 	result := r.db.Table("feed").Find(feed, "id = ?", id)
 	if result.Error != nil {
 		return result.Error
@@ -39,7 +45,7 @@ func (r *BoardRepository) UpdateFeed(feed *entity.Feed, id int) error {
 	return nil
 }
 
-func (r *BoardRepository) DeleteFeed(id int) error {
+func (r *FeedRepository) DeleteFeed(id int) error {
 	feed := entity.Feed{}
 	result := r.db.Table("feed").Find(&feed, "id = ?", id)
 	if result.Error != nil {
