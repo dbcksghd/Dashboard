@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"Server/domain/feed/entity"
 	"Server/domain/feed/presentation/dto/requset"
 	"Server/domain/feed/service"
 	"github.com/labstack/echo/v4"
@@ -21,7 +22,8 @@ func (h *FeedHandler) CreateFeed(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
-	err := h.feedService.CreateFeed(req.Title, req.Content)
+	feed := entity.NewFeed(req.Title, req.Content)
+	err := h.feedService.CreateFeed(feed)
 	if err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
@@ -33,7 +35,8 @@ func (h *FeedHandler) UpdateFeed(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
-	err := h.feedService.UpdateFeed(req.Id, req.Title, req.Content)
+	feed := entity.NewFeed(req.Title, req.Content)
+	err := h.feedService.UpdateFeed(feed, req.Id)
 	if err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
