@@ -2,7 +2,7 @@ package repository
 
 import (
 	"Server/domain/feed/presentation/dto/requset"
-	"errors"
+	"Server/domain/feed/presentation/dto/response"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +11,16 @@ type FeedRepositoryImpl struct{}
 func (receiver FeedRepositoryImpl) CrateFeed(feed *requset.CreateRequest, db *gorm.DB) error {
 	result := db.Table("feed").Create(feed)
 	if result.Error != nil {
-		return errors.New(result.Error.Error())
+		return result.Error
 	}
 	return nil
+}
+
+func (receiver FeedRepositoryImpl) FindAllFeeds(db *gorm.DB) (response.FeedResponse, error) {
+	var res response.FeedResponse
+	result := db.Table("feed").Find(&res)
+	if result.Error != nil {
+		return res, result.Error
+	}
+	return res, nil
 }
