@@ -45,13 +45,13 @@ func (r *FeedRepository) UpdateFeed(feed *entity.Feed, id int) error {
 	return nil
 }
 
-func (r *FeedRepository) DeleteFeed(id string) error {
+func (r *FeedRepository) DeleteFeed(id int) error {
 	feed := entity.Feed{}
-	result := r.db.Table("feed").Find(&feed, "id = ?", id)
+	result := r.db.Table("feed").Find(feed, "id = ?", id)
 	if result.Error != nil {
 		return result.Error
 	}
-	result = r.db.Table("feed").Delete(&feed)
+	result = r.db.Table("feed").Delete(feed)
 	if result.Error != nil {
 		return result.Error
 	}

@@ -31,7 +31,7 @@ func (f *FeedService) UpdateFeed(feed *entity.Feed, id int) error {
 	return nil
 }
 
-func (f *FeedService) DeleteFeed(id string) error {
+func (f *FeedService) DeleteFeed(id int) error {
 	if err := f.repository.DeleteFeed(id); err != nil {
 		return errors.New("게시글 삭제 실패")
 	}
