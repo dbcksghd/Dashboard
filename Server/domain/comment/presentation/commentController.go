@@ -31,7 +31,7 @@ func (c *CommentController) CreateComment(ctx echo.Context) error {
 	return ctx.NoContent(201)
 }
 
-func (c *CommentController) name(ctx echo.Context) error {
+func (c *CommentController) FindAllCommentsInFeed(ctx echo.Context) error {
 	reqPostId, err := strconv.Atoi(ctx.QueryParam("postId"))
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
@@ -39,7 +39,7 @@ func (c *CommentController) name(ctx echo.Context) error {
 	if err := ctx.Bind(reqPostId); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
-	comments, err := c.commentService.FindAllFeedsInFeed(reqPostId)
+	comments, err := c.commentService.FindAllCommentsInFeed(reqPostId)
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}

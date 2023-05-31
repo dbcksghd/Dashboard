@@ -23,8 +23,8 @@ func (s *CommentService) CreateComment(comment *entity.Comment) error {
 	return nil
 }
 
-func (s *CommentService) FindAllFeedsInFeed(id int) (*[]entity.Comment, error) {
-	comments, err := s.repository.FindAllCommentInFeed(id)
+func (s *CommentService) FindAllCommentsInFeed(id int) (*[]entity.Comment, error) {
+	comments, err := s.repository.FindAllCommentsInFeed(id)
 	if err != nil {
 		return comments, errors.New("댓글 불러오기 실패")
 	}

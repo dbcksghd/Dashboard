@@ -23,7 +23,7 @@ func (r *CommentRepository) CreateComment(comment *entity.Comment) error {
 	return nil
 }
 
-func (r *CommentRepository) FindAllCommentInFeed(id int) (*[]entity.Comment, error) {
+func (r *CommentRepository) FindAllCommentsInFeed(id int) (*[]entity.Comment, error) {
 	res := []entity.Comment{}
 	result := r.db.Table("comment").Find(&res, "id = ?", id)
 	if result.Error != nil {
