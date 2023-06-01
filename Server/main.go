@@ -49,42 +49,6 @@ func main() {
 
 	feedHandler.FeedRoutes(e)
 	commentHandler.CommentRoutes(e)
-	//e.POST("/comment", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	requestBody := new(Comment)
-	//	if err = c.Bind(requestBody); err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	result := db.Table("comment").Create(&requestBody)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
-	//
-	//e.GET("/comment", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	var comments []Comment
-	//	postId := c.QueryParam("postId")
-	//	result := db.Table("comment").Find(&comments, "postId = ?", postId)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	if len(comments) == 0 {
-	//		return c.NoContent(204)
-	//	}
-	//	return c.JSON(200, comments)
-	//})
 	//
 	//e.POST("/sign-up", func(c echo.Context) error {
 	//	requestBody := new(User)
