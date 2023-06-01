@@ -7,6 +7,9 @@ import (
 	feedPresentation "Server/domain/feed/presentation"
 	feedRepository "Server/domain/feed/repository"
 	feedService "Server/domain/feed/service"
+	userPresentation "Server/domain/user/presentation"
+	userRepository "Server/domain/user/repository"
+	userService "Server/domain/user/service"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
@@ -45,10 +48,16 @@ func main() {
 	commentCont := commentPresentation.NewCommentController(*commentServ)
 	commentHandler := commentPresentation.NewCommentHandler(*commentCont)
 
+	userRepo := userRepository.NewUserRepository(db)
+	userServ := userService.NewUserService(*userRepo)
+	userCont := userPresentation.NewUserController(*userServ)
+	userHandler := userPresentation.NewUserHandler(*userCont)
+
 	e := echo.New()
 
 	feedHandler.FeedRoutes(e)
 	commentHandler.CommentRoutes(e)
+	userHandler.UserRoutes(e)
 	//
 	//e.POST("/sign-up", func(c echo.Context) error {
 	//	requestBody := new(User)
