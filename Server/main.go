@@ -18,12 +18,6 @@ import (
 	"os"
 )
 
-type User struct {
-	Id       string `json:"id"`
-	Password string `json:"password"`
-	Name     string `json:"name"`
-}
-
 type TokenClaims struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
