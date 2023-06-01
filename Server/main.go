@@ -1,9 +1,12 @@
 package main
 
 import (
-	"Server/domain/feed/presentation"
-	"Server/domain/feed/repository"
-	"Server/domain/feed/service"
+	commentPresentation "Server/domain/comment/presentation"
+	commentRepository "Server/domain/comment/repository"
+	commentService "Server/domain/comment/service"
+	feedPresentation "Server/domain/feed/presentation"
+	feedRepository "Server/domain/feed/repository"
+	feedService "Server/domain/feed/service"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
@@ -11,13 +14,6 @@ import (
 	"gorm.io/gorm"
 	"os"
 )
-
-type Comment struct {
-	Id        int    `json:"id"`
-	PostId    int    `gorm:"column:postId"`
-	WriteTime string `gorm:"column:writeTime"`
-	Comment   string `json:"comment"`
-}
 
 type User struct {
 	Id       string `json:"id"`
@@ -39,130 +35,20 @@ func main() {
 		panic(err)
 	}
 
-	feedRepository := repository.NewFeedRepository(db)
-	feedService := service.NewFeedService(*feedRepository)
-	feedController := presentation.NewFeedController(*feedService)
-	feedHandler := presentation.NewFeedHandler(*feedController)
+	feedRepo := feedRepository.NewFeedRepository(db)
+	feedServ := feedService.NewFeedService(*feedRepo)
+	feedCont := feedPresentation.NewFeedController(*feedServ)
+	feedHandler := feedPresentation.NewFeedHandler(*feedCont)
+
+	commentRepo := commentRepository.NewCommentRepository(db)
+	commentServ := commentService.NewCommentService(*commentRepo)
+	commentCont := commentPresentation.NewCommentController(*commentServ)
+	commentHandler := commentPresentation.NewCommentHandler(*commentCont)
 
 	e := echo.New()
 
-	feedHandler.RegisterRoutes(e)
-
-	//e.POST("/feed", func(c echo.Context) error {
-	//	requestBody := new(requset.CreateRequest)
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	if err = c.Bind(requestBody); err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	result := db.Table("feed").Create(&requestBody)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
-	//
-	//e.GET("/feed", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//
-	//	//rows, err := db.Query("select * from feed order by id desc ")
-	//	if err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	var feeds []requset.CreateRequest
-	//	result := db.Table("feed").Find(&feeds)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	if len(feeds) == 0 {
-	//		return c.NoContent(204)
-	//	}
-	//	return c.JSON(200, feeds)
-	//})
-	//
-	//e.PATCH("/feed", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	requestBody := new(requset.CreateRequest)
-	//	if err = c.Bind(requestBody); err != nil {
-	//		panic(err)
-	//	}
-	//	result := db.Table("feed").Save(&requestBody)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
-	//
-	//e.DELETE("/feed", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	id := c.QueryParam("id")
-	//	var feed requset.CreateRequest
-	//	result := db.Table("feed").Find(&feed, "id = ? ", id)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	result = db.Table("feed").Delete(&feed)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
-	//
-	//e.POST("/comment", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	requestBody := new(Comment)
-	//	if err = c.Bind(requestBody); err != nil {
-	//		return c.JSON(500, map[string]string{"error": err.Error()})
-	//	}
-	//	result := db.Table("comment").Create(&requestBody)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	return c.NoContent(201)
-	//})
-	//
-	//e.GET("/comment", func(c echo.Context) error {
-	//	//authToken := c.Request().Header.Get("Authorization")
-	//	//err = verifyToken(db, authToken)
-	//	//if err != nil {
-	//	//	fmt.Println(err)
-	//	//	return c.NoContent(401)
-	//	//}
-	//	var comments []Comment
-	//	postId := c.QueryParam("postId")
-	//	result := db.Table("comment").Find(&comments, "postId = ?", postId)
-	//	if result.Error != nil {
-	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
-	//	}
-	//	if len(comments) == 0 {
-	//		return c.NoContent(204)
-	//	}
-	//	return c.JSON(200, comments)
-	//})
+	feedHandler.FeedRoutes(e)
+	commentHandler.CommentRoutes(e)
 	//
 	//e.POST("/sign-up", func(c echo.Context) error {
 	//	requestBody := new(User)
