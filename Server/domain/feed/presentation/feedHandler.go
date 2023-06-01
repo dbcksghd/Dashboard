@@ -12,7 +12,7 @@ func NewFeedHandler(feedController FeedController) *FeedHandler {
 	}
 }
 
-func (f *FeedHandler) RegisterRoutes(e *echo.Echo) {
+func (f *FeedHandler) FeedRoutes(e *echo.Echo) {
 	e.POST("/feed", f.feedController.CreateFeed)
 	e.GET("/feed", f.feedController.FindAllFeeds)
 	e.PATCH("/feed", f.feedController.UpdateFeed)
