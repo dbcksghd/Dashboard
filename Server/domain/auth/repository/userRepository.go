@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"Server/domain/user/entity"
+	"Server/domain/auth/entity"
 	"errors"
 	"gorm.io/gorm"
 )
@@ -18,7 +18,7 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 
 func (r *UserRepository) SignIn(user *entity.User) error {
 	u := entity.User{}
-	result := r.db.Table("user").Where("id = ? and password = ?", user.Id, user.Password).Find(&u)
+	result := r.db.Table("auth").Where("id = ? and password = ?", user.Id, user.Password).Find(&u)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -29,7 +29,7 @@ func (r *UserRepository) SignIn(user *entity.User) error {
 }
 
 func (r *UserRepository) SignUp(user *entity.User) error {
-	result := r.db.Table("user").Create(&user)
+	result := r.db.Table("auth").Create(&user)
 	if result.Error != nil {
 		return result.Error
 	}

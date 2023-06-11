@@ -1,9 +1,9 @@
 package presentation
 
 import (
-	"Server/domain/user/entity"
-	"Server/domain/user/presentation/dto/request"
-	"Server/domain/user/service"
+	"Server/domain/auth/entity"
+	"Server/domain/auth/presentation/dto/request"
+	"Server/domain/auth/service"
 	"github.com/labstack/echo/v4"
 )
 

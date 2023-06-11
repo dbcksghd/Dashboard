@@ -13,6 +13,6 @@ func NewUserHandler(userController UserController) *UserHandler {
 }
 
 func (h *UserHandler) UserRoutes(e *echo.Echo) {
-	e.POST("/user/sign-in", h.userController.SignIn)
-	e.POST("/user/sign-up", h.userController.SignUp)
+	e.POST("/auth/sign-in", h.userController.SignIn)
+	e.POST("/auth/sign-up", h.userController.SignUp)
 }
