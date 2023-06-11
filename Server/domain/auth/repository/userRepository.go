@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"Server/domain/auth/entity"
+	"Server/domain/user/entity"
 	"errors"
 	"gorm.io/gorm"
 )

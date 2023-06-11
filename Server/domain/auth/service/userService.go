@@ -1,8 +1,8 @@
 package service
 
 import (
-	"Server/domain/auth/entity"
 	"Server/domain/auth/repository"
+	"Server/domain/user/entity"
 	"errors"
 )
 
