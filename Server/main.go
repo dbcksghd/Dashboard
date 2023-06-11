@@ -1,15 +1,15 @@
 package main
 
 import (
+	userPresentation "Server/domain/auth/presentation"
+	userRepository "Server/domain/auth/repository"
+	userService "Server/domain/auth/service"
 	commentPresentation "Server/domain/comment/presentation"
 	commentRepository "Server/domain/comment/repository"
 	commentService "Server/domain/comment/service"
 	feedPresentation "Server/domain/feed/presentation"
 	feedRepository "Server/domain/feed/repository"
 	feedService "Server/domain/feed/service"
-	userPresentation "Server/domain/user/presentation"
-	userRepository "Server/domain/user/repository"
-	userService "Server/domain/user/service"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
@@ -42,10 +42,10 @@ func main() {
 	commentCont := commentPresentation.NewCommentController(*commentServ)
 	commentHandler := commentPresentation.NewCommentHandler(*commentCont)
 
-	userRepo := userRepository.NewUserRepository(db)
+	userRepo := userRepository.NewAuthRepository(db)
 	userServ := userService.NewUserService(*userRepo)
-	userCont := userPresentation.NewUserController(*userServ)
-	userHandler := userPresentation.NewUserHandler(*userCont)
+	userCont := userPresentation.NewAuthController(*userServ)
+	userHandler := userPresentation.NewAuthHandler(*userCont)
 
 	e := echo.New()
 
@@ -71,7 +71,7 @@ func main() {
 	//	if err = c.Bind(requestBody); err != nil {
 	//		return c.JSON(500, map[string]string{"error": err.Error()})
 	//	}
-	//	result := db.Table("user").Find(&requestBody, "id = ? and password = ?", requestBody.Id, &requestBody.Password)
+	//	result := db.Table("auth").Find(&requestBody, "id = ? and password = ?", requestBody.Id, &requestBody.Password)
 	//	if result.Error != nil {
 	//		return c.JSON(500, map[string]string{"error": result.Error.Error()})
 	//	}
@@ -153,12 +153,12 @@ func main() {
 //	if !ok {
 //		return errors.New("토큰 파싱이 안됨")
 //	}
-//	var user User
-//	result := db.Table("user").Select("id").Where("id = ?", claims.Id).Find(&user)
+//	var auth User
+//	result := db.Table("auth").Select("id").Where("id = ?", claims.Id).Find(&auth)
 //	if result.Error != nil {
 //		return result.Error
 //	}
-//	if claims.Id != user.Id {
+//	if claims.Id != auth.Id {
 //		return errors.New("토큰 클레임 부분이 안맞는게 있음")
 //	}
 //	return nil

@@ -6,17 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserRepository struct {
+type AuthRepository struct {
 	db *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) *UserRepository {
-	return &UserRepository{
+func NewAuthRepository(db *gorm.DB) *AuthRepository {
+	return &AuthRepository{
 		db: db,
 	}
 }
 
-func (r *UserRepository) SignIn(user *entity.User) error {
+func (r *AuthRepository) SignIn(user *entity.User) error {
 	u := entity.User{}
 	result := r.db.Table("user").Where("id = ? and password = ?", user.Id, user.Password).Find(&u)
 	if result.Error != nil {
@@ -28,8 +28,8 @@ func (r *UserRepository) SignIn(user *entity.User) error {
 	return nil
 }
 
-func (r *UserRepository) SignUp(user *entity.User) error {
-	result := r.db.Table("user").Create(&user)
+func (r *AuthRepository) SignUp(user *entity.User) error {
+	result := r.db.Table("auth").Create(&user)
 	if result.Error != nil {
 		return result.Error
 	}
