@@ -2,17 +2,17 @@ package presentation
 
 import "github.com/labstack/echo/v4"
 
-type UserHandler struct {
-	userController UserController
+type AuthHandler struct {
+	authController AuthController
 }
 
-func NewUserHandler(userController UserController) *UserHandler {
-	return &UserHandler{
-		userController: userController,
+func NewAuthHandler(authController AuthController) *AuthHandler {
+	return &AuthHandler{
+		authController: authController,
 	}
 }
 
-func (h *UserHandler) UserRoutes(e *echo.Echo) {
-	e.POST("/auth/sign-in", h.userController.SignIn)
-	e.POST("/auth/sign-up", h.userController.SignUp)
+func (h *AuthHandler) UserRoutes(e *echo.Echo) {
+	e.POST("/auth/sign-in", h.authController.SignIn)
+	e.POST("/auth/sign-up", h.authController.SignUp)
 }

@@ -42,10 +42,10 @@ func main() {
 	commentCont := commentPresentation.NewCommentController(*commentServ)
 	commentHandler := commentPresentation.NewCommentHandler(*commentCont)
 
-	userRepo := userRepository.NewUserRepository(db)
+	userRepo := userRepository.NewAuthRepository(db)
 	userServ := userService.NewUserService(*userRepo)
-	userCont := userPresentation.NewUserController(*userServ)
-	userHandler := userPresentation.NewUserHandler(*userCont)
+	userCont := userPresentation.NewAuthController(*userServ)
+	userHandler := userPresentation.NewAuthHandler(*userCont)
 
 	e := echo.New()
 

@@ -7,36 +7,36 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type UserController struct {
-	userService service.UserService
+type AuthController struct {
+	authService service.AuthService
 }
 
-func NewUserController(userService service.UserService) *UserController {
-	return &UserController{
-		userService: userService,
+func NewAuthController(authService service.AuthService) *AuthController {
+	return &AuthController{
+		authService: authService,
 	}
 }
 
-func (c *UserController) SignIn(ctx echo.Context) error {
+func (c *AuthController) SignIn(ctx echo.Context) error {
 	req := new(request.SignInRequest)
 	if err := ctx.Bind(req); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
 	user := entity.User{Id: req.Id, Password: req.Password}
-	err := c.userService.SignIn(&user)
+	err := c.authService.SignIn(&user)
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
 	return ctx.NoContent(200)
 }
 
-func (c *UserController) SignUp(ctx echo.Context) error {
+func (c *AuthController) SignUp(ctx echo.Context) error {
 	req := new(request.SignUpRequest)
 	if err := ctx.Bind(req); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
 	user := entity.NewUser(req.Id, req.Password, req.Name)
-	err := c.userService.SignUp(user) //NewUser로 받아온 user는 주소값을 가지고 있음
+	err := c.authService.SignUp(user) //NewUser로 받아온 user는 주소값을 가지고 있음
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
