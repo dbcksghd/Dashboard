@@ -18,7 +18,7 @@ func NewAuthRepository(db *gorm.DB) *AuthRepository {
 
 func (r *AuthRepository) SignIn(user *entity.User) error {
 	u := entity.User{}
-	result := r.db.Table("auth").Where("id = ? and password = ?", user.Id, user.Password).Find(&u)
+	result := r.db.Table("user").Where("id = ? and password = ?", user.Id, user.Password).Find(&u)
 	if result.Error != nil {
 		return result.Error
 	}
