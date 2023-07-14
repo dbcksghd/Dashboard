@@ -21,14 +21,14 @@ func UpdateFeed(id int, title, content string) *Feed {
 	}
 }
 
-func (f Feed) getId() int {
+func (f *Feed) Id() int {
 	return f.id
 }
 
-func (f Feed) getTitle() string {
+func (f *Feed) Title() string {
 	return f.title
 }
 
-func (f Feed) getContent() string {
+func (f *Feed) Content() string {
 	return f.content
 }
