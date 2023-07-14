@@ -15,18 +15,18 @@ func NewComment(postId int, writeTime, comment string) *Comment {
 	}
 }
 
-func (c Comment) getId() int {
+func (c *Comment) Id() int {
 	return c.id
 }
 
-func (c Comment) getPostId() int {
+func (c *Comment) PostId() int {
 	return c.postId
 }
 
-func (c Comment) getWriteTime() string {
+func (c *Comment) WriteTime() string {
 	return c.writeTime
 }
 
-func (c Comment) getComment() string {
+func (c *Comment) Comment() string {
 	return c.comment
 }
