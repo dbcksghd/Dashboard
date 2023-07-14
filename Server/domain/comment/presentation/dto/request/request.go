@@ -1,7 +1,19 @@
 package request
 
 type CreateRequest struct {
-	PostId    int    `gorm:"column:postId"`
-	WriteTime string `gorm:"column:writeTime"`
-	Comment   string `json:"comment"`
+	postId    int    `gorm:"column:postId"`
+	writeTime string `gorm:"column:writeTime"`
+	comment   string `gorm:"column:comment"`
+}
+
+func (c *CreateRequest) PostId() int {
+	return c.postId
+}
+
+func (c *CreateRequest) WriteTime() string {
+	return c.writeTime
+}
+
+func (c *CreateRequest) Comment() string {
+	return c.comment
 }
