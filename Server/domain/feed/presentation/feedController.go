@@ -23,7 +23,7 @@ func (f *FeedController) CreateFeed(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
-	feed := entity.NewFeed(req.Title, req.Content)
+	feed := entity.NewFeed(req.Title(), req.Content())
 	err := f.feedService.CreateFeed(feed)
 	if err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
@@ -36,7 +36,7 @@ func (f *FeedController) UpdateFeed(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
-	feed := entity.UpdateFeed(req.Id, req.Title, req.Content)
+	feed := entity.UpdateFeed(req.Id(), req.Title(), req.Content())
 	err := f.feedService.UpdateFeed(feed)
 	if err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
