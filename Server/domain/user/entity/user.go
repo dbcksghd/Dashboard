@@ -1,15 +1,27 @@
 package entity
 
 type User struct {
-	Id       string `json:"id"`
-	Password string `json:"password"`
-	Name     string `json:"name"`
+	id       string `gorm:"column:id"`
+	password string `gorm:"column:password"`
+	name     string `gorm:"column:name"`
 }
 
 func NewUser(id, password, name string) *User {
 	return &User{
-		Id:       id,
-		Password: password,
-		Name:     name,
+		id:       id,
+		password: password,
+		name:     name,
 	}
+}
+
+func (u *User) Id() string {
+	return u.id
+}
+
+func (u *User) Password() string {
+	return u.password
+}
+
+func (u *User) Name() string {
+	return u.name
 }
