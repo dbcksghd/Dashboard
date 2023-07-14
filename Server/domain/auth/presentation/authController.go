@@ -22,7 +22,7 @@ func (c *AuthController) SignIn(ctx echo.Context) error {
 	if err := ctx.Bind(req); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
-	user := entity.User{Id: req.Id, Password: req.Password}
+	user := entity.NewUser(req.Id(), req.Password())
 	err := c.authService.SignIn(&user)
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
@@ -35,7 +35,7 @@ func (c *AuthController) SignUp(ctx echo.Context) error {
 	if err := ctx.Bind(req); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
-	user := entity.NewUser(req.Id, req.Password, req.Name)
+	user := entity.NewUser(req.Id(), req.Password(), req.Name())
 	err := c.authService.SignUp(user) //NewUser로 받아온 user는 주소값을 가지고 있음
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})

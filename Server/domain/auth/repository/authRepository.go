@@ -22,7 +22,7 @@ func (r *AuthRepository) SignIn(user *entity.User) error {
 	if result.Error != nil {
 		return result.Error
 	}
-	if u.Id == "" || u.Password == "" {
+	if u.Id() == "" || u.Password() == "" {
 		return errors.New("등록된 유저가 없음")
 	}
 	return nil
