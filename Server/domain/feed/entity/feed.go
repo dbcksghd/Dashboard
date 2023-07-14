@@ -13,6 +13,14 @@ func NewFeed(title, content string) *Feed {
 	}
 }
 
+func UpdateFeed(id int, title, content string) *Feed {
+	return &Feed{
+		id:      id,
+		title:   title,
+		content: content,
+	}
+}
+
 func (f Feed) getId() int {
 	return f.id
 }
