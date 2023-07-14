@@ -1,27 +1,26 @@
 package entity
 
 type Feed struct {
-	Id      int    `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	id      int    `gorm:"column:id"`
+	title   string `gorm:"column:title"`
+	content string `gorm:"column:content"`
 }
 
 func NewFeed(title, content string) *Feed {
 	return &Feed{
-		Title:   title,
-		Content: content,
+		title:   title,
+		content: content,
 	}
 }
 
-func NewUpdateFeed(id int, title, content string) *Feed {
-	return &Feed{
-		Id:      id,
-		Title:   title,
-		Content: content,
-	}
+func (f Feed) getId() int {
+	return f.id
 }
 
-func (f *Feed) Setter(feed *Feed) {
-	f.Title = feed.Title
-	f.Content = feed.Content
+func (f Feed) getTitle() string {
+	return f.title
+}
+
+func (f Feed) getContent() string {
+	return f.content
 }
