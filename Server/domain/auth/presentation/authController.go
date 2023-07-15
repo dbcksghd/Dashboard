@@ -19,19 +19,11 @@ func NewAuthController(authService service.AuthService) *AuthController {
 func (c *AuthController) SignIn(ctx echo.Context) error {
 	req := new(request.SignInRequest)
 	_ = ctx.Bind(req)
-	res := c.authService.SignIn(req)
-	if res.Message == "" {
-		return ctx.JSON(401, "넌 안돼 ㅋ")
-	}
-	return ctx.JSON(200, res)
+	return c.authService.SignIn(req, ctx)
 }
 
 func (c *AuthController) SignUp(ctx echo.Context) error {
 	req := new(request.SignUpRequest)
 	_ = ctx.Bind(req)
-	res := c.authService.SignUp(req)
-	if res != nil {
-		return ctx.JSON(500, "회원가입 실패")
-	}
-	return ctx.NoContent(201)
+	return c.authService.SignUp(req, ctx)
 }

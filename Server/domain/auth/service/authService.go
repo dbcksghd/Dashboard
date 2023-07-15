@@ -4,7 +4,8 @@ import (
 	"Server/domain/auth/presentation/dto/request"
 	"Server/domain/auth/presentation/dto/response"
 	"Server/domain/auth/repository"
-	"errors"
+	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
 type AuthService struct {
@@ -17,9 +18,9 @@ func NewUserService(authRepository repository.AuthRepository) *AuthService {
 	}
 }
 
-func (s *AuthService) SignIn(req *request.SignInRequest) response.SignInResponse {
+func (s *AuthService) SignIn(req *request.SignInRequest, c echo.Context) error {
 	if err := s.authRepository.SignIn(req); err != nil {
-		return response.SignInResponse{}
+		return c.JSON(http.StatusNotFound, err)
 	}
 	res := response.SignInResponse{
 		Message: "파싱 성공",
@@ -27,12 +28,12 @@ func (s *AuthService) SignIn(req *request.SignInRequest) response.SignInResponse
 			AccessToken: "accessToken", RefreshToken: "refreshToken",
 		},
 	}
-	return res
+	return c.JSON(200, res)
 }
 
-func (s *AuthService) SignUp(req *request.SignUpRequest) error {
+func (s *AuthService) SignUp(req *request.SignUpRequest, c echo.Context) error {
 	if err := s.authRepository.SignUp(req); err != nil {
-		return errors.New("회원가입 실패")
+		return c.JSON(404, map[string]string{"message": "회원가입 실패"})
 	}
-	return nil
+	return c.NoContent(201)
 }
