@@ -1,7 +1,7 @@
 package entity
 
 type Feed struct {
-	Id      int    `gorm:"column:id"`
-	Title   string `gorm:"column:title"`
-	Content string `gorm:"column:content"`
+	Id      int    `json:"id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
 }
