@@ -1,7 +1,6 @@
 package presentation
 
 import (
-	"Server/domain/comment/entity"
 	"Server/domain/comment/presentation/dto/request"
 	"Server/domain/comment/service"
 	"github.com/labstack/echo/v4"
@@ -20,28 +19,11 @@ func NewCommentController(commentService service.CommentService) *CommentControl
 
 func (c *CommentController) CreateComment(ctx echo.Context) error {
 	req := new(request.CreateRequest)
-	if err := ctx.Bind(req); err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	comment := entity.NewComment(req.PostId, req.WriteTime, req.Comment)
-	err := c.commentService.CreateComment(comment)
-	if err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return ctx.NoContent(201)
+	_ = ctx.Bind(req)
+	return c.commentService.CreateComment(req, ctx)
 }
 
 func (c *CommentController) FindAllCommentsInFeed(ctx echo.Context) error {
-	postId, err := strconv.Atoi(ctx.QueryParam("postId"))
-	if err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	comments, err := c.commentService.FindAllCommentsInFeed(postId)
-	if err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	if len(*comments) == 0 {
-		return ctx.NoContent(204)
-	}
-	return ctx.JSON(200, comments)
+	postId, _ := strconv.Atoi(ctx.QueryParam("postId"))
+	return c.commentService.FindAllCommentsInFeed(postId, ctx)
 }
