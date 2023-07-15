@@ -23,8 +23,8 @@ func (c *CommentController) CreateComment(ctx echo.Context) error {
 	if err := ctx.Bind(req); err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
-	comment := entity.NewComment(req.PostId, req.WriteTime, req.Comment)
-	err := c.commentService.CreateComment(comment)
+	comment := entity.Comment{PostId: req.PostId, WriteTime: req.WriteTime, Comment: req.Comment}
+	err := c.commentService.CreateComment(&comment)
 	if err != nil {
 		return ctx.JSON(500, map[string]string{"error": err.Error()})
 	}
