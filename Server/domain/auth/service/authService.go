@@ -1,8 +1,9 @@
 package service
 
 import (
+	"Server/domain/auth/presentation/dto/request"
+	"Server/domain/auth/presentation/dto/response"
 	"Server/domain/auth/repository"
-	"Server/domain/user/entity"
 	"errors"
 )
 
@@ -16,15 +17,21 @@ func NewUserService(authRepository repository.AuthRepository) *AuthService {
 	}
 }
 
-func (s *AuthService) SignIn(user *entity.User) error {
-	if err := s.authRepository.SignIn(user); err != nil {
-		return errors.New("로그인 실패")
+func (s *AuthService) SignIn(req *request.SignInRequest) response.SignInResponse {
+	if err := s.authRepository.SignIn(req); err != nil {
+		return response.SignInResponse{}
 	}
-	return nil
+	res := response.SignInResponse{
+		Message: "파싱 성공",
+		TokenResponse: response.TokenResponse{
+			AccessToken: "accessToken", RefreshToken: "refreshToken",
+		},
+	}
+	return res
 }
 
-func (s *AuthService) SignUp(user *entity.User) error {
-	if err := s.authRepository.SignUp(user); err != nil {
+func (s *AuthService) SignUp(req *request.SignUpRequest) error {
+	if err := s.authRepository.SignUp(req); err != nil {
 		return errors.New("회원가입 실패")
 	}
 	return nil

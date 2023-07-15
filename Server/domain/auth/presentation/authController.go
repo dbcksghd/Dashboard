@@ -3,7 +3,6 @@ package presentation
 import (
 	"Server/domain/auth/presentation/dto/request"
 	"Server/domain/auth/service"
-	"Server/domain/user/entity"
 	"github.com/labstack/echo/v4"
 )
 
@@ -19,26 +18,20 @@ func NewAuthController(authService service.AuthService) *AuthController {
 
 func (c *AuthController) SignIn(ctx echo.Context) error {
 	req := new(request.SignInRequest)
-	if err := ctx.Bind(req); err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
+	_ = ctx.Bind(req)
+	res := c.authService.SignIn(req)
+	if res.Message == "" {
+		return ctx.JSON(401, "넌 안돼 ㅋ")
 	}
-	user := entity.User{Id: req.Id, Password: req.Password}
-	err := c.authService.SignIn(&user)
-	if err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return ctx.NoContent(200)
+	return ctx.JSON(200, res)
 }
 
 func (c *AuthController) SignUp(ctx echo.Context) error {
 	req := new(request.SignUpRequest)
-	if err := ctx.Bind(req); err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
+	_ = ctx.Bind(req)
+	res := c.authService.SignUp(req)
+	if res != nil {
+		return ctx.JSON(500, "회원가입 실패")
 	}
-	user := entity.NewUser(req.Id, req.Password, req.Name)
-	err := c.authService.SignUp(user) //NewUser로 받아온 user는 주소값을 가지고 있음
-	if err != nil {
-		return ctx.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return ctx.NoContent(200)
+	return ctx.NoContent(201)
 }
