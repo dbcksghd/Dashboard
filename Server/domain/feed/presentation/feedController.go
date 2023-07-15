@@ -1,7 +1,6 @@
 package presentation
 
 import (
-	"Server/domain/feed/entity"
 	"Server/domain/feed/presentation/dto/requset"
 	"Server/domain/feed/service"
 	"github.com/labstack/echo/v4"
@@ -20,46 +19,21 @@ func NewFeedController(feedService service.FeedService) *FeedController {
 
 func (f *FeedController) CreateFeed(c echo.Context) error {
 	req := new(requset.CreateRequest)
-	if err := c.Bind(req); err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	feed := entity.NewFeed(req.Title(), req.Content())
-	err := f.feedService.CreateFeed(feed)
-	if err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return c.NoContent(201)
+	_ = c.Bind(req)
+	return f.feedService.CreateFeed(req, c)
 }
 
 func (f *FeedController) UpdateFeed(c echo.Context) error {
 	req := new(requset.UpdateRequest)
-	if err := c.Bind(req); err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	feed := entity.UpdateFeed(req.Id(), req.Title(), req.Content())
-	err := f.feedService.UpdateFeed(feed)
-	if err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return c.NoContent(201)
+	_ = c.Bind(req)
+	return f.feedService.UpdateFeed(req, c)
 }
 
 func (f *FeedController) DeleteFeed(c echo.Context) error {
-	reqId, err := strconv.Atoi(c.QueryParam("id"))
-	if err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	err = f.feedService.DeleteFeed(reqId)
-	if err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return c.NoContent(201)
+	reqId, _ := strconv.Atoi(c.QueryParam("id"))
+	return f.feedService.DeleteFeed(reqId, c)
 }
 
 func (f *FeedController) FindAllFeeds(c echo.Context) error {
-	feeds, err := f.feedService.FindAllFeeds()
-	if err != nil {
-		return c.JSON(500, map[string]string{"error": err.Error()})
-	}
-	return c.JSON(200, feeds)
+	return f.feedService.FindAllFeeds(c)
 }

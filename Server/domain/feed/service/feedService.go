@@ -2,8 +2,10 @@ package service
 
 import (
 	"Server/domain/feed/entity"
+	"Server/domain/feed/presentation/dto/requset"
 	"Server/domain/feed/repository"
-	"errors"
+	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
 type FeedService struct {
@@ -16,31 +18,33 @@ func NewFeedService(repository repository.FeedRepository) *FeedService {
 	}
 }
 
-func (f *FeedService) CreateFeed(feed *entity.Feed) error {
-	if err := f.repository.CrateFeed(feed); err != nil {
-		return errors.New("게시글 생성 실패")
+func (f *FeedService) CreateFeed(req *requset.CreateRequest, c echo.Context) error {
+	newFeed := entity.Feed{Title: req.Title, Content: req.Content}
+	if err := f.repository.CrateFeed(&newFeed); err != nil {
+		return c.JSON(http.StatusNotFound, "게시글 삭제 실패")
 	}
-	return nil
+	return c.NoContent(201)
 }
 
-func (f *FeedService) UpdateFeed(feed *entity.Feed) error {
-	if err := f.repository.UpdateFeed(feed); err != nil {
-		return errors.New("게시글 수정 실패")
+func (f *FeedService) UpdateFeed(req *requset.UpdateRequest, c echo.Context) error {
+	updateFeed := entity.Feed{Id: req.Id, Title: req.Title, Content: req.Content}
+	if err := f.repository.UpdateFeed(&updateFeed); err != nil {
+		return c.JSON(http.StatusNotFound, "게시글 수정 실패")
 	}
-	return nil
+	return c.NoContent(201)
 }
 
-func (f *FeedService) DeleteFeed(id int) error {
+func (f *FeedService) DeleteFeed(id int, c echo.Context) error {
 	if err := f.repository.DeleteFeed(id); err != nil {
-		return errors.New("게시글 삭제 실패")
+		return c.JSON(http.StatusNotFound, "게시글 삭제 실패")
 	}
-	return nil
+	return c.NoContent(201)
 }
 
-func (f *FeedService) FindAllFeeds() (*[]entity.Feed, error) {
+func (f *FeedService) FindAllFeeds(c echo.Context) error {
 	feeds, err := f.repository.FindAllFeeds()
 	if err != nil {
-		return feeds, errors.New("게시글 불러오기 실패")
+		return c.JSON(http.StatusNotFound, "게시글 불러오기 실패")
 	}
-	return feeds, nil
+	return c.JSON(200, feeds)
 }
