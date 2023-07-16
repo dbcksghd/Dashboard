@@ -31,7 +31,7 @@ func (s *CommentService) FindAllCommentsInFeed(postId int, c echo.Context) error
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "댓글 불러오기 실패"})
 	}
-	if len(*comments) == 0 {
+	if len(comments) == 0 {
 		return c.NoContent(204)
 	}
 	return c.JSON(http.StatusOK, comments)
