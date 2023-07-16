@@ -10,11 +10,10 @@ import (
 	feedPresentation "Server/domain/feed/presentation"
 	feedRepository "Server/domain/feed/repository"
 	feedService "Server/domain/feed/service"
+	"database/sql"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/labstack/echo/v4"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"os"
 )
 
@@ -27,10 +26,11 @@ type TokenClaims struct {
 func main() {
 	password := os.Getenv("PASSWORD")
 	dsn := "root:" + password + "@tcp(localhost:3306)/dashboard"
-	db, err := gorm.Open(mysql.Open(dsn))
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 
 	feedRepo := feedRepository.NewFeedRepository(db)
 	feedServ := feedService.NewFeedService(*feedRepo)

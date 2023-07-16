@@ -2,49 +2,55 @@ package repository
 
 import (
 	"Server/domain/feed/entity"
-	"gorm.io/gorm"
+	"database/sql"
+	"fmt"
 )
 
 type FeedRepository struct {
-	db *gorm.DB
+	db *sql.DB
 }
 
-func NewFeedRepository(db *gorm.DB) *FeedRepository {
+func NewFeedRepository(db *sql.DB) *FeedRepository {
 	return &FeedRepository{
 		db: db,
 	}
 }
 
 func (r *FeedRepository) CrateFeed(feed *entity.Feed) error {
-	result := r.db.Table("feed").Create(feed)
-	if result.Error != nil {
-		return result.Error
+	_, err := r.db.Exec("insert into feed(id, title, content) values (?, ?, ?)", feed.Id, feed.Title, feed.Content)
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
-func (r *FeedRepository) FindAllFeeds() (*[]entity.Feed, error) {
-	res := []entity.Feed{}
-	err := r.db.Table("feed").Find(&res)
-	if err.Error != nil {
-		return &res, err.Error
+func (r *FeedRepository) FindAllFeeds() (feeds []entity.Feed, err error) {
+	rows, err := r.db.Query("select * from feed")
+
+	if err != nil {
+		return nil, err
 	}
-	return &res, nil
+	for rows.Next() {
+		var feed entity.Feed
+		rows.Scan(&feed.Id, &feed.Title, &feed.Content)
+		feeds = append(feeds, feed)
+	}
+	return feeds, nil
 }
 
 func (r *FeedRepository) UpdateFeed(newFeed *entity.Feed) error {
-	result := r.db.Table("feed").Where("id = ?", newFeed.Id).Save(newFeed)
-	if result.Error != nil {
-		return result.Error
+	_, err := r.db.Exec("update feed set title = ?, content = ? where id = ?", newFeed.Title, newFeed.Content, newFeed.Id)
+	if err != nil {
+		fmt.Println(err)
+		return err
 	}
 	return nil
 }
 
 func (r *FeedRepository) DeleteFeed(id int) error {
-	feed := entity.Feed{}
-	result := r.db.Table("feed").Delete(&feed, "id = ?", id)
-	if result.Error != nil {
-		return result.Error
+	_, err := r.db.Exec("delete from feed where id = ?", id)
+	if err != nil {
+		return err
 	}
 	return nil
 }
