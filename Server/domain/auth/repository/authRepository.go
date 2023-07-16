@@ -3,15 +3,15 @@ package repository
 import (
 	"Server/domain/auth/presentation/dto/request"
 	"Server/domain/user/entity"
+	"database/sql"
 	"errors"
-	"gorm.io/gorm"
 )
 
 type AuthRepository struct {
-	db *gorm.DB
+	db *sql.DB
 }
 
-func NewAuthRepository(db *gorm.DB) *AuthRepository {
+func NewAuthRepository(db *sql.DB) *AuthRepository {
 	return &AuthRepository{
 		db: db,
 	}

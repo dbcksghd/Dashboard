@@ -2,14 +2,14 @@ package repository
 
 import (
 	"Server/domain/feed/entity"
-	"gorm.io/gorm"
+	"database/sql"
 )
 
 type FeedRepository struct {
-	db *gorm.DB
+	db *sql.DB
 }
 
-func NewFeedRepository(db *gorm.DB) *FeedRepository {
+func NewFeedRepository(db *sql.DB) *FeedRepository {
 	return &FeedRepository{
 		db: db,
 	}

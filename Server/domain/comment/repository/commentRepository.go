@@ -2,14 +2,14 @@ package repository
 
 import (
 	"Server/domain/comment/entity"
-	"gorm.io/gorm"
+	"database/sql"
 )
 
 type CommentRepository struct {
-	db *gorm.DB
+	db *sql.DB
 }
 
-func NewCommentRepository(db *gorm.DB) *CommentRepository {
+func NewCommentRepository(db *sql.DB) *CommentRepository {
 	return &CommentRepository{
 		db: db,
 	}
