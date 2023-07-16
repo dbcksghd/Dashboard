@@ -16,18 +16,22 @@ func NewCommentRepository(db *sql.DB) *CommentRepository {
 }
 
 func (r *CommentRepository) CreateComment(comment *entity.Comment) error {
-	result := r.db.Table("comment").Create(comment)
-	if result.Error != nil {
-		return result.Error
+	_, err := r.db.Exec("insert into comment(postId, comment, writeTime) values (?, ?, ?)", comment.PostId, comment.Comment, comment.WriteTime)
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
-func (r *CommentRepository) FindAllCommentsInFeed(postId int) (*[]entity.Comment, error) {
-	res := []entity.Comment{}
-	result := r.db.Table("comment").Find(&res, "postId = ?", postId)
-	if result.Error != nil {
-		return &res, result.Error
+func (r *CommentRepository) FindAllCommentsInFeed(postId int) (comments []entity.Comment, err error) {
+	rows, err := r.db.Query("select * from comment where postId = ?", postId)
+	if err != nil {
+		return nil, err
 	}
-	return &res, nil
+	for rows.Next() {
+		var comment entity.Comment
+		rows.Scan(&comment.Id, &comment.PostId, &comment.Comment, &comment.WriteTime)
+		comments = append(comments, comment)
+	}
+	return comments, nil
 }
