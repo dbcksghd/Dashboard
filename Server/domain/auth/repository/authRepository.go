@@ -19,9 +19,9 @@ func NewAuthRepository(db *sql.DB) *AuthRepository {
 
 func (r *AuthRepository) SignIn(req *request.SignInRequest) error {
 	u := entity.User{}
-	result := r.db.Table("user").Where("id = ? and password = ?", req.Id, req.Password).Find(&u)
-	if result.Error != nil {
-		return result.Error
+	err := r.db.QueryRow("select * from user where id = ? and password = ?", req.Id, req.Password).Scan(&u.Id, &u.Password, &u.Name)
+	if err != nil {
+		return err
 	}
 	if u.Id == "" || u.Password == "" {
 		return errors.New("등록된 유저가 없음")
@@ -30,9 +30,9 @@ func (r *AuthRepository) SignIn(req *request.SignInRequest) error {
 }
 
 func (r *AuthRepository) SignUp(req *request.SignUpRequest) error {
-	result := r.db.Table("auth").Create(&req)
-	if result.Error != nil {
-		return result.Error
+	_, err := r.db.Exec("insert into user(id, password, name) values (?, ?, ?)", req.Id, req.Password, req.Name)
+	if err != nil {
+		return err
 	}
 	return nil
 }
