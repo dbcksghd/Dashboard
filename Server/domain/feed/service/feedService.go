@@ -21,7 +21,7 @@ func NewFeedService(repository repository.FeedRepository) *FeedService {
 func (f *FeedService) CreateFeed(req *requset.CreateRequest, c echo.Context) error {
 	newFeed := entity.Feed{Title: req.Title, Content: req.Content}
 	if err := f.repository.CrateFeed(&newFeed); err != nil {
-		return c.JSON(http.StatusNotFound, "게시글 삭제 실패")
+		return c.JSON(http.StatusNotFound, "게시글 생성 실패")
 	}
 	return c.NoContent(201)
 }
