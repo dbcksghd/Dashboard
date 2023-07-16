@@ -10,6 +10,7 @@ import (
 	feedPresentation "Server/domain/feed/presentation"
 	feedRepository "Server/domain/feed/repository"
 	feedService "Server/domain/feed/service"
+	"Server/route"
 	"database/sql"
 	"github.com/dgrijalva/jwt-go/v4"
 	_ "github.com/go-sql-driver/mysql"
@@ -35,23 +36,20 @@ func main() {
 	feedRepo := feedRepository.NewFeedRepository(db)
 	feedServ := feedService.NewFeedService(*feedRepo)
 	feedCont := feedPresentation.NewFeedController(*feedServ)
-	feedHandler := feedPresentation.NewFeedHandler(*feedCont)
 
 	commentRepo := commentRepository.NewCommentRepository(db)
 	commentServ := commentService.NewCommentService(*commentRepo)
 	commentCont := commentPresentation.NewCommentController(*commentServ)
-	commentHandler := commentPresentation.NewCommentHandler(*commentCont)
 
 	userRepo := userRepository.NewAuthRepository(db)
 	userServ := userService.NewUserService(*userRepo)
 	userCont := userPresentation.NewAuthController(*userServ)
-	userHandler := userPresentation.NewAuthHandler(*userCont)
 
 	e := echo.New()
-
-	feedHandler.FeedRoutes(e)
-	commentHandler.CommentRoutes(e)
-	userHandler.UserRoutes(e)
+	route.NewRouter(*userCont, *feedCont, *commentCont).Routes(e)
+	//feedHandler.FeedRoutes(e)
+	//commentHandler.CommentRoutes(e)
+	//userHandler.UserRoutes(e)
 	//
 	//e.POST("/sign-up", func(c echo.Context) error {
 	//	requestBody := new(User)
