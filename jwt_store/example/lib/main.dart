@@ -1,61 +1,54 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:jwt_store/jwt_store.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _jwtStorePlugin = JwtStore();
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _jwtStorePlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
+class _MyHomePageState extends State<MyHomePage> {
+  final JwtStore _jwtStore = JwtStore();
+  String? accessToken;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+    return Scaffold(
+      body: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(accessToken ?? "공백"),
+            Center(
+              child: MaterialButton(
+                onPressed: () async {
+                  // await _jwtStore.save(
+                  //     properties: JwtStoreProperties.accessToken,
+                  //     token: "asdfsdfs");
+                  accessToken = await _jwtStore.load(
+                      properties: JwtStoreProperties.accessToken);
+                  setState(() {});
+                },
+                child: Text("버튼"),
+              ),
+            ),
+          ],
         ),
       ),
     );
