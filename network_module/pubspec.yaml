@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   dio: ^5.3.3
+  jwt_store:
+    path: ../jwt_store
   flutter:
     sdk: flutter
 
