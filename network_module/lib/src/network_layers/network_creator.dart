@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:jwt_store/jwt_store.dart';
 import 'package:network_module/src/request_options.dart';
 
 enum JWTTokenType { accessToken, refreshToken, none }
