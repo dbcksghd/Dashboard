@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:jwt_store/jwt_store.dart';
 import 'package:network_module/src/request_options.dart';
@@ -7,34 +5,26 @@ import 'package:network_module/src/request_options.dart';
 enum JWTTokenType { accessToken, refreshToken, none }
 
 class NetworkCreator {
+  static var shared = NetworkCreator();
   final Dio _client = Dio();
-  final JWTTokenType _jwtTokenType;
-  final DioRequestOptions _requestOptions;
   final JwtStore _jwtStore = JwtStore();
 
-  NetworkCreator(
+  Future<Response> request(
       {required JWTTokenType jwtTokenType,
-      required DioRequestOptions requestOptions})
-      : _jwtTokenType = jwtTokenType,
-        _requestOptions = requestOptions;
-
-  Future<Response> request() {
-    switch (_jwtTokenType) {
+      required DioRequestOptions requestOptions}) {
+    switch (jwtTokenType) {
       case JWTTokenType.accessToken:
       case JWTTokenType.refreshToken:
         _client.options.headers['Authorization'] =
             'Bearer ${_jwtStore.load(properties: JwtStoreProperties.accessToken)}';
-        break;
       case JWTTokenType.none:
-        break;
     }
     return _client.fetch(RequestOptions(
-      baseUrl: "https://naver.com",
-      path: _requestOptions.path,
-      method: _requestOptions.httpMethod.name,
-      data: jsonEncode(_requestOptions.body),
-      headers: _requestOptions.headers,
-      queryParameters: _requestOptions.queryParam,
+      baseUrl: requestOptions.path,
+      method: requestOptions.httpMethod.name,
+      data: requestOptions.body,
+      headers: requestOptions.headers,
+      queryParameters: requestOptions.queryParam,
       sendTimeout: const Duration(seconds: 3),
       receiveTimeout: const Duration(seconds: 3),
     ));
