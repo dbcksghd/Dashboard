@@ -8,5 +8,5 @@ class RepositoryImpl implements Repository {
   RepositoryImpl({required DataSource dataSource}) : _dataSource = dataSource;
 
   @override
-  Future<TestEntity> getTest() => _dataSource.getTest();
+  Future<TestEntity> getTest() async => _dataSource.getTest();
 }
