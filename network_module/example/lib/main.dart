@@ -1,63 +1,46 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:network_module_example/di/di.dart';
+import 'package:network_module_example/presentation/view.dart';
+import 'package:provider/provider.dart';
 
-import 'package:flutter/services.dart';
-import 'package:network_module/network_module.dart';
+void main() => runApp(MultiProvider(providers: di(), child: const MyApp()));
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _networkModulePlugin = NetworkModule();
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _networkModulePlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: TestView(),
     );
   }
 }
+
+/*class Test extends BaseNetworkDTO {
+  late int userId;
+  late int id;
+  late String title;
+  late bool completed;
+
+  Test();
+
+  factory Test.fromJson(Map<String, dynamic> json) => Test()
+    ..userId = json['userId']
+    ..id = json['id']
+    ..title = json['title']
+    ..completed = json['completed'];
+
+  @override
+  Test fromJson(Map<String, dynamic> json) => Test.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['id'] = id;
+    data['title'] = title;
+    data['completed'] = completed;
+    return data;
+  }
+}*/
