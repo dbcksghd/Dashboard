@@ -1,5 +1,9 @@
-abstract class BaseNetworkDTO<T> {
-  T fromJson(Map<String, dynamic> json);
+abstract class BaseRequestDTO {
+  Map<String, dynamic> toJson();
+}
 
-  List<T> toJson();
+abstract class BaseResponseDTO<E> {
+  fromJson(Map<String, dynamic> json);
+
+  E toEntity();
 }
