@@ -4,11 +4,16 @@ import 'package:network_module/src/network_layers/network_decoder.dart';
 import 'package:network_module/src/request_options.dart';
 
 class NetworkExecuter {
+  String baseUrl;
+
+  NetworkExecuter({required this.baseUrl});
+
   Future<T> execute<T extends BaseResponseDTO>(
       {required DioRequestOptions options,
       required BaseResponseDTO responseType,
       JWTTokenType? jwtTokenType}) async {
     var response = await NetworkCreator.shared.request(
+        baseUrl: baseUrl,
         jwtTokenType: jwtTokenType ?? JWTTokenType.none,
         requestOptions: options);
     var data = NetworkDecoder.decodeHelper.decode<T>(

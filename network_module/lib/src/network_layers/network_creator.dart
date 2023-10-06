@@ -11,7 +11,8 @@ class NetworkCreator {
 
   Future<Response> request(
       {required JWTTokenType jwtTokenType,
-      required DioRequestOptions requestOptions}) {
+      required DioRequestOptions requestOptions,
+      required String baseUrl}) {
     switch (jwtTokenType) {
       case JWTTokenType.accessToken:
       case JWTTokenType.refreshToken:
@@ -20,7 +21,7 @@ class NetworkCreator {
       case JWTTokenType.none:
     }
     return _client.fetch(RequestOptions(
-      baseUrl: requestOptions.path,
+      baseUrl: baseUrl + requestOptions.path,
       method: requestOptions.httpMethod.name,
       data: requestOptions.body,
       headers: requestOptions.headers,
