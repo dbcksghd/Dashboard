@@ -3,9 +3,8 @@ import 'package:network_module/src/http_method.dart';
 class DioRequestOptions {
   String path;
   HTTPMethod httpMethod;
-  dynamic body;
   void Function(int, int)? onReceiveProgress;
-  Map<String, dynamic>? queryParam, headers;
+  Map<String, dynamic>? queryParam, headers, body;
 
   DioRequestOptions(
       {required this.path,
