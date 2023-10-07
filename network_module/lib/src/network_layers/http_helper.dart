@@ -1,5 +1,5 @@
 import 'package:network_module/src/base_network_dto.dart';
-import 'package:network_module/src/network_layers/network_creator.dart';
+import 'package:network_module/src/network_layers/network.dart';
 import 'package:network_module/src/network_layers/network_decoder.dart';
 import 'package:network_module/src/request_options.dart';
 

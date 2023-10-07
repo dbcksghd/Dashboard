@@ -8,8 +8,7 @@ import 'package:provider/provider.dart';
 
 List<ChangeNotifierProvider> di() {
   DataSource dataSource = DataSource(
-      executer:
-          NetworkExecuter(baseUrl: "https://jsonplaceholder.typicode.com"));
+      httpHelper: HttpHelper(baseUrl: "https://jsonplaceholder.typicode.com"));
   Repository repository = RepositoryImpl(dataSource: dataSource);
   UseCase useCase = UseCase(repository: repository);
   return [
