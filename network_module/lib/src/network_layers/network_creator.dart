@@ -4,8 +4,8 @@ import 'package:network_module/src/request_options.dart';
 
 enum JWTTokenType { accessToken, refreshToken, none }
 
-class NetworkCreator {
-  static var shared = NetworkCreator();
+class Network {
+  static final network = Network();
   final Dio _client = Dio();
   final JwtStore _jwtStore = JwtStore();
 
