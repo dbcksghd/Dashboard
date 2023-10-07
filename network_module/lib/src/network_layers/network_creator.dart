@@ -21,7 +21,8 @@ class NetworkCreator {
       case JWTTokenType.none:
     }
     return _client.fetch(RequestOptions(
-      baseUrl: baseUrl + requestOptions.path,
+      baseUrl: baseUrl,
+      path: requestOptions.path ?? '',
       method: requestOptions.httpMethod.name,
       data: requestOptions.body,
       headers: requestOptions.headers,
