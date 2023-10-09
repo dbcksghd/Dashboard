@@ -3,11 +3,12 @@ import 'package:network_module/src/dio_request_options.dart';
 import 'package:network_module/src/interceptor.dart';
 import 'package:network_module/src/network_layers/network.dart';
 import 'package:network_module/src/network_layers/network_decoder.dart';
+import 'package:network_module/src/result.dart';
 
 class HttpHelper {
   List<Interceptor> interceptor = List.empty(growable: true);
 
-  Future<T> network<T extends BaseResponseDTO>(
+  Future<Result<T>> network<T extends BaseResponseDTO>(
       {required DioRequestOptions options,
       required BaseResponseDTO responseType}) async {
     try {
@@ -22,12 +23,12 @@ class HttpHelper {
         response: response,
         responseType: responseType,
       );
-      return decodeData;
+      return Result.success(decodeData);
     } catch (error) {
       for (var e in interceptor) {
         e.onError(error);
       }
-      throw Exception(error);
+      return Result.error(Exception(error.toString()));
     }
   }
 }
