@@ -25,7 +25,7 @@ class HttpHelper {
       return decodeData;
     } catch (error) {
       for (var e in interceptor) {
-        e.onError(error as Error);
+        e.onError(error);
       }
       throw Exception(error);
     }
