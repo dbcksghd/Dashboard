@@ -1,16 +1,17 @@
 abstract class Result<T> {
-  factory Result.success(T data) = Success;
-  factory Result.error(Exception e) = Error;
+  factory Result.success(T data) = _Success;
+
+  factory Result.error(Exception e) = _Error;
 }
 
-class Success<T> implements Result<T> {
+class _Success<T> implements Result<T> {
   final T data;
 
-  Success(this.data);
+  _Success(this.data);
 }
 
-class Error<T> implements Result<T> {
+class _Error<T> implements Result<T> {
   final Exception e;
 
-  Error(this.e);
+  _Error(this.e);
 }
