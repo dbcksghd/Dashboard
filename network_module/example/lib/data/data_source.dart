@@ -8,9 +8,9 @@ class DataSource {
   DataSource({required HttpHelper httpHelper}) : _httpHelper = httpHelper;
 
   Future<TestEntity> getTest() async {
-    final res = await _httpHelper.execute<Test>(
+    final res = await _httpHelper.network<Test>(
         options:
-            DioRequestOptions(path: "/todos/1", httpMethod: HTTPMethod.get),
+            DioRequestOptions(baseUrl: "https://jsonplaceholder.typicode.com/todos/1", httpMethod: HTTPMethod.get),
         responseType: Test());
     return res.toEntity();
   }
