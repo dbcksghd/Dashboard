@@ -8,7 +8,7 @@ import 'package:network_module/src/result.dart';
 class HttpHelper {
   List<Interceptor> interceptor = List.empty(growable: true);
 
-  Future<Result<T>> network<T extends BaseResponseDTO>(
+  Future<Result<T, Exception>> network<T extends BaseResponseDTO>(
       {required DioRequestOptions options,
       required BaseResponseDTO responseType}) async {
     try {
@@ -23,12 +23,12 @@ class HttpHelper {
         response: response,
         responseType: responseType,
       );
-      return Result.success(decodeData);
+      return Success(value: decodeData);
     } catch (error) {
       for (var e in interceptor) {
         e.onError(error);
       }
-      return Result.error(Exception(error.toString()));
+      return Failure(exception: Exception(error));
     }
   }
 }
