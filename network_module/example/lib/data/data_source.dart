@@ -13,11 +13,9 @@ class DataSource {
             baseUrl: "https://jsonplaceholder.typicode.com/todos/1",
             httpMethod: HTTPMethod.get),
         responseType: Test());
-    switch (res) {
-      case Success(value: final value):
-        return Success(value: value.toEntity());
-      case Failure(exception: final e):
-        return Failure(exception: e);
-    }
+    return switch (res) {
+      Success(value: final value) => Success(value: value.toEntity()),
+      Failure(exception: final e) => Failure(exception: e),
+    };
   }
 }
