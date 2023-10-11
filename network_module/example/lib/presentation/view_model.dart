@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:network_module/network_module.dart';
 import 'package:network_module_example/domain/entity.dart';
 import 'package:network_module_example/domain/use_case.dart';
 
@@ -14,7 +15,11 @@ class ViewModel extends ChangeNotifier {
 
   void changeEntity() async {
     final response = await _useCase.execute();
-    _entity = response;
+    switch (response) {
+      case Success(value: final value):
+        _entity = value;
+      default:
+    }
     notifyListeners();
   }
 }
