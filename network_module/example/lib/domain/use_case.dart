@@ -1,3 +1,4 @@
+import 'package:network_module/network_module.dart';
 import 'package:network_module_example/domain/entity.dart';
 import 'package:network_module_example/domain/repository.dart';
 
@@ -6,5 +7,6 @@ class UseCase {
 
   UseCase({required Repository repository}) : _repository = repository;
 
-  Future<TestEntity> execute() async => _repository.getTest();
+  Future<Result<TestEntity, Exception>> execute() async =>
+      _repository.getTest();
 }

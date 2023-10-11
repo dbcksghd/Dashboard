@@ -1,28 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:jwt_store/jwt_store.dart';
-import 'package:network_module/src/request_options.dart';
-
-enum JWTTokenType { accessToken, refreshToken, none }
+import 'package:network_module/src/dio_request_options.dart';
 
 class Network {
   static final network = Network();
   final Dio _client = Dio();
-  final JwtStore _jwtStore = JwtStore();
 
-  Future<Response> request(
-      {required JWTTokenType jwtTokenType,
-      required DioRequestOptions requestOptions,
-      required String baseUrl}) {
-    switch (jwtTokenType) {
-      case JWTTokenType.accessToken:
-      case JWTTokenType.refreshToken:
-        _client.options.headers['Authorization'] =
-            'Bearer ${_jwtStore.load(properties: JwtStoreProperties.accessToken)}';
-      case JWTTokenType.none:
-    }
+  Future<Response> request({required DioRequestOptions requestOptions}) {
     return _client.fetch(RequestOptions(
-      baseUrl: baseUrl,
-      path: requestOptions.path ?? '',
+      baseUrl: requestOptions.baseUrl,
       method: requestOptions.httpMethod.name,
       data: requestOptions.body,
       headers: requestOptions.headers,
