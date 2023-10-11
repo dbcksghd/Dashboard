@@ -1,17 +1,15 @@
-abstract class Result<T> {
-  factory Result.success(T data) = _Success;
-
-  factory Result.error(Exception e) = _Error;
+sealed class Result<S, E extends Exception> {
+  const Result();
 }
 
-class _Success<T> implements Result<T> {
-  final T data;
+final class Success<S, E extends Exception> extends Result<S, E> {
+  final S value;
 
-  _Success(this.data);
+  const Success({required this.value});
 }
 
-class _Error<T> implements Result<T> {
-  final Exception e;
+final class Failure<S, E extends Exception> extends Result<S, E> {
+  final E exception;
 
-  _Error(this.e);
+  const Failure({required this.exception});
 }
