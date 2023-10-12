@@ -1,7 +1,7 @@
 name: network_module
 description: A new Flutter project.
 version: 0.0.1
-homepage:
+homepage: 'https://github.com/dbcksghd/Dashboard/tree/main/network_module'
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
