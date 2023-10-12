@@ -38,6 +38,8 @@ dependencies:
   provider: ^6.0.5
   http: ^0.13.6
   flutter_secure_storage: ^8.0.0
+  network_module:
+    path: ../network_module
 
 dev_dependencies:
   flutter_test:
