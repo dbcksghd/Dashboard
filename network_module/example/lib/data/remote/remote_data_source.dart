@@ -2,10 +2,10 @@ import 'package:network_module/network_module.dart';
 import 'package:network_module_example/data/response_dto.dart';
 import 'package:network_module_example/domain/entity.dart';
 
-class DataSource {
+class RemoteDataSource {
   final HttpHelper _httpHelper;
 
-  DataSource({required HttpHelper httpHelper}) : _httpHelper = httpHelper;
+  RemoteDataSource({required HttpHelper httpHelper}) : _httpHelper = httpHelper;
 
   Future<Result<TestEntity, Exception>> getTest() async {
     final res = await _httpHelper.network<Test>(
