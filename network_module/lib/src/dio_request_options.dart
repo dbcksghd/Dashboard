@@ -1,15 +1,13 @@
 import 'package:network_module/src/http_method.dart';
 
-class DioRequestOptions {
-  String baseUrl;
-  HTTPMethod httpMethod;
-  Map<String, dynamic>? queryParam, body;
-  Map<String, String>? headers;
+abstract class DioRequestOptions {
+  String get baseUrl;
 
-  DioRequestOptions(
-      {required this.baseUrl,
-      required this.httpMethod,
-      this.body,
-      this.queryParam,
-      this.headers});
+  HTTPMethod get httpMethod;
+
+  Map<String, dynamic>? get queryParam;
+
+  Map<String, dynamic>? get body;
+
+  Map<String, String>? get headers;
 }
