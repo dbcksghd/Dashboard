@@ -17,10 +17,14 @@ class _TestViewState extends State<TestView> {
     provider = Provider.of<ViewModel>(context);
     return Scaffold(
       body: Center(
-        child: provider.entity.title == ""
-            ? const CircularProgressIndicator()
-            : Text(provider.entity.title.toString()),
-      ),
+          child: provider.entityList.isNotEmpty
+              ? ListView.builder(
+                  itemCount: provider.entityList.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(provider.entityList[index].title),
+                  ),
+                )
+              : const CircularProgressIndicator()),
     );
   }
 }
