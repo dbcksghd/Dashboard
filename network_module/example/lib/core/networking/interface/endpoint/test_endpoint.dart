@@ -7,7 +7,7 @@ mixin TestEndpoint implements DioRequestOptions {
   Map<int, Error> get errorMap;
 
   @override
-  String get baseUrl => "https://jsonplaceholder.typicode.com/${domain.name}/1";
+  String get baseUrl => "https://jsonplaceholder.typicode.com/${domain.name}";
 
   Map<String, String> get headers => {'Content-Type': 'application/json'};
 }
