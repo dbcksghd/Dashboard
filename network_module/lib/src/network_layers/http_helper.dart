@@ -14,7 +14,7 @@ class HttpHelper {
       for (var e in interceptor) {
         e.onRequest(options);
       }
-      final response = await Network.network.request(requestOptions: options);
+      final response = await Network.network.request(options: options);
       for (var e in interceptor) {
         e.onResponse(response);
       }
