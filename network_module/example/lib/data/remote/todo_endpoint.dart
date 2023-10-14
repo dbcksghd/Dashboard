@@ -1,6 +1,5 @@
 import 'package:network_module/network_module.dart';
 import 'package:network_module_example/core/networking/interface/endpoint/test_endpoint.dart';
-import 'package:network_module_example/core/networking/interface/endpoint/test_rest_api_domain.dart';
 
 enum TodoEndpoint with TestEndpoint {
   todos();
@@ -10,7 +9,7 @@ enum TodoEndpoint with TestEndpoint {
   const TodoEndpoint({this.baseRequestDTO});
 
   @override
-  TestRestAPIDomain get domain => TestRestAPIDomain.todos;
+  String get domain => switch (this) { todos => "todos" };
 
   @override
   HTTPMethod get httpMethod => switch (this) { todos => HTTPMethod.get };
