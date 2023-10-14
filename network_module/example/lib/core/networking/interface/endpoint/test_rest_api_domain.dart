@@ -1,0 +1,1 @@
+enum TestRestAPIDomain { todos }
