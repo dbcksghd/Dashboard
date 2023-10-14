@@ -7,6 +7,6 @@ class UseCase {
 
   UseCase({required Repository repository}) : _repository = repository;
 
-  Future<Result<TestEntity, Exception>> execute() async =>
+  Future<Result<List<TestEntity>, Exception>> execute() async =>
       _repository.getTest();
 }
