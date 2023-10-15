@@ -1,6 +1,6 @@
 import 'package:network_module/src/http_method.dart';
 
-mixin DioRequestOptions {
+abstract class DioRequestOptions {
   String get baseUrl;
 
   HTTPMethod get httpMethod;
