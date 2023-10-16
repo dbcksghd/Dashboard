@@ -4,10 +4,6 @@ import 'package:network_module_example/core/networking/interface/endpoint/test_e
 enum TodoEndpoint with TestEndpoint {
   todos();
 
-  final BaseRequestDTO? baseRequestDTO;
-
-  const TodoEndpoint({this.baseRequestDTO});
-
   @override
   String get domain => switch (this) { todos => "todos" };
 
@@ -16,10 +12,6 @@ enum TodoEndpoint with TestEndpoint {
 
   @override
   Map<int, Error> get errorMap => switch (this) { todos => {404: Error()} };
-
-  @override
-  Map<String, String> get headers =>
-      switch (this) { todos => {'Content-Type': 'application/json'} };
 
   @override
   Map<String, dynamic> get body => {};
