@@ -11,7 +11,8 @@ enum TodoEndpoint with TestEndpoint {
   HTTPMethod get httpMethod => switch (this) { todos => HTTPMethod.get };
 
   @override
-  Map<int, Error> get errorMap => switch (this) { todos => {404: Error()} };
+  Map<int, Exception> get errorMap =>
+      switch (this) { todos => {404: Exception()} };
 
   @override
   Map<String, dynamic> get body => {};

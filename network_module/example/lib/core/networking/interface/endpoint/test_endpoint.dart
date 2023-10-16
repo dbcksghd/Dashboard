@@ -4,7 +4,7 @@ import 'package:network_module_example/core/networking/interface/endpoint/test_r
 mixin TestEndpoint implements DioRequestOptions {
   String get domain;
 
-  Map<int, Error> get errorMap;
+  Map<int, Exception> get errorMap;
 
   @override
   String get baseUrl => "https://jsonplaceholder.typicode.com/${domain}";
