@@ -8,9 +8,9 @@ class NetworkDecoder {
       {required Response<dynamic> response, required T responseType}) {
     try {
       if (response.data is List) {
-        var list = response.data as List;
-        return List<T>.from(
-            list.map((item) => responseType.fromJson(item)).toList()) as K;
+        return (response.data as List)
+            .map((item) => responseType.fromJson(item))
+            .toList() as K;
       } else {
         return responseType.fromJson(response.data) as K;
       }
