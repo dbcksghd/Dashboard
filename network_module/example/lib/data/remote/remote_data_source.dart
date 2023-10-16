@@ -9,12 +9,11 @@ class RemoteDataSource {
 
   RemoteDataSource({required this.networking});
 
-  Future<Result<List<TestEntity>, Exception>> getTest() async {
-    final res = await networking.request<Test, List<Test>>(
-        options: TodoEndpoint.todos, responseType: Test());
+  Future<Result<TestEntity, Exception>> getTest() async {
+    final res = await networking.request<Test, Test>(
+        options: TodoEndpoint.todos(id: 1), responseType: Test());
     return switch (res) {
-      Success(value: final value) =>
-        Success(value: value.map((e) => e.toEntity()).toList()),
+      Success(value: final value) => Success(value: value.toEntity()),
       Failure(exception: final e) => Failure(exception: e),
     };
   }
