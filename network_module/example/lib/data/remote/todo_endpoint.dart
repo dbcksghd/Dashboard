@@ -1,22 +1,29 @@
 import 'package:network_module/network_module.dart';
 import 'package:network_module_example/core/networking/interface/endpoint/test_endpoint.dart';
 
-enum TodoEndpoint with TestEndpoint {
-  todos();
+sealed class TodoEndpoint extends TestEndpoint {
+  TodoEndpoint();
+
+  factory TodoEndpoint.todos({required int id}) = Todos;
 
   @override
-  String get domain => switch (this) { todos => "todos" };
+  Map<String, dynamic>? get body => {};
 
   @override
-  HTTPMethod get httpMethod => switch (this) { todos => HTTPMethod.get };
+  String get domain => switch (this) { Todos(id: final id) => "todos/$id" };
 
   @override
-  Map<int, Exception> get errorMap =>
-      switch (this) { todos => {404: Exception()} };
+  Map<int, Exception> get errorMap => {};
 
   @override
-  Map<String, dynamic> get body => {};
+  HTTPMethod get httpMethod => switch (this) { Todos() => HTTPMethod.get };
 
   @override
-  Map<String, dynamic> get queryParam => {};
+  Map<String, dynamic>? get queryParam => {};
+}
+
+final class Todos extends TodoEndpoint {
+  int id;
+
+  Todos({required this.id});
 }
