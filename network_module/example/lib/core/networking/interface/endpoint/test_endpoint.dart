@@ -9,5 +9,6 @@ mixin TestEndpoint implements DioRequestOptions {
   @override
   String get baseUrl => "https://jsonplaceholder.typicode.com/${domain}";
 
+  @override
   Map<String, String> get headers => {'Content-Type': 'application/json'};
 }
