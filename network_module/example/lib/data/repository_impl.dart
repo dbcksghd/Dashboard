@@ -10,6 +10,6 @@ class RepositoryImpl implements Repository {
       : _dataSource = dataSource;
 
   @override
-  Future<Result<List<TestEntity>, Exception>> getTest() async =>
+  Future<Result<TestEntity, Exception>> getTest() async =>
       _dataSource.getTest();
 }

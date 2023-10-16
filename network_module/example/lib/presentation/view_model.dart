@@ -4,10 +4,10 @@ import 'package:network_module_example/domain/entity.dart';
 import 'package:network_module_example/domain/use_case.dart';
 
 class ViewModel extends ChangeNotifier {
-  List<TestEntity> _entity = List.empty(growable: true);
+  TestEntity _entity = TestEntity(title: "");
   final UseCase _useCase;
 
-  List<TestEntity> get entityList => _entity;
+  TestEntity get entityList => _entity;
 
   ViewModel({required UseCase useCase}) : _useCase = useCase {
     changeEntity();
