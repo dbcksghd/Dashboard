@@ -1,3 +1,4 @@
+import 'package:client/core/network/interface/endpoint/dasboard_rest_api_domain.dart';
 import 'package:client/core/network/interface/endpoint/dashboard_endpoint.dart';
 import 'package:client/core/network/interface/interceptor/jwt/jwt_authorizable.dart';
 import 'package:client/data/dto/request/auth/sign_in_request_dto.dart';
@@ -14,6 +15,9 @@ sealed class AuthEndpoint extends DashboardEndpoint {
 
   @override
   Map<int, Error> get errorMap => switch (this) { SignIn() => {} };
+
+  @override
+  DashboardRestAPIDomain get domain => DashboardRestAPIDomain.auth;
 
   @override
   HTTPMethod get httpMethod => switch (this) { SignIn() => HTTPMethod.post };
