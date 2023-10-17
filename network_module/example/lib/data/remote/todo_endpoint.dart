@@ -7,10 +7,10 @@ sealed class TodoEndpoint extends TestEndpoint {
   factory TodoEndpoint.todos({required int id}) = Todos;
 
   @override
-  Map<String, dynamic>? get body => {};
+  BaseRequestDTO? get body => switch (this) { Todos() => null };
 
   @override
-  String get domain => switch (this) { Todos(id: final id) => "todos/$id" };
+  String get path => switch (this) { Todos(id: final id) => "todos/$id" };
 
   @override
   Map<int, Exception> get errorMap => {};
