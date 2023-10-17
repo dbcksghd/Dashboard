@@ -1,5 +1,5 @@
 enum JwtTokenType { accessToken, refreshToken, none }
 
-abstract class JwtAuthorizable {
+abstract interface class JwtAuthorizable {
   JwtTokenType get jwtTokenType;
 }
