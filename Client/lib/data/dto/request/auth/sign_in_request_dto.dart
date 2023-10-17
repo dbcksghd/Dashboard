@@ -1,6 +1,6 @@
 import 'package:network_module/network_module.dart';
 
-class SignInRequestDTO extends BaseRequestDTO {
+final class SignInRequestDTO extends BaseRequestDTO {
   late String id;
   late String password;
 
