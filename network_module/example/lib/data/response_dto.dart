@@ -1,7 +1,7 @@
 import 'package:network_module/network_module.dart';
 import 'package:network_module_example/domain/entity.dart';
 
-class Test extends BaseResponseDTO<TestEntity> {
+final class Test extends BaseResponseDTO<TestEntity> {
   late int userId;
   late int id;
   late String title;
