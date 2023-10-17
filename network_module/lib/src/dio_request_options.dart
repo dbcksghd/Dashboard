@@ -1,3 +1,4 @@
+import 'package:network_module/src/base_network_dto.dart';
 import 'package:network_module/src/http_method.dart';
 
 abstract class DioRequestOptions {
@@ -7,7 +8,7 @@ abstract class DioRequestOptions {
 
   Map<String, dynamic>? get queryParam;
 
-  Map<String, dynamic>? get body;
+  BaseRequestDTO? get body;
 
   Map<String, String>? get headers;
 }
