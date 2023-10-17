@@ -12,6 +12,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Result<SignInEntity, Exception>> signIn(
-          SignInRequestDTO signInRequestDTO) =>
-      _remoteDataSource.signIn(signInRequestDTO);
+          SignInRequestDTO signInRequestDTO) async =>
+      await _remoteDataSource.signIn(signInRequestDTO);
 }

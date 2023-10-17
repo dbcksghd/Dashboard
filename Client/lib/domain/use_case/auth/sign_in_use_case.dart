@@ -10,6 +10,6 @@ class SignInUseCase {
       : _authRepository = authRepository;
 
   Future<Result<SignInEntity, Exception>> execute(
-          SignInRequestDTO signInRequestDTO) =>
-      _authRepository.signIn(signInRequestDTO);
+          SignInRequestDTO signInRequestDTO) async =>
+      await _authRepository.signIn(signInRequestDTO);
 }
