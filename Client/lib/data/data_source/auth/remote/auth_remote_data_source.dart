@@ -2,7 +2,7 @@ import 'package:client/core/network/interface/network.dart';
 import 'package:client/data/data_source/auth/remote/auth_endpoint.dart';
 import 'package:client/data/dto/request/auth/sign_in_request_dto.dart';
 import 'package:client/data/dto/response/auth/sign_in_response_dto.dart';
-import 'package:client/domain/entity/auth/sign_in_entity.dart';
+import 'package:client/domain/entity/auth/jwt_token_entity.dart';
 import 'package:network_module/network_module.dart';
 
 class AuthRemoteDataSource {
@@ -11,7 +11,7 @@ class AuthRemoteDataSource {
   AuthRemoteDataSource({required Networking networking})
       : _networking = networking;
 
-  Future<Result<SignInEntity, Exception>> signIn(
+  Future<Result<JwtTokenEntity, Exception>> signIn(
       SignInRequestDTO signInRequestDTO) async {
     final response =
         await _networking.request<SignInResponseDTO, SignInResponseDTO>(

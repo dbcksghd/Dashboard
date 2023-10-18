@@ -1,6 +1,6 @@
-class SignInEntity {
+class JwtTokenEntity {
   String accessToken;
   String refreshToken;
 
-  SignInEntity({required this.accessToken, required this.refreshToken});
+  JwtTokenEntity({required this.accessToken, required this.refreshToken});
 }
