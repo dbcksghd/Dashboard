@@ -1,8 +1,7 @@
 import 'package:client/core/network/interface/endpoint/dasboard_rest_api_domain.dart';
-import 'package:client/core/network/interface/interceptor/jwt/jwt_authorizable.dart';
-import 'package:network_module/network_module.dart';
+import 'package:client/core/network/interface/endpoint/dashboard_request_options.dart';
 
-abstract class DashboardEndpoint implements DioRequestOptions, JwtAuthorizable {
+abstract class DashboardEndpoint extends DashboardRequestOptions {
   String get path;
 
   DashboardRestAPIDomain get domain;
