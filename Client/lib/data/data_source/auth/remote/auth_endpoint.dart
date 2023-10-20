@@ -1,6 +1,6 @@
 import 'package:client/core/network/interface/endpoint/dasboard_rest_api_domain.dart';
 import 'package:client/core/network/interface/endpoint/dashboard_endpoint.dart';
-import 'package:client/core/network/interface/interceptor/jwt/jwt_authorizable.dart';
+import 'package:client/core/network/interface/interceptor/jwt/jwt_token_type.dart';
 import 'package:client/data/dto/request/auth/sign_in_request_dto.dart';
 import 'package:network_module/network_module.dart';
 
