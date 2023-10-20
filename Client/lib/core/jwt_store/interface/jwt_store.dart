@@ -4,7 +4,7 @@ abstract interface class JwtStore {
   Future<void> save(
       {required JwtStoreProperties properties, required String token});
 
-  Future<String?> load({required JwtStoreProperties properties});
+  Future<String> load({required JwtStoreProperties properties});
 
   Future<void> delete(JwtStoreProperties properties);
 }
