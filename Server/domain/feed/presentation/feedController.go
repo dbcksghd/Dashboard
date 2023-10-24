@@ -18,13 +18,13 @@ func NewFeedController(feedService service.FeedService) *FeedController {
 }
 
 func (f *FeedController) CreateFeed(c echo.Context) error {
-	req := new(requset.CreateRequest)
+	req := new(requset.CreateFeedRequest)
 	_ = c.Bind(req)
 	return f.feedService.CreateFeed(req, c)
 }
 
 func (f *FeedController) UpdateFeed(c echo.Context) error {
-	req := new(requset.UpdateRequest)
+	req := new(requset.UpdateFeedRequest)
 	_ = c.Bind(req)
 	return f.feedService.UpdateFeed(req, c)
 }
