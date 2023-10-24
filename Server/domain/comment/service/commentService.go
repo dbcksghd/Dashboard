@@ -18,8 +18,8 @@ func NewCommentService(repository repository.CommentRepository) *CommentService 
 	}
 }
 
-func (s *CommentService) CreateComment(req *request.CreateRequest, c echo.Context) error {
-	comment := entity.Comment{PostId: req.PostId, WriteTime: req.WriteTime, Comment: req.Comment}
+func (s *CommentService) CreateComment(req *request.CreateCommentRequest, c echo.Context) error {
+	comment := entity.Comment{FeedId: req.FeedId, WriteTime: req.WriteTime, Comment: req.Content}
 	if err := s.repository.CreateComment(&comment); err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "댓글 생성 실패"})
 	}

@@ -18,7 +18,7 @@ func NewCommentController(commentService service.CommentService) *CommentControl
 }
 
 func (c *CommentController) CreateComment(ctx echo.Context) error {
-	req := new(request.CreateRequest)
+	req := new(request.CreateCommentRequest)
 	_ = ctx.Bind(req)
 	return c.commentService.CreateComment(req, ctx)
 }

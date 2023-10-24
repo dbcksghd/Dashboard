@@ -17,7 +17,7 @@ func NewFeedRepository(db *sql.DB) *FeedRepository {
 }
 
 func (r *FeedRepository) CrateFeed(feed *entity.Feed) error {
-	_, err := r.db.Exec("insert into feed(id, title, content) values (?, ?, ?)", feed.Id, feed.Title, feed.Content)
+	_, err := r.db.Exec("insert into feed(id, title, content) values (?, ?, ?)", feed.FeedId, feed.Title, feed.Content)
 	if err != nil {
 		return err
 	}
@@ -32,14 +32,14 @@ func (r *FeedRepository) FindAllFeeds() (feeds []entity.Feed, err error) {
 	}
 	for rows.Next() {
 		var feed entity.Feed
-		rows.Scan(&feed.Id, &feed.Title, &feed.Content)
+		rows.Scan(&feed.FeedId, &feed.Title, &feed.Content)
 		feeds = append(feeds, feed)
 	}
 	return feeds, nil
 }
 
 func (r *FeedRepository) UpdateFeed(newFeed *entity.Feed) error {
-	_, err := r.db.Exec("update feed set title = ?, content = ? where id = ?", newFeed.Title, newFeed.Content, newFeed.Id)
+	_, err := r.db.Exec("update feed set title = ?, content = ? where id = ?", newFeed.Title, newFeed.Content, newFeed.FeedId)
 	if err != nil {
 		fmt.Println(err)
 		return err

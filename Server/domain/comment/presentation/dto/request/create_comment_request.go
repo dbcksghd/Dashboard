@@ -1,4 +1,4 @@
-package requset
+package request
 
 type CreateCommentRequest struct {
 	FeedId    int    `gorm:"column:feedId"`

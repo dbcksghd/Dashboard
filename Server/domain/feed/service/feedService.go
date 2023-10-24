@@ -18,7 +18,7 @@ func NewFeedService(repository repository.FeedRepository) *FeedService {
 	}
 }
 
-func (f *FeedService) CreateFeed(req *requset.CreateRequest, c echo.Context) error {
+func (f *FeedService) CreateFeed(req *requset.CreateFeedRequest, c echo.Context) error {
 	newFeed := entity.Feed{Title: req.Title, Content: req.Content}
 	if err := f.repository.CrateFeed(&newFeed); err != nil {
 		return c.JSON(http.StatusNotFound, "게시글 생성 실패")
@@ -26,8 +26,8 @@ func (f *FeedService) CreateFeed(req *requset.CreateRequest, c echo.Context) err
 	return c.NoContent(201)
 }
 
-func (f *FeedService) UpdateFeed(req *requset.UpdateRequest, c echo.Context) error {
-	updateFeed := entity.Feed{Id: req.Id, Title: req.Title, Content: req.Content}
+func (f *FeedService) UpdateFeed(req *requset.UpdateFeedRequest, c echo.Context) error {
+	updateFeed := entity.Feed{FeedId: req.Id, Title: req.Title, Content: req.Content}
 	if err := f.repository.UpdateFeed(&updateFeed); err != nil {
 		return c.JSON(http.StatusNotFound, "게시글 수정 실패")
 	}
