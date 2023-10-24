@@ -1,7 +1,7 @@
 package requset
 
 type CreateCommentRequest struct {
-	PostId    int    `gorm:"column:postId"`
+	FeedId    int    `gorm:"column:feedId"`
 	WriteTime string `gorm:"column:writeTime"`
-	Comment   string `gorm:"column:comment"`
+	Content   string `gorm:"column:content"`
 }
