@@ -20,8 +20,8 @@ class JWTInterceptor extends Interceptor<DashboardRequestOptions> {
   }
 
   @override
-  void onResponse(Response response) async {
-    if (response.data['access_token'] != null) {
+  void onResponse(Response<dynamic> response) async {
+    if (response.data is! List && response.data['access_token'] != null) {
       await _jwtStore.save(
           properties: JwtStoreProperties.accessToken,
           token: response.data['access_token']);
