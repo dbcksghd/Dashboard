@@ -23,7 +23,7 @@ sealed class FeedEndpoint extends DashboardEndpoint {
 
   @override
   JwtTokenType get jwtTokenType =>
-      switch (this) { GetAllFeeds() => JwtTokenType.none };
+      switch (this) { GetAllFeeds() => JwtTokenType.accessToken };
 
   @override
   String get path => switch (this) { GetAllFeeds() => "/feed" };
