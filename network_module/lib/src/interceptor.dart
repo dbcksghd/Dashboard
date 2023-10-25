@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:network_module/src/dio_request_options.dart';
+import 'package:network_module/network_module.dart';
 
-abstract class Interceptor {
-  void onRequest(DioRequestOptions options);
+abstract class Interceptor<T extends DioRequestOptions> {
+  void onRequest(T options);
 
   void onResponse(Response<dynamic> response);
 
