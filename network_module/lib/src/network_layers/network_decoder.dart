@@ -15,7 +15,7 @@ class NetworkDecoder {
         return responseType.fromJson(response.data) as K;
       }
     } catch (e) {
-      rethrow;
+      throw Exception(e);
     }
   }
 }
