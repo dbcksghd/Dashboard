@@ -24,7 +24,7 @@ class NetworkingImpl implements Networking {
       return Success(value: decodeData);
     } catch (error) {
       for (var e in interceptor) {
-        e.onError(error);
+        await e.onError(error);
       }
       return Failure(exception: Exception(error));
     }
