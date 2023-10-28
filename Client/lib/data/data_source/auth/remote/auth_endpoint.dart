@@ -11,7 +11,9 @@ sealed class AuthEndpoint extends DashboardEndpoint {
       SignIn;
 
   @override
-  BaseRequestDTO? get body => switch (this) { SignIn() => SignInRequestDTO() };
+  BaseRequestDTO? get body => switch (this) {
+        SignIn(signInRequestDTO: final signInRequestDTO) => signInRequestDTO,
+      };
 
   @override
   Map<int, Error> get errorMap => switch (this) { SignIn() => {} };
