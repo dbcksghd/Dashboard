@@ -9,18 +9,18 @@ class JWTInterceptor extends Interceptor<DashboardRequestOptions> {
   JWTInterceptor({required JwtStore jwtStore}) : _jwtStore = jwtStore;
 
   @override
-  void onRequest(DashboardRequestOptions options) async {
+  Future<void> onRequest(DashboardRequestOptions options) async {
     if (JwtStoreProperties.accessToken.name == options.jwtTokenType.name) {
       String accessToken =
           await _jwtStore.load(properties: JwtStoreProperties.accessToken);
       if (accessToken.isNotEmpty) {
-        options.headers!['Authorization'] = "Bearer $accessToken";
+        options.headers["Authorization"] = "Bearer $accessToken";
       }
     }
   }
 
   @override
-  void onResponse(Response<dynamic> response) async {
+  Future<void> onResponse(Response<dynamic> response) async {
     if (response.data is! List && response.data['access_token'] != null) {
       await _jwtStore.save(
           properties: JwtStoreProperties.accessToken,
@@ -32,5 +32,5 @@ class JWTInterceptor extends Interceptor<DashboardRequestOptions> {
   }
 
   @override
-  void onError(Object error) {}
+  Future<void> onError(Object error) async {}
 }
