@@ -29,7 +29,7 @@ sealed class FeedEndpoint extends DashboardEndpoint {
   String get path => switch (this) { GetAllFeeds() => "/feed" };
 
   @override
-  Map<String, dynamic>? get queryParam => {};
+  Map<String, dynamic> get queryParam => {};
 }
 
 final class GetAllFeeds extends FeedEndpoint {}
