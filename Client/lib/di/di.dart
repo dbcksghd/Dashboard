@@ -9,15 +9,13 @@ import 'package:client/domain/repository/feed_repository.dart';
 import 'package:client/domain/use_case/feed/get_all_feeds_use_case.dart';
 import 'package:client/presentation/feed_page/feed_page_view_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:network_module/network_module.dart';
 import 'package:provider/provider.dart';
 
 List<ChangeNotifierProvider> di() {
   FlutterSecureStorage storage = const FlutterSecureStorage();
   JwtStore jwtStore = JwtStoreImpl(storage: storage);
-  HttpHelper httpHelper = HttpHelper()
+  Networking networking = NetworkingImpl()
     ..interceptor.add(JWTInterceptor(jwtStore: jwtStore));
-  Networking networking = NetworkingImpl(httpHelper: httpHelper);
   RemoteFeedDataSource remoteFeedDataSource =
       RemoteFeedDataSource(networking: networking);
   FeedRepository feedRepository =
