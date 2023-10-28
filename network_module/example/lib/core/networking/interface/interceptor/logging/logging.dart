@@ -3,18 +3,16 @@ import 'package:network_module/network_module.dart';
 class LoggingInterceptor extends Interceptor {
 
   @override
-  void onRequest(DioRequestOptions options) {
+  Future<void> onRequest(DioRequestOptions options) async {
     print(options.baseUrl);
   }
 
   @override
-  void onResponse(Response<dynamic> response) {
+  Future<void> onResponse(Response<dynamic> response) async {
     print(response.data);
   }
 
   @override
-  void onError(Object error) {
-    // TODO: implement onError
-  }
+  Future<void> onError(Object error) async {}
 
 }

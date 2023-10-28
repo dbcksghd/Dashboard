@@ -1,4 +1,3 @@
-import 'package:network_module/network_module.dart';
 import 'package:network_module_example/core/networking/interface/interceptor/logging/logging.dart';
 import 'package:network_module_example/core/networking/interface/networking.dart';
 import 'package:network_module_example/core/networking/source/networking_impl.dart';
@@ -10,9 +9,8 @@ import 'package:network_module_example/presentation/view_model.dart';
 import 'package:provider/provider.dart';
 
 List<ChangeNotifierProvider> di() {
-  HttpHelper httpHelper = HttpHelper();
-  httpHelper.interceptor.add(LoggingInterceptor());
-  Networking networking = NetworkingImpl(httpHelper: httpHelper);
+  Networking networking = NetworkingImpl()
+    ..interceptor.add(LoggingInterceptor());
   RemoteDataSource dataSource = RemoteDataSource(networking: networking);
   Repository repository = RepositoryImpl(dataSource: dataSource);
   UseCase useCase = UseCase(repository: repository);

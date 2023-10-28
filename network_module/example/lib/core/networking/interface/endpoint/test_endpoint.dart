@@ -10,5 +10,5 @@ abstract class TestEndpoint extends DioRequestOptions {
   String get baseUrl => "https://jsonplaceholder.typicode.com/${path}";
 
   @override
-  Map<String, String> get headers => {'Content-Type': 'application/json'};
+  Map<String, String> headers = {'Content-Type': 'application/json'};
 }
