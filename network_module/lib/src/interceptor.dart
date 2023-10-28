@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:network_module/network_module.dart';
 
 abstract class Interceptor<T extends DioRequestOptions> {
-  void onRequest(T options);
+  Future<void> onRequest(T options);
 
-  void onResponse(Response<dynamic> response);
+  Future<void> onResponse(Response<dynamic> response);
 
-  void onError(Object error);
+  Future<void> onError(Object error);
 }
