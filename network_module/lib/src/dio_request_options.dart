@@ -10,5 +10,5 @@ abstract class DioRequestOptions {
 
   BaseRequestDTO? get body;
 
-  Map<String, String>? get headers;
+  Map<String, String> headers = {};
 }
