@@ -29,4 +29,24 @@ class NetworkingImpl implements Networking {
       return Failure(exception: Exception(error));
     }
   }
+
+  @override
+  Future<Result<void, Exception>> noResponseRequest(
+      {required DashboardRequestOptions options}) async {
+    try {
+      for (var e in interceptor) {
+        await e.onRequest(options);
+      }
+      final response = await Network.network.request(options: options);
+      for (var e in interceptor) {
+        await e.onResponse(response);
+      }
+      return const Success(value: null);
+    } catch (error) {
+      for (var e in interceptor) {
+        await e.onError(error);
+      }
+      return Failure(exception: Exception(error));
+    }
+  }
 }
