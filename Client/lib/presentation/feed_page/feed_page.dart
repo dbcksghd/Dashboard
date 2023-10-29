@@ -1,6 +1,6 @@
-import 'package:client/View/Screen/write_page.dart';
 import 'package:client/View/Widget/custom_post_widget.dart';
 import 'package:client/presentation/feed_page/feed_page_view_model.dart';
+import 'package:client/presentation/feed_page/write_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,9 +26,9 @@ class FeedPage extends StatelessWidget {
                     return Column(
                       children: [
                         CustomPostWidget(
-                          id: viewModel.feedList[index].feedId.toInt(),
-                          title: viewModel.feedList[index].title.toString(),
-                          content: viewModel.feedList[index].content.toString(),
+                          id: viewModel.feedList[index].feedId,
+                          title: viewModel.feedList[index].title,
+                          content: viewModel.feedList[index].content,
                         ),
                         const SizedBox(height: 20.0),
                       ],
