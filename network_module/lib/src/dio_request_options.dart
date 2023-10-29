@@ -6,7 +6,7 @@ abstract class DioRequestOptions {
 
   HTTPMethod get httpMethod;
 
-  Map<String, dynamic>? get queryParam;
+  Map<String, String>? get queryParam;
 
   BaseRequestDTO? get body;
 

@@ -32,7 +32,7 @@ sealed class AuthEndpoint extends DashboardEndpoint {
   String get path => switch (this) { SignIn() => "/auth/sign-in" };
 
   @override
-  Map<String, dynamic>? get queryParam => {};
+  Map<String, String>? get queryParam => {};
 }
 
 final class SignIn extends AuthEndpoint {

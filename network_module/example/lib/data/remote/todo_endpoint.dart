@@ -19,7 +19,7 @@ sealed class TodoEndpoint extends TestEndpoint {
   HTTPMethod get httpMethod => switch (this) { Todos() => HTTPMethod.get };
 
   @override
-  Map<String, dynamic>? get queryParam => {};
+  Map<String, String>? get queryParam => {};
 }
 
 final class Todos extends TodoEndpoint {
