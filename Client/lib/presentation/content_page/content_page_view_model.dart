@@ -9,6 +9,8 @@ class ContentPageViewModel extends ChangeNotifier {
   List<CommentEntity> _commentList = List.empty(growable: true);
   final GetAllCommentsUseCase _getAllCommentsUseCase;
   final CreateCommentUseCase _createCommentUseCase;
+  bool isCommentWidgetClicked = false;
+  bool isTextControllerEmpty = true;
 
   List<CommentEntity> get commentList => _commentList;
 
@@ -17,6 +19,26 @@ class ContentPageViewModel extends ChangeNotifier {
       required CreateCommentUseCase createCommentUseCase})
       : _getAllCommentsUseCase = getAllCommentsUseCase,
         _createCommentUseCase = createCommentUseCase;
+
+  void click() {
+    isCommentWidgetClicked = !isCommentWidgetClicked ? true : false;
+    notifyListeners();
+  }
+
+  void textFieldHaveText() {
+    isTextControllerEmpty = false;
+    notifyListeners();
+  }
+
+  void textFieldClear() {
+    isTextControllerEmpty = true;
+    notifyListeners();
+  }
+
+  void recovery() {
+    isCommentWidgetClicked = false;
+    notifyListeners();
+  }
 
   Future<void> getAllComments({required int feedId}) async {
     final res = await _getAllCommentsUseCase.execute(feedId: feedId);
@@ -32,7 +54,7 @@ class ContentPageViewModel extends ChangeNotifier {
   Future<void> createComment(
       {required CreateCommentRequestDTO createCommentRequestDTO}) async {
     final res = await _createCommentUseCase.execute(
-        createCommentInRequestDTO: createCommentRequestDTO);
+        createCommentRequestDTO: createCommentRequestDTO);
     switch (res) {
       case Success(value: final value):
         _commentList = value;
