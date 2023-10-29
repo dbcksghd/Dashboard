@@ -1,4 +1,5 @@
 import 'package:client/data/dto/request/comment/create_comment_request_dto.dart';
+import 'package:client/domain/entity/comment/comment_entity.dart';
 import 'package:client/domain/repository/comment_repository.dart';
 import 'package:network_module/network_module.dart';
 
@@ -8,9 +9,14 @@ class CreateCommentUseCase {
   CreateCommentUseCase({required CommentRepository commentRepository})
       : _commentRepository = commentRepository;
 
-  Future<Result<void, Exception>> execute(
-          {required CreateCommentInRequestDTO
-              createCommentInRequestDTO}) async =>
-      await _commentRepository.createComment(
-          createCommentInRequestDTO: createCommentInRequestDTO);
+  Future<Result<List<CommentEntity>, Exception>> execute(
+      {required CreateCommentInRequestDTO createCommentInRequestDTO}) async {
+    final res = await _commentRepository.createComment(
+        createCommentInRequestDTO: createCommentInRequestDTO);
+    return switch (res) {
+      Success() => await _commentRepository.getAllComments(
+          feedId: createCommentInRequestDTO.feedId),
+      Failure(exception: final e) => Failure(exception: e),
+    };
+  }
 }
