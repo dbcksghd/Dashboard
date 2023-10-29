@@ -49,14 +49,14 @@ class _WritePageState extends State<WritePage> {
         actions: [
           TextButton(
             onPressed: () {
-              //if (titleFormKey.currentState!.validate() &&
-              //  contentFormKey.currentState!.validate()) {
-              viewModel.createFeed(
-                  createFeedRequestDTO: CreateFeedRequestDTO(
-                      title: titleController.text,
-                      content: contentController.text));
-              Navigator.of(context).pop();
-              // }
+              if (titleFormKey.currentState!.validate() &&
+                  contentFormKey.currentState!.validate()) {
+                viewModel.createFeed(
+                    createFeedRequestDTO: CreateFeedRequestDTO(
+                        title: titleController.text,
+                        content: contentController.text));
+                Navigator.of(context).pop();
+              }
             },
             child: const Text("완료", style: TextStyle(color: Colors.black)),
           ),
