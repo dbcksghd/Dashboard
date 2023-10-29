@@ -26,8 +26,8 @@ func (s *CommentService) CreateComment(req *request.CreateCommentRequest, c echo
 	return c.NoContent(201)
 }
 
-func (s *CommentService) FindAllCommentsInFeed(postId int, c echo.Context) error {
-	comments, err := s.repository.FindAllCommentsInFeed(postId)
+func (s *CommentService) FindAllCommentsInFeed(feedId int, c echo.Context) error {
+	comments, err := s.repository.FindAllCommentsInFeed(feedId)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "댓글 불러오기 실패"})
 	}

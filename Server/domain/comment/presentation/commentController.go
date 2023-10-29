@@ -24,6 +24,6 @@ func (c *CommentController) CreateComment(ctx echo.Context) error {
 }
 
 func (c *CommentController) FindAllCommentsInFeed(ctx echo.Context) error {
-	postId, _ := strconv.Atoi(ctx.QueryParam("postId"))
-	return c.commentService.FindAllCommentsInFeed(postId, ctx)
+	feedId, _ := strconv.Atoi(ctx.QueryParam("feedId"))
+	return c.commentService.FindAllCommentsInFeed(feedId, ctx)
 }
