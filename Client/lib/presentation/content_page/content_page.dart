@@ -39,6 +39,8 @@ class _ContentPageState extends State<ContentPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
+            viewModel.recovery();
+            viewModel.textFieldClear();
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black),
