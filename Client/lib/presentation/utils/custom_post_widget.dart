@@ -1,3 +1,5 @@
+import 'package:client/presentation/content_page/content_page.dart';
+import 'package:client/presentation/content_page/content_page_view_model.dart';
 import 'package:client/presentation/feed_page/feed_page_view_model.dart';
 import 'package:client/presentation/feed_page/update_page.dart';
 import 'package:flutter/material.dart';
@@ -8,27 +10,26 @@ class CustomPostWidget extends StatelessWidget {
     Key? key,
     required this.title,
     required this.content,
-    required this.id,
+    required this.feedId,
   }) : super(key: key);
 
   final String title, content;
-  final int id;
-  late FeedPageViewModel postViewModel;
-
-  //late CommentViewModel commentViewModel;
+  final int feedId;
+  late FeedPageViewModel feedPageViewModel;
+  late ContentPageViewModel contentPageViewModel;
 
   @override
   Widget build(BuildContext context) {
-    postViewModel = Provider.of<FeedPageViewModel>(context);
-    //commentViewModel = Provider.of<CommentViewModel>(context);
+    feedPageViewModel = Provider.of<FeedPageViewModel>(context);
+    contentPageViewModel = Provider.of<ContentPageViewModel>(context);
     return GestureDetector(
       onTap: () {
-        //commentViewModel.readComments(id);
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => ContentPage(id: id, content: content),
-        //   ),
-        // );
+        contentPageViewModel.getAllComments(feedId: feedId);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ContentPage(id: feedId, content: content),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -65,7 +66,9 @@ class CustomPostWidget extends StatelessWidget {
                               onPressed: () => Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => UpdatePage(
-                                      id: id, title: title, content: content),
+                                      id: feedId,
+                                      title: title,
+                                      content: content),
                                 ),
                               ),
                               child: Text(
@@ -82,7 +85,7 @@ class CustomPostWidget extends StatelessWidget {
                                     MediaQuery.of(context).size.height * 0.05),
                             TextButton(
                               onPressed: () {
-                                postViewModel.deleteFeed(id: id);
+                                feedPageViewModel.deleteFeed(id: feedId);
                                 Navigator.of(context).pop();
                               },
                               child: Text(
