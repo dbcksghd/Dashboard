@@ -1,27 +1,30 @@
 import 'package:client/core/jwt_store/interface/jwt_store.dart';
 import 'package:client/core/jwt_store/interface/jwt_store_properties.dart';
-import 'package:client/core/network/interface/endpoint/dashboard_request_options.dart';
+import 'package:client/core/network/interface/endpoint/dasboard_rest_api_domain.dart';
+import 'package:client/core/network/interface/endpoint/dashboard_endpoint.dart';
 import 'package:network_module/network_module.dart';
 
-class JWTInterceptor extends Interceptor<DashboardRequestOptions> {
+class JWTInterceptor extends Interceptor<DashboardEndpoint> {
   final JwtStore _jwtStore;
 
   JWTInterceptor({required JwtStore jwtStore}) : _jwtStore = jwtStore;
 
   @override
-  Future<void> onRequest(DashboardRequestOptions options) async {
-    if (JwtStoreProperties.accessToken.name == options.jwtTokenType.name) {
+  Future<void> onRequest(DashboardEndpoint endpoint) async {
+    if (JwtStoreProperties.accessToken.name == endpoint.jwtTokenType.name) {
       String accessToken =
           await _jwtStore.load(properties: JwtStoreProperties.accessToken);
       if (accessToken.isNotEmpty) {
-        options.headers["Authorization"] = "Bearer $accessToken";
+        endpoint.headers["Authorization"] = "Bearer $accessToken";
       }
     }
   }
 
   @override
-  Future<void> onResponse(Response<dynamic> response) async {
-    if (response.data is! List && response.data['access_token'] != null) {
+  Future<void> onResponse(
+      DashboardEndpoint endpoint, Response<dynamic> response) async {
+    if (endpoint.domain.name == DashboardRestAPIDomain.auth.name &&
+        response.data['access_token'].toString().isNotEmpty) {
       await _jwtStore.save(
           properties: JwtStoreProperties.accessToken,
           token: response.data['access_token']);
