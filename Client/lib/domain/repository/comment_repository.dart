@@ -4,7 +4,7 @@ import 'package:network_module/network_module.dart';
 
 abstract interface class CommentRepository {
   Future<Result<void, Exception>> createComment(
-      {required CreateCommentRequestDTO createCommentInRequestDTO});
+      {required CreateCommentRequestDTO createCommentRequestDTO});
 
   Future<Result<List<CommentEntity>, Exception>> getAllComments(
       {required int feedId});

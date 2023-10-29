@@ -10,12 +10,12 @@ class CreateCommentUseCase {
       : _commentRepository = commentRepository;
 
   Future<Result<List<CommentEntity>, Exception>> execute(
-      {required CreateCommentRequestDTO createCommentInRequestDTO}) async {
+      {required CreateCommentRequestDTO createCommentRequestDTO}) async {
     final res = await _commentRepository.createComment(
-        createCommentInRequestDTO: createCommentInRequestDTO);
+        createCommentRequestDTO: createCommentRequestDTO);
     return switch (res) {
       Success() => await _commentRepository.getAllComments(
-          feedId: createCommentInRequestDTO.feedId),
+          feedId: createCommentRequestDTO.feedId),
       Failure(exception: final e) => Failure(exception: e),
     };
   }

@@ -18,8 +18,7 @@ class CommentRepositoryImpl implements CommentRepository {
 
   @override
   Future<Result<void, Exception>> createComment(
-          {required CreateCommentInRequestDTO
-              createCommentInRequestDTO}) async =>
+          {required CreateCommentRequestDTO createCommentRequestDTO}) async =>
       await _remoteCommentDataSource.createComment(
-          createCommentInRequestDTO: createCommentInRequestDTO);
+          createCommentRequestDTO: createCommentRequestDTO);
 }

@@ -8,7 +8,7 @@ sealed class CommentEndpoint extends DashboardEndpoint {
   CommentEndpoint();
 
   factory CommentEndpoint.createComment({
-    required CreateCommentInRequestDTO createCommentInRequestDTO,
+    required CreateCommentRequestDTO createCommentRequestDTO,
   }) = CreateComment;
 
   factory CommentEndpoint.getAllComments({
@@ -17,10 +17,8 @@ sealed class CommentEndpoint extends DashboardEndpoint {
 
   @override
   BaseRequestDTO? get body => switch (this) {
-        CreateComment(
-          createCommentInRequestDTO: final createCommentInRequestDTO
-        ) =>
-          createCommentInRequestDTO,
+        CreateComment(createCommentRequestDTO: final createCommentRequestDTO) =>
+          createCommentRequestDTO,
         GetAllComments() => null,
       };
 
@@ -53,9 +51,9 @@ sealed class CommentEndpoint extends DashboardEndpoint {
 }
 
 final class CreateComment extends CommentEndpoint {
-  final CreateCommentInRequestDTO createCommentInRequestDTO;
+  final CreateCommentRequestDTO createCommentRequestDTO;
 
-  CreateComment({required this.createCommentInRequestDTO});
+  CreateComment({required this.createCommentRequestDTO});
 }
 
 final class GetAllComments extends CommentEndpoint {

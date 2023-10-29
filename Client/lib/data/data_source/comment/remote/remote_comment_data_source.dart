@@ -12,10 +12,10 @@ class RemoteCommentDataSource {
       : _networking = networking;
 
   Future<Result<void, Exception>> createComment(
-      {required CreateCommentInRequestDTO createCommentInRequestDTO}) async {
+      {required CreateCommentRequestDTO createCommentRequestDTO}) async {
     return await _networking.noResponseRequest(
         endpoint: CommentEndpoint.createComment(
-            createCommentInRequestDTO: createCommentInRequestDTO));
+            createCommentRequestDTO: createCommentRequestDTO));
   }
 
   Future<Result<List<CommentEntity>, Exception>> getAllComments(
