@@ -1,5 +1,5 @@
-import 'package:client/View/Widget/custom_post_widget.dart';
 import 'package:client/presentation/feed_page/feed_page_view_model.dart';
+import 'package:client/presentation/utils/custom_post_widget.dart';
 import 'package:client/presentation/write_page/write_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
