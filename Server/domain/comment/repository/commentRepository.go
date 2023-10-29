@@ -16,7 +16,7 @@ func NewCommentRepository(db *sql.DB) *CommentRepository {
 }
 
 func (r *CommentRepository) CreateComment(comment *entity.Comment) error {
-	_, err := r.db.Exec("insert into comment(postId, comment, writeTime) values (?, ?, ?)", comment.FeedId, comment.Comment, comment.WriteTime)
+	_, err := r.db.Exec("insert into comment(postId, comment, writeTime) values (?, ?, ?)", comment.FeedId, comment.Content, comment.WriteTime)
 	if err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (r *CommentRepository) FindAllCommentsInFeed(postId int) (comments []entity
 	}
 	for rows.Next() {
 		var comment entity.Comment
-		rows.Scan(&comment.Id, &comment.FeedId, &comment.Comment, &comment.WriteTime)
+		rows.Scan(&comment.Id, &comment.FeedId, &comment.Content, &comment.WriteTime)
 		comments = append(comments, comment)
 	}
 	return comments, nil

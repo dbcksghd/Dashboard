@@ -19,7 +19,7 @@ func NewCommentService(repository repository.CommentRepository) *CommentService 
 }
 
 func (s *CommentService) CreateComment(req *request.CreateCommentRequest, c echo.Context) error {
-	comment := entity.Comment{FeedId: req.FeedId, WriteTime: req.WriteTime, Comment: req.Content}
+	comment := entity.Comment{FeedId: req.FeedId, WriteTime: req.WriteTime, Content: req.Content}
 	if err := s.repository.CreateComment(&comment); err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"message": "댓글 생성 실패"})
 	}
