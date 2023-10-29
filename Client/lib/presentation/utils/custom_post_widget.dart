@@ -1,7 +1,5 @@
-import 'package:client/View/Screen/content_page.dart';
-import 'package:client/View/Screen/update_page.dart';
-import 'package:client/ViewModel/comment_view_model.dart';
-import 'package:client/ViewModel/feed_view_model.dart';
+import 'package:client/presentation/feed_page/feed_page_view_model.dart';
+import 'package:client/presentation/feed_page/update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,21 +13,22 @@ class CustomPostWidget extends StatelessWidget {
 
   final String title, content;
   final int id;
-  late FeedViewModel postViewModel;
-  late CommentViewModel commentViewModel;
+  late FeedPageViewModel postViewModel;
+
+  //late CommentViewModel commentViewModel;
 
   @override
   Widget build(BuildContext context) {
-    postViewModel = Provider.of<FeedViewModel>(context);
-    commentViewModel = Provider.of<CommentViewModel>(context);
+    postViewModel = Provider.of<FeedPageViewModel>(context);
+    //commentViewModel = Provider.of<CommentViewModel>(context);
     return GestureDetector(
       onTap: () {
-        commentViewModel.readComments(id);
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ContentPage(id: id, content: content),
-          ),
-        );
+        //commentViewModel.readComments(id);
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => ContentPage(id: id, content: content),
+        //   ),
+        // );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -83,7 +82,7 @@ class CustomPostWidget extends StatelessWidget {
                                     MediaQuery.of(context).size.height * 0.05),
                             TextButton(
                               onPressed: () {
-                                postViewModel.deleteFeed(id);
+                                postViewModel.deleteFeed(id: id);
                                 Navigator.of(context).pop();
                               },
                               child: Text(
