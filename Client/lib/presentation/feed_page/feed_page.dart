@@ -26,7 +26,7 @@ class FeedPage extends StatelessWidget {
                     return Column(
                       children: [
                         CustomPostWidget(
-                          id: viewModel.feedList[index].feedId,
+                          feedId: viewModel.feedList[index].feedId,
                           title: viewModel.feedList[index].title,
                           content: viewModel.feedList[index].content,
                         ),
