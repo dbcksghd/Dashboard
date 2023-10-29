@@ -19,23 +19,21 @@ class FeedPage extends StatelessWidget {
           margin: const EdgeInsets.only(left: 20, right: 20),
           width: MediaQuery.of(context).size.width - 40,
           height: MediaQuery.of(context).size.height,
-          child: viewModel.feedList.isNotEmpty
-              ? ListView.builder(
-                  itemCount: viewModel.feedList.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        CustomPostWidget(
-                          feedId: viewModel.feedList[index].feedId,
-                          title: viewModel.feedList[index].title,
-                          content: viewModel.feedList[index].content,
-                        ),
-                        const SizedBox(height: 20.0),
-                      ],
-                    );
-                  },
-                )
-              : const Center(child: CircularProgressIndicator()),
+          child: ListView.builder(
+            itemCount: viewModel.feedList.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  CustomPostWidget(
+                    feedId: viewModel.feedList[index].feedId,
+                    title: viewModel.feedList[index].title,
+                    content: viewModel.feedList[index].content,
+                  ),
+                  const SizedBox(height: 20.0),
+                ],
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
