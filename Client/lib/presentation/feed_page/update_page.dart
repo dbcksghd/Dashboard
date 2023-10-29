@@ -1,5 +1,6 @@
-import 'package:client/ViewModel/feed_view_model.dart';
+import 'package:client/data/dto/request/feed/update_feed_request_dto.dart';
 import 'package:client/presentation/feed_page/feed_page.dart';
+import 'package:client/presentation/feed_page/feed_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class UpdatePage extends StatefulWidget {
 }
 
 class _UpdatePageState extends State<UpdatePage> {
-  late FeedViewModel viewModel;
+  late FeedPageViewModel viewModel;
 
   late TextEditingController titleController, contentController;
   late FocusNode focusNode;
@@ -44,7 +45,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<FeedViewModel>(context);
+    viewModel = Provider.of<FeedPageViewModel>(context);
     titleController = TextEditingController(text: widget.title);
     contentController = TextEditingController(text: widget.content);
     return Scaffold(
@@ -64,7 +65,10 @@ class _UpdatePageState extends State<UpdatePage> {
               if (titleFormKey.currentState!.validate() &&
                   contentFormKey.currentState!.validate()) {
                 viewModel.updateFeed(
-                    widget.id, titleController.text, contentController.text);
+                    updateFeedRequestDTO: UpdateFeedRequestDTO(
+                        id: widget.id,
+                        title: titleController.text,
+                        content: contentController.text));
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => FeedPage()),
                     (route) => false);
