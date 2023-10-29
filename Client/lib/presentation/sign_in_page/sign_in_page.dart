@@ -1,6 +1,6 @@
-import 'package:client/View/Screen/feed_page.dart';
 import 'package:client/ViewModel/feed_view_model.dart';
-import 'package:client/ViewModel/sign_in_view_model.dart';
+import 'package:client/presentation/feed_page/feed_page.dart';
+import 'package:client/presentation/sign_in_page/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
