@@ -54,8 +54,8 @@ sealed class FeedEndpoint extends DashboardEndpoint {
   String get path => "/feed";
 
   @override
-  Map<String, String> get queryParam => switch (this) {
-        DeleteFeed(id: final id) => {'id': id.toString()},
+  Map<String, dynamic>? get queryParam => switch (this) {
+        DeleteFeed(id: final id) => {'id': id},
         GetAllFeeds() => {},
         UpdateFeed() => {},
         CreateFeed() => {}
