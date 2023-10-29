@@ -12,5 +12,5 @@ abstract class DashboardEndpoint extends DashboardRequestOptions {
   String get baseUrl => "http://localhost:8080$path";
 
   @override
-  Map<String, String> headers = {"Content-Type": "Application/json"};
+  Map<String, String> headers = {'Content-Type': 'application/json'};
 }
