@@ -1,10 +1,10 @@
 import 'package:network_module/network_module.dart';
 
-final class CreateCommentInRequestDTO extends BaseRequestDTO {
+final class CreateCommentRequestDTO extends BaseRequestDTO {
   final int feedId;
   final String writeTime, content;
 
-  CreateCommentInRequestDTO(
+  CreateCommentRequestDTO(
       {required this.feedId, required this.writeTime, required this.content});
 
   @override

@@ -10,7 +10,7 @@ class CreateCommentUseCase {
       : _commentRepository = commentRepository;
 
   Future<Result<List<CommentEntity>, Exception>> execute(
-      {required CreateCommentInRequestDTO createCommentInRequestDTO}) async {
+      {required CreateCommentRequestDTO createCommentInRequestDTO}) async {
     final res = await _commentRepository.createComment(
         createCommentInRequestDTO: createCommentInRequestDTO);
     return switch (res) {

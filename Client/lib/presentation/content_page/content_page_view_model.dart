@@ -30,9 +30,9 @@ class ContentPageViewModel extends ChangeNotifier {
   }
 
   Future<void> createComment(
-      {required CreateCommentInRequestDTO createCommentInRequestDTO}) async {
+      {required CreateCommentRequestDTO createCommentRequestDTO}) async {
     final res = await _createCommentUseCase.execute(
-        createCommentInRequestDTO: createCommentInRequestDTO);
+        createCommentInRequestDTO: createCommentRequestDTO);
     switch (res) {
       case Success(value: final value):
         _commentList = value;
