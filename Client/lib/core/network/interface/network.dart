@@ -4,4 +4,7 @@ import 'package:network_module/network_module.dart';
 abstract class Networking {
   Future<Result<K, Exception>> request<T extends BaseResponseDTO, K>(
       {required DashboardRequestOptions options, required T responseType});
+
+  Future<Result<void, Exception>> noResponseRequest(
+      {required DashboardRequestOptions options});
 }
