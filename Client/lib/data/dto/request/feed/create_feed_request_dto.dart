@@ -1,11 +1,10 @@
 import 'package:network_module/network_module.dart';
 
 final class CreateFeedRequestDTO extends BaseRequestDTO {
-  final String id;
-  final String password;
+  final String title, content;
 
-  CreateFeedRequestDTO({required this.id, required this.password});
+  CreateFeedRequestDTO({required this.title, required this.content});
 
   @override
-  Map<String, dynamic> toJson() => {'id': id, 'password': password};
+  Map<String, dynamic> toJson() => {'title': title, 'content': content};
 }
