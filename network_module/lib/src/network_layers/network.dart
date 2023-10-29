@@ -9,7 +9,7 @@ class Network {
     return _client.fetch(RequestOptions(
       baseUrl: options.baseUrl,
       method: options.httpMethod.name,
-      data: options.body,
+      data: options.body?.toJson(),
       headers: options.headers,
       queryParameters: options.queryParam,
       sendTimeout: const Duration(seconds: 3),
