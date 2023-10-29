@@ -27,7 +27,7 @@ class CustomPostWidget extends StatelessWidget {
         contentPageViewModel.getAllComments(feedId: feedId);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => ContentPage(id: feedId, content: content),
+            builder: (context) => ContentPage(feedId: feedId, content: content),
           ),
         );
       },

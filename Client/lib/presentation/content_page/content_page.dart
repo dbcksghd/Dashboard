@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContentPage extends StatefulWidget {
-  const ContentPage({Key? key, required this.id, required this.content})
+  const ContentPage({Key? key, required this.feedId, required this.content})
       : super(key: key);
-  final int id;
+  final int feedId;
   final String content;
 
   @override
@@ -153,7 +153,8 @@ class _ContentPageState extends State<ContentPage> {
                                                 viewModel.createComment(
                                                     createCommentRequestDTO:
                                                         CreateCommentRequestDTO(
-                                                            feedId: widget.id,
+                                                            feedId:
+                                                                widget.feedId,
                                                             writeTime:
                                                                 "20231029",
                                                             content:
