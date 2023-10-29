@@ -15,7 +15,7 @@ class AuthRemoteDataSource {
       SignInRequestDTO signInRequestDTO) async {
     final response =
         await _networking.request<SignInResponseDTO, SignInResponseDTO>(
-            options: AuthEndpoint.signIn(signInRequestDTO: signInRequestDTO),
+            endpoint: AuthEndpoint.signIn(signInRequestDTO: signInRequestDTO),
             responseType: SignInResponseDTO());
     return switch (response) {
       Success(value: final value) => Success(value: value.toEntity()),

@@ -15,7 +15,7 @@ class RemoteFeedDataSource {
   Future<Result<List<FeedEntity>, Exception>> getAllFeeds() async {
     final res = await _networking
         .request<GetAllFeedsResponseDTO, List<GetAllFeedsResponseDTO>>(
-            options: FeedEndpoint.getAllFeeds(),
+            endpoint: FeedEndpoint.getAllFeeds(),
             responseType: GetAllFeedsResponseDTO());
     return switch (res) {
       Success(value: final value) =>
@@ -27,19 +27,19 @@ class RemoteFeedDataSource {
   Future<Result<void, Exception>> createFeed(
       {required CreateFeedRequestDTO createFeedRequestDTO}) async {
     return await _networking.noResponseRequest(
-        options: FeedEndpoint.createFeed(
+        endpoint: FeedEndpoint.createFeed(
             createFeedRequestDTO: createFeedRequestDTO));
   }
 
   Future<Result<void, Exception>> updateFeed(
       {required UpdateFeedRequestDTO updateFeedRequestDTO}) async {
     return await _networking.noResponseRequest(
-        options: FeedEndpoint.updateFeed(
+        endpoint: FeedEndpoint.updateFeed(
             updateFeedRequestDTO: updateFeedRequestDTO));
   }
 
   Future<Result<void, Exception>> deleteFeed({required int id}) async {
     return await _networking.noResponseRequest(
-        options: FeedEndpoint.deleteFeed(id: id));
+        endpoint: FeedEndpoint.deleteFeed(id: id));
   }
 }
