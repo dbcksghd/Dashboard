@@ -46,5 +46,8 @@ func (f *FeedService) FindAllFeeds(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "게시글 불러오기 실패")
 	}
+	if len(feeds) == 0 {
+		return c.JSON(http.StatusOK, []entity.Feed{})
+	}
 	return c.JSON(200, feeds)
 }
