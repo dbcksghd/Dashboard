@@ -6,7 +6,7 @@ abstract class DashboardEndpoint extends DashboardRequestOptions {
 
   DashboardRestAPIDomain get domain;
 
-  Map<int, Error> get errorMap;
+  Map<int, Exception> get errorMap;
 
   @override
   String get baseUrl => "http://localhost:8080$path";
