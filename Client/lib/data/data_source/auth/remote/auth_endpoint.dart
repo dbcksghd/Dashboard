@@ -16,7 +16,7 @@ sealed class AuthEndpoint extends DashboardEndpoint {
       };
 
   @override
-  Map<int, Error> get errorMap => switch (this) { SignIn() => {} };
+  Map<int, Exception> get errorMap => switch (this) { SignIn() => {} };
 
   @override
   DashboardRestAPIDomain get domain => DashboardRestAPIDomain.auth;

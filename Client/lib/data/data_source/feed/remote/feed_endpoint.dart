@@ -29,7 +29,7 @@ sealed class FeedEndpoint extends DashboardEndpoint {
       };
 
   @override
-  Map<int, Error> get errorMap => {};
+  Map<int, Exception> get errorMap => {};
 
   @override
   DashboardRestAPIDomain get domain => DashboardRestAPIDomain.feed;

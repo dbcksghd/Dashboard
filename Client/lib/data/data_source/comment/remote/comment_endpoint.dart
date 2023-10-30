@@ -23,7 +23,7 @@ sealed class CommentEndpoint extends DashboardEndpoint {
       };
 
   @override
-  Map<int, Error> get errorMap => {};
+  Map<int, Exception> get errorMap => {};
 
   @override
   DashboardRestAPIDomain get domain => DashboardRestAPIDomain.comment;
