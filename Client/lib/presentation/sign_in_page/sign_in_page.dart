@@ -1,5 +1,6 @@
-import 'package:client/ViewModel/feed_view_model.dart';
+import 'package:client/data/dto/request/auth/sign_in_request_dto.dart';
 import 'package:client/presentation/feed_page/feed_page.dart';
+import 'package:client/presentation/feed_page/feed_page_view_model.dart';
 import 'package:client/presentation/sign_in_page/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class _SignInPageState extends State<SignInPage> {
   late TextEditingController nameController;
   late TextEditingController passwordController;
   late SignInViewModel signInViewModel;
-  late FeedViewModel feedViewModel;
+  late FeedPageViewModel feedViewModel;
 
   @override
   void initState() {
@@ -37,7 +38,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     signInViewModel = Provider.of<SignInViewModel>(context);
-    feedViewModel = Provider.of<FeedViewModel>(context);
+    feedViewModel = Provider.of<FeedPageViewModel>(context);
+    if (signInViewModel.isLoginState) return FeedPage();
     return Scaffold(
       body: Center(
         child: Column(
@@ -122,17 +124,15 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {
-                    signInViewModel
-                        .signIn(idController.text, passwordController.text)
-                        .then((value) {
-                      if (signInViewModel.success == true) {
-                        feedViewModel.readFeed();
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => FeedPage()),
-                            (route) => false);
-                      }
-                    });
+                  onPressed: () async {
+                    await signInViewModel.signIn(SignInRequestDTO(
+                        id: idController.text,
+                        password: passwordController.text));
+                    if (signInViewModel.isLoginState) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => FeedPage()),
+                          (route) => false);
+                    }
                   },
                   child: const Text("로그인"),
                 ),
