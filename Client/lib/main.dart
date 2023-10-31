@@ -1,5 +1,5 @@
 import 'package:client/di/di.dart';
-import 'package:client/presentation/feed_page/feed_page.dart';
+import 'package:client/presentation/sign_in_page/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FeedPage(),
+      home: SignInPage(),
     );
   }
 }
