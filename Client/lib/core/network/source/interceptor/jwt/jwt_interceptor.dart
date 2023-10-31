@@ -24,13 +24,13 @@ class JWTInterceptor extends Interceptor<DashboardEndpoint> {
   Future<void> onResponse(
       DashboardEndpoint endpoint, Response<dynamic> response) async {
     if (endpoint.domain.name == DashboardRestAPIDomain.auth.name &&
-        response.data['access_token'].toString().isNotEmpty) {
+        response.data['tokenResponse']['accessToken'] != null) {
       await _jwtStore.save(
           properties: JwtStoreProperties.accessToken,
-          token: response.data['access_token']);
+          token: response.data['tokenResponse']['accessToken']);
       await _jwtStore.save(
           properties: JwtStoreProperties.refreshToken,
-          token: response.data['refresh_token']);
+          token: response.data['tokenResponse']['refreshToken']);
     }
   }
 
