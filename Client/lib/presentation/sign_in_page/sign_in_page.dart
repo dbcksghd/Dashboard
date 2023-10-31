@@ -39,7 +39,10 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     signInViewModel = Provider.of<SignInViewModel>(context);
     feedViewModel = Provider.of<FeedPageViewModel>(context);
-    if (signInViewModel.isLoginState) return FeedPage();
+    if (signInViewModel.isLoginState) {
+      feedViewModel.getAllFeeds();
+      return FeedPage();
+    }
     return Scaffold(
       body: Center(
         child: Column(

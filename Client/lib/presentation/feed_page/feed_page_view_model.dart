@@ -25,9 +25,7 @@ class FeedPageViewModel extends ChangeNotifier {
       : _getAllFeedsUseCase = getAllFeedsUseCase,
         _createFeedUseCase = createFeedUseCase,
         _updateFeedUseCase = updateFeedUseCase,
-        _deleteFeedUseCase = deleteFeedUseCase {
-    getAllFeeds();
-  }
+        _deleteFeedUseCase = deleteFeedUseCase;
 
   Future<void> getAllFeeds() async {
     final res = await _getAllFeedsUseCase.execute();
