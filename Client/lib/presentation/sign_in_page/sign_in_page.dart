@@ -95,31 +95,6 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                border: Border.all(width: 1, color: Colors.black12),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.04,
-                    right: MediaQuery.of(context).size.width * 0.04),
-                child: TextFormField(
-                  validator: (value) => value!.isEmpty ? '이름을 입력해주세요.' : null,
-                  cursorColor: Colors.black,
-                  controller: nameController,
-                  style: TextStyle(
-                      height: 1.2,
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    hintText: "이름를 입력해주세요",
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -128,11 +103,6 @@ class _SignInPageState extends State<SignInPage> {
                     await signInViewModel.signIn(SignInRequestDTO(
                         id: idController.text,
                         password: passwordController.text));
-                    if (signInViewModel.isLoginState) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => FeedPage()),
-                          (route) => false);
-                    }
                   },
                   child: const Text("로그인"),
                 ),
