@@ -6,20 +6,20 @@ import 'package:client/domain/repository/auth_repository.dart';
 import 'package:network_module/network_module.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource _remoteDataSource;
-  final AuthLocalDataSource _localDataSource;
+  final AuthRemoteDataSource _authRemoteDataSource;
+  final AuthLocalDataSource _authLocalDataSource;
 
   AuthRepositoryImpl(
-      {required AuthLocalDataSource localDataSource,
-      required AuthRemoteDataSource remoteDataSource})
-      : _remoteDataSource = remoteDataSource,
-        _localDataSource = localDataSource;
+      {required AuthLocalDataSource authLocalDataSource,
+      required AuthRemoteDataSource authRemoteDataSource})
+      : _authLocalDataSource = authLocalDataSource,
+        _authRemoteDataSource = authRemoteDataSource;
 
   @override
   Future<Result<JwtTokenEntity, Exception>> signIn(
           SignInRequestDTO signInRequestDTO) async =>
-      await _remoteDataSource.signIn(signInRequestDTO);
+      await _authRemoteDataSource.signIn(signInRequestDTO);
 
   @override
-  Future<JwtTokenEntity> getToken() async => _localDataSource.getToken();
+  Future<JwtTokenEntity> getToken() async => _authLocalDataSource.getToken();
 }
