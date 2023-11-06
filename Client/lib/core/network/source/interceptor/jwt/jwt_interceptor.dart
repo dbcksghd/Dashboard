@@ -31,6 +31,12 @@ class JWTInterceptor extends Interceptor<DashboardEndpoint> {
       await _jwtStore.save(
           properties: JwtStoreProperties.refreshToken,
           token: response.data['tokenResponse']['refreshToken']);
+      await _jwtStore.save(
+          properties: JwtStoreProperties.accessTokenExpireAt,
+          token: response.data['tokenResponse']['access_token_expire_at']);
+      await _jwtStore.save(
+          properties: JwtStoreProperties.refreshTokenExpireAt,
+          token: response.data['tokenResponse']['refresh_token_expire_at']);
     }
   }
 
