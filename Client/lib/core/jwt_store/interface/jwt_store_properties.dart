@@ -1,1 +1,7 @@
-enum JwtStoreProperties { accessToken, refreshToken, none }
+enum JwtStoreProperties {
+  accessToken,
+  refreshToken,
+  accessTokenExpireAt,
+  refreshTokenExpireAt,
+  none
+}

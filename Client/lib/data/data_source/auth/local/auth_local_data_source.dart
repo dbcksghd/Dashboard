@@ -10,10 +10,12 @@ class AuthLocalDataSource {
   Future<JwtTokenEntity> getToken() async {
     return JwtTokenEntity(
         accessToken:
-            await _jwtStore.load(properties: JwtStoreProperties.accessToken) ??
-                "",
+            await _jwtStore.load(properties: JwtStoreProperties.accessToken),
         refreshToken:
-            await _jwtStore.load(properties: JwtStoreProperties.refreshToken) ??
-                "");
+            await _jwtStore.load(properties: JwtStoreProperties.refreshToken),
+        accessTokenExpireAt: await _jwtStore.load(
+            properties: JwtStoreProperties.accessTokenExpireAt),
+        refreshTokenExpireAt: await _jwtStore.load(
+            properties: JwtStoreProperties.refreshTokenExpireAt));
   }
 }
