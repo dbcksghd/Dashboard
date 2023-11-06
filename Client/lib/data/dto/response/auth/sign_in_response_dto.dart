@@ -14,7 +14,7 @@ final class SignInResponseDTO extends BaseResponseDTO<JwtTokenEntity> {
       SignInResponseDTO()
         ..accessToken = json['tokenResponse']['accessToken']
         ..refreshToken = json['tokenResponse']['refreshToken']
-        ..accessToken = json['tokenResponse']['access_token_expire_at']
+        ..accessTokenExpireAt = json['tokenResponse']['access_token_expire_at']
         ..refreshTokenExpireAt =
             json['tokenResponse']['refresh_token_expire_at']
         ..message = json['message'];
