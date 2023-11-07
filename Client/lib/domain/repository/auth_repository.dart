@@ -3,8 +3,7 @@ import 'package:client/domain/entity/auth/jwt_token_entity.dart';
 import 'package:network_module/network_module.dart';
 
 abstract interface class AuthRepository {
-  Future<Result<JwtTokenEntity, Exception>> signIn(
-      SignInRequestDTO signInRequestDTO);
+  Future<Result<void, Exception>> signIn(SignInRequestDTO signInRequestDTO);
 
   Future<JwtTokenEntity> getToken();
 }

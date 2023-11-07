@@ -16,7 +16,7 @@ class AuthRepositoryImpl implements AuthRepository {
         _authRemoteDataSource = authRemoteDataSource;
 
   @override
-  Future<Result<JwtTokenEntity, Exception>> signIn(
+  Future<Result<void, Exception>> signIn(
           SignInRequestDTO signInRequestDTO) async =>
       await _authRemoteDataSource.signIn(signInRequestDTO);
 
