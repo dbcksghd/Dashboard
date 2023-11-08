@@ -34,7 +34,7 @@ class FeedPageViewModel extends ChangeNotifier {
         _feedList = value;
         notifyListeners();
       case Failure(exception: final e):
-        print(e);
+        print("게시물 불러오기 실패 $e");
     }
   }
 
