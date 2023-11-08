@@ -17,11 +17,14 @@ class JWTInterceptor extends Interceptor<DashboardEndpoint> {
     if (JwtStoreProperties.accessToken.name == endpoint.jwtTokenType.name) {
       String accessTokenExpireAt = await _jwtStore.load(
           properties: JwtStoreProperties.accessTokenExpireAt);
+
       if (DateTime.now()
           .isBefore(DateTime.now().add(const Duration(seconds: 1)))) {
         RefreshEndpoint refreshEndpoint = RefreshEndpoint.refresh();
+
         String refreshToken =
             await _jwtStore.load(properties: JwtStoreProperties.refreshToken);
+
         refreshEndpoint.headers["refreshToken"] = refreshToken;
 
         final Response<dynamic> response =
@@ -39,7 +42,7 @@ class JWTInterceptor extends Interceptor<DashboardEndpoint> {
   @override
   Future<void> onResponse(
       DashboardEndpoint endpoint, Response<dynamic> response) async {
-    if (endpoint.domain.name == DashboardRestAPIDomain.auth.name &&
+    if (endpoint.domain == DashboardRestAPIDomain.auth &&
         response.data['accessToken'] != null) {
       JwtTokenEntity jwtTokenEntity =
           JWTTokenDTO.fromJson(response.data).toEntity();
