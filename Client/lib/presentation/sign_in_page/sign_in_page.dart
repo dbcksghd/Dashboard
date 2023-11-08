@@ -39,10 +39,6 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     signInViewModel = Provider.of<SignInViewModel>(context);
     feedViewModel = Provider.of<FeedPageViewModel>(context);
-    if (signInViewModel.isLoginState) {
-      feedViewModel.getAllFeeds();
-      return FeedPage();
-    }
     return Scaffold(
       body: Center(
         child: Column(
@@ -106,6 +102,12 @@ class _SignInPageState extends State<SignInPage> {
                     await signInViewModel.signIn(SignInRequestDTO(
                         id: idController.text,
                         password: passwordController.text));
+                    if (signInViewModel.isLoginState) {
+                      feedViewModel.getAllFeeds();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => FeedPage()),
+                          (route) => false);
+                    }
                   },
                   child: const Text("로그인"),
                 ),
