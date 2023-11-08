@@ -46,12 +46,10 @@ class JWTInterceptor extends Interceptor<DashboardEndpoint> {
         response.data['accessToken'] != null) {
       JwtTokenEntity jwtTokenEntity =
           JWTTokenDTO.fromJson(response.data).toEntity();
+
       await saveAllTokenInfo(jwtTokenEntity: jwtTokenEntity);
     }
   }
-
-  @override
-  Future<void> onError(Object error) async {}
 }
 
 extension on JWTInterceptor {
