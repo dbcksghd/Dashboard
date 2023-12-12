@@ -30,17 +30,14 @@ final class Test extends BaseResponseDTO<TestEntity> {
 }
 
 final class TestList extends BaseResponseDTO<List<TestEntity>> {
-  late List<Test> testList;
+  List<Test> testList = [];
 
   TestList();
 
   @override
-  fromJson(Map<String, dynamic> json) {
+  List<Test> fromJson(Map<String, dynamic> json) {
     if (json['users'] != null) {
-      testList = [];
-      json['users'].forEach((data) {
-        testList.add(Test.fromJson(data));
-      });
+      json['users'].forEach((data) => testList.add(Test.fromJson(data)));
     }
     return testList;
   }
