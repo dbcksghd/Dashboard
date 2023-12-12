@@ -1,5 +1,13 @@
 class TestEntity {
-  final String title;
+  final int id, age;
+  final String name, lastName, email, password;
 
-  TestEntity({required this.title});
+  TestEntity({
+    required this.id,
+    required this.age,
+    required this.name,
+    required this.lastName,
+    required this.email,
+    required this.password,
+  });
 }

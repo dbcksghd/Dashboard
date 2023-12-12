@@ -4,26 +4,28 @@ import 'package:network_module_example/core/networking/interface/endpoint/test_e
 sealed class TodoEndpoint extends TestEndpoint {
   TodoEndpoint();
 
-  factory TodoEndpoint.todos({required int id}) = Todos;
+  factory TodoEndpoint.nestedStructuresWithLists() = NestedStructuresWithLists;
 
   @override
-  BaseRequestDTO? get body => switch (this) { Todos() => null };
+  BaseRequestDTO? get body => switch (this) {
+        NestedStructuresWithLists() => null,
+      };
 
   @override
-  String get path => switch (this) { Todos(id: final id) => "todos/$id" };
+  String get path => switch (this) {
+        NestedStructuresWithLists() => "jlgalarza3/1.2-pet-project/db",
+      };
 
   @override
   Map<int, Exception> get errorMap => {};
 
   @override
-  HTTPMethod get httpMethod => switch (this) { Todos() => HTTPMethod.get };
+  HTTPMethod get httpMethod => switch (this) {
+        NestedStructuresWithLists() => HTTPMethod.get,
+      };
 
   @override
   Map<String, dynamic>? get queryParam => {};
 }
 
-final class Todos extends TodoEndpoint {
-  int id;
-
-  Todos({required this.id});
-}
+final class NestedStructuresWithLists extends TodoEndpoint {}
