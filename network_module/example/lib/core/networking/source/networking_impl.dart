@@ -16,7 +16,7 @@ class NetworkingImpl implements Networking {
       }
       final response = await Network.network.request(options: options);
       for (var e in interceptor) {
-        await e.onResponse(response);
+        await e.onResponse(options, response);
       }
       final decodeData = NetworkDecoder.decodeHelper.decode<T, K>(
         response: response,
